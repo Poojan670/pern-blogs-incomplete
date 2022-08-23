@@ -37,6 +37,8 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.user = require('./user')(sequelize, DataTypes)
+db.category = require('./category')(sequelize, DataTypes)
+db.blogs = require('./blogs')(sequelize, DataTypes)
 
 db.sequelize.sync({ force: false })
 

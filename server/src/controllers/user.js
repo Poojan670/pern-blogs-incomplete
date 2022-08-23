@@ -9,13 +9,13 @@ const { mail } = require('../utils/mail.js')
 const validate = require('../validators/user')
 
 
-const listUsers = async (req, res) => {
+exports.listUsers = async (req, res) => {
     const users = await User.findAll()
     res.json(users)
 }
 
 
-const register = async (req, res) => {
+exports.register = async (req, res) => {
     const { error } = validate(req.body)
     if (error) {
         return res.status(400).send(error.details[0].message)
@@ -29,13 +29,12 @@ const register = async (req, res) => {
     try {
         user = new User(_.pick(req.body, ['username', 'email', 'password']))
         user.password = await passwordHash(user.password)
+        await user.save()
 
         const verifyToken = await generateVerificationToken(user.id)
         const url = `http://localhost:${process.env.PORT}/api/v1/user-app/user/verify/${verifyToken}`
 
         await mail(user.email, url)
-
-        await user.save()
 
         return res.status(201).json({
             "msg": `Sent a verification email to ${user.email}`
@@ -48,7 +47,7 @@ const register = async (req, res) => {
     }
 }
 
-const userVerify = async (req, res) => {
+exports.userVerify = async (req, res) => {
     const token = req.params.id
     if (!token) {
         return res.status(422).json({ "msg": "Missing Token" })
@@ -59,12 +58,11 @@ const userVerify = async (req, res) => {
             token,
             process.env.TOKEN_SECRET
         );
-        console.log(payload)
     } catch (err) {
         return res.status(500).send(err);
     }
 
-    const user = await User.findOne({ id: payload.id }).exec();
+    const user = await User.findOne({ id: payload.id });
     if (!user) {
         return res.status(404).json({
             "msg": "User does not  exists"
@@ -78,15 +76,8 @@ const userVerify = async (req, res) => {
     })
 }
 
-const getUser = async (req, res) => {
+exports.getUser = async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     if (!user) return res.status(403).json({ "msg": "User not found!" })
     res.send(user);
-}
-
-module.exports = {
-    listUsers,
-    register,
-    getUser,
-    userVerify
 }

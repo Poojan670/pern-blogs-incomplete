@@ -1,0 +1,87 @@
+.login-bak {
+    background: linear-gradient(-45deg,
+            hsl(222, 54%, 63%),
+            #3c66c7,
+            rgb(187, 184, 184)) !important;
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    height: 100vh;
+}
+
+/* .account-pages {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+} */
+.bg-primary.bg-soft {
+    background: linear-gradient(to right,
+            rgb(255, 255, 255) 0%,
+            rgb(255, 255, 255) 100%) !important;
+}
+
+.form-control:active {
+    outline: none !important;
+}
+
+.password-field span {
+    position: absolute;
+    z-index: 10;
+    font-size: 16px;
+    line-height: 38px;
+    right: 13px;
+    top: 0;
+    color: #74788d;
+}
+
+.card-login {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 80px;
+    padding: 20px;
+}
+
+.login-position {
+    width: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.btn-login {
+    width: 60%;
+    border-radius: 12px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 20px 30px;
+}
+
+.textfield-login {
+    height: 40px !important;
+    padding: 8px;
+}
+
+.reset-container {
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-reset {
+    box-shadow: rgb(0 0 0 / 40%) 0px 30px 80px;
+    padding: 20px;
+}
+
+.changepwd-container {
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.change-textfield {
+    font-size: 11px !important;
+    color: #eee;
+    padding-left: 7px;
+}

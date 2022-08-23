@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const passwordComplexity = require("joi-password-complexity");
+const User = require('../model').user
 
 const complexityOptions = {
     min: 5,

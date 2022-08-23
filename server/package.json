@@ -7,7 +7,8 @@
     "start": "nodemon server.js",
     "migrate": "npx sequelize-cli db:migrate",
     "unmigrate": "npx sequelize-cli db:migrate:undo",
-    "makemigrations": "npx sequelize-cli migration:create --name added_is_verified_column"
+    "makemigrations": "npx sequelize-cli migration:create --name added_is_verified_column",
+    "createmigrations": "npx sequelize-cli model:generate --name Category --attributes title:string"
   },
   "keywords": [
     "node",
