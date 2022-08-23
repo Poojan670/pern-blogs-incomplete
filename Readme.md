@@ -86,10 +86,11 @@ app.post('/todos', async (req, res) => {
 * Install dependencies using `npm i`.
 * run `npm start`. Frontend will open at `http://localhost:3000/`
 
-## :envelope: Contact
 
 ## :file_folder: License
 
 * N/A
+
+## :envelope: Contact
 
 * Repo created by [Poojan670](https://github.com/Poojan670), email: po0janhunt@gmail.com
