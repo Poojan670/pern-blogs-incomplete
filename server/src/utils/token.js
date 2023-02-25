@@ -12,6 +12,17 @@ const generateAuthToken = function (user) {
     return token;
 }
 
+const generateAuthRefreshToken = function (user) {
+    const token = jwt.sign({
+        id: user.id,
+        username: user.username
+    }, process.env.SECRET_KEY,
+        {
+            expiresIn: '1d'
+        });
+    return token;
+}
+
 const generateVerificationToken = function (user_id) {
     const verifyToken = jwt.sign({
         id: user_id
@@ -19,4 +30,4 @@ const generateVerificationToken = function (user_id) {
     return verifyToken
 }
 
-module.exports = { generateAuthToken, generateVerificationToken }
+module.exports = { generateAuthToken, generateVerificationToken, generateAuthRefreshToken }

@@ -2,10 +2,10 @@ module.exports = {
     up: function (queryInterface, Sequelize) {
         // logic for transforming into the new state
         return queryInterface.changeColumn(
-            'Users',
+            'users',
             'password',
             {
-                type: Sequelize.String,
+                type: Sequelize.STRING,
                 validate: {
                     min: 5,
                     max: 20,
@@ -19,7 +19,7 @@ module.exports = {
     down: function (queryInterface, Sequelize) {
         // logic for reverting the changes
         return queryInterface.removeColumn(
-            'Users',
+            'users',
             'isVerified'
         );
     }

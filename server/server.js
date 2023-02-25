@@ -3,7 +3,6 @@ const express = require('express')
 
 app = express();
 
-// require('./main/db')();
 require('./main/api/routes')(app);
 require('./main/Joi/index')();
 

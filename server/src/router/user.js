@@ -4,13 +4,14 @@ const user = require('../controllers/user')
 const auth = require('../../middleware/auth')
 const { login } = require('../utils/login')
 
-router.post('/', user.register)
-router.get('/', auth, user.listUsers)
+const prefix = '/api/v1/user-app'
 
-router.get('/me', auth, user.getUser)
 
-router.get('/verify/:id', user.userVerify)
-router.post('/login', login)
+router.post(`${prefix}/register`, user.register)
+router.get(`${prefix}/users`, auth, user.listUsers)
+router.get(`${prefix}/me`, auth, user.getUser)
+router.get(`${prefix}/verify/:id`, user.userVerify)
+router.post(`${prefix}/login`, login)
 
 
 module.exports = router

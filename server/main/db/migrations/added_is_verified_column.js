@@ -2,7 +2,7 @@ module.exports = {
     up: function (queryInterface, Sequelize) {
         // logic for transforming into the new state
         return queryInterface.addColumn(
-            'Users',
+            'users',
             'isVerified',
             {
                 type: Sequelize.BOOLEAN,
@@ -15,7 +15,7 @@ module.exports = {
     down: function (queryInterface, Sequelize) {
         // logic for reverting the changes
         return queryInterface.removeColumn(
-            'Users',
+            'users',
             'isVerified'
         );
     }

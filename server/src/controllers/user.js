@@ -1,26 +1,30 @@
 require('dotenv').config()
 const _ = require('lodash')
 const User = require('../model').user
-const sequelize = require('../model').sequelize
 const jwt = require('jsonwebtoken')
 const { generateVerificationToken } = require('../utils/token')
 const { passwordHash } = require('../utils/hash')
 const { mail } = require('../utils/mail.js')
 const validate = require('../validators/user')
+const paginate = require('../../middleware/pagination');
+const { Op } = require('sequelize')
 
 
 exports.listUsers = async (req, res) => {
-    const users = await User.findAll()
-    res.json(users)
+    const users = await User.findAll({attributes: {exclude: 'password'}})
+    const result = await paginate(users, req, res)
+    res.json(result)
 }
 
 
 exports.register = async (req, res) => {
     const { error } = validate(req.body)
-    if (error) {
-        return res.status(400).send(error.details[0].message)
-    }
-    let user = await User.findOne({ email: req.body.email } || { username: req.body.username });
+    if (error) return res.status(400).json({"msg": error.details[0].message})
+    let user = await User.findOne({
+        where: {
+            [Op.or] : {email: req.body.email, username: req.body.username}
+        }
+    });
     if (user) {
         return res.status(400).json({
             "msg": "User with this email or username already exists!"
@@ -62,7 +66,11 @@ exports.userVerify = async (req, res) => {
         return res.status(500).send(err);
     }
 
-    const user = await User.findOne({ id: payload.id });
+    const user = await User.findOne({
+        where:{
+            id: payload.id
+        }
+    });
     if (!user) {
         return res.status(404).json({
             "msg": "User does not  exists"
@@ -77,7 +85,11 @@ exports.userVerify = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-    const user = await User.findById(req.user.id).select('-password');
+    // const user = await User.findByPk(req.user.id);
+    const user = await User.findOne({
+        where: {id: req.user.id},
+        attributes: {exclude: 'password'}
+    });
     if (!user) return res.status(403).json({ "msg": "User not found!" })
     res.send(user);
 }

@@ -1,21 +1,18 @@
 const express = require('express'),
-    user = require('../../src/router/user')
+    bodyParser = require('body-parser'),
+    swaggerUi = require('swagger-ui-express'),
+    swaggerFile =require('../../swagger-output.json'),
+    user = require('../../src/router/user');
 
 
 module.exports = function (app) {
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(bodyParser.json())
+    app.use(express.static('public'));
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, { swaggerOptions: { persistAuthorization: true } }))
 
-    app.use('/api/v1/user-app/user', user)
 
-
-    // app.get('/api/v1/blogs', async (req, res) => {
-    //     const results = await db.query("select * from blogs");
-    //     console.log(results);
-    //     res.status(200).send(results[rows])
-    // })
-
-    // app.get('/api/v1/blogs/:id', async (req, res) => {
-    //     const results = await db.query(`select * from blogs where id=${req.params.id}`)
-    //     res.status(200).send(results)
-    // })
+    app.use('', user)
 }

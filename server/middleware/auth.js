@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken')
-require('dotenv')
 
 module.exports = function auth(req, res, next) {
-    const token = req.header('authorization');
+    const token = req.header('Authorization');
     if (!token) return res.status(401).json({
         "msg": "Access Denied, No Token Provided !"
     })
@@ -12,7 +11,7 @@ module.exports = function auth(req, res, next) {
         req.user = decode;
         next();
     } catch (err) {
-        res.status(400).json({
+        res.status(403).json({
             "msg": `Invalid Token, Please try again due to ${err}`
         })
 
