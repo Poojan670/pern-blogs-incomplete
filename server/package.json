@@ -1,0 +1,39 @@
+{
+  "name": "blogs_app",
+  "version": "1.0.0",
+  "description": "Web application for viewing personal vlogs",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "unmigrate": "npx sequelize-cli db:migrate:undo",
+    "makemigrations": "npx sequelize-cli migration:create --name added_is_verified_column",
+    "createmigrations": "npx sequelize-cli model:generate --name Category --attributes title:string"
+  },
+  "keywords": [
+    "node",
+    "nodemon",
+    "blogs"
+  ],
+  "author": "Poojan Pradhan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "joi-objectid": "^4.0.2",
+    "joi-password-complexity": "^5.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "nodemailer": "^6.7.7",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3",
+    "sequelize-auto-migrations-v2": "^1.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "sequelize-cli": "^6.4.1"
+  }
+}
