@@ -12,16 +12,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Blogs.hasOne(models.Category, {
-        foreignKey: "category_id"
-      })
-      models.Category.hasMany(Blogs);
+      models.Category.hasMany(Blogs,{
+        foreignKey: 'category_id'
+      });
+      Blogs.belongsTo(models.Category);
 
-
-      Blogs.hasOne(models.User, {
-        foreignKey: "user_id"
-      })
-      models.User.hasMany(Blogs);
+      models.User.hasMany(Blogs, {
+        foreignKey: 'user_id'
+      });
+      Blogs.belongsTo(models.User);
     }
   }
   Blogs.init({
@@ -38,10 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.TEXT,
     paragraph1: DataTypes.TEXT,
-    isLatest: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
+    // isLatest: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false
+    // }
   }, {
     timestamps: true,
     sequelize,

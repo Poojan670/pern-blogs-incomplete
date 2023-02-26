@@ -3,6 +3,7 @@ const express = require('express')
 
 app = express();
 
+require('./main/admin')(app);
 require('./main/api/routes')(app);
 require('./main/Joi/index')();
 

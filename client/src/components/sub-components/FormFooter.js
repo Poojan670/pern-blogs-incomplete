@@ -5,7 +5,7 @@ const date = new Date().getFullYear();
 const Footer = () => {
     return (
         <div>
-            <p style={{ color: "white" }}>
+            <p className="text-sm font-light text-gray-800 text-center">
                 ©{date} PERN-blogs  @Poojan Pradhan.
             </p>
         </div>

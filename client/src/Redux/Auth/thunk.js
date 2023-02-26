@@ -3,23 +3,19 @@ import * as action from "./action";
 import * as API from "./api";
 import { authConstants } from "./constants";
 //login
-export const login = (user_name, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
     try {
         dispatch(action.loadingAction());
-        const body = { user_name, password };
+        const body = { username, password };
         const { data } = await API.login(body);
-        const permissions = data.permissions;
-        const user_permissions = permissions?.map(
-            (permission) => permission.code_name
-        );
 
         //for storing the states when login success on the basis of which we can change the route of page.
         successFunction(`Welcome ${data.user_name}`);
         dispatch(
-            action.loginSuccessAction({ ...data, permissions: user_permissions })
+            action.loginSuccessAction({ ...data })
         );
     } catch (error) {
-        errorFunction("Invalid Credentials");
+        errorFunction(error.response.data.msg);
         dispatch(action.loginFailAction(error));
     }
 };

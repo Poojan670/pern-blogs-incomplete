@@ -6,7 +6,7 @@ import Blogs from "../pages/Blogs.js"
 import Register from "../pages/Register.js"
 import ResetPassword from "../pages/ResetPassword/ResetPassword"
 import PageNotFound from "../pages/PageNotFound/PageNotFound"
-import Login from "../pages/Login/Login"
+import Login from "../pages/Login"
 
 const PublicRoutes = () => {
   return (

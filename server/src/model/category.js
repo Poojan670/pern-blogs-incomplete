@@ -11,7 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.User.hasMany(Category, {
+        foreignKey: 'user_id',
+        foreignKeyConstraint: true,
+        allowNull: false
+      });
+      Category.belongsTo(models.User, {
+        foreignKey: 'user_id',
+      });
     }
+    
   }
   Category.init({
     title: {
@@ -28,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     sequelize,
     modelName: 'Category',
-    tableName: 'categories'
+    tableName: 'categories',
   });
   return Category;
 };
