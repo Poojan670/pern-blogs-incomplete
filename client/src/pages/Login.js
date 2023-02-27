@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { login } from "../Redux/Auth/thunk";
 import { authConstants } from "../Redux/Auth/constants";
 import Footer from "../components/sub-components/FormFooter";
@@ -9,6 +10,7 @@ const Login = () => {
   // props
   const loading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +30,7 @@ const Login = () => {
     console.log("submitted for login");
     localStorage.setItem("remember_me", remember);
     localStorage.setItem("username", user ? user : "");
-    dispatch(login(username, password));
+    dispatch(login(username, password, history));
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

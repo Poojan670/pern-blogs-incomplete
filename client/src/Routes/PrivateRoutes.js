@@ -28,6 +28,8 @@ const lazyWithReload = (componentImport) =>
   });
 const Dashboard = lazyWithReload(() => import("../pages/DashBoard"));
 const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
+const Home = lazyWithReload(() => import("../pages/Home"));
+const Posts = lazyWithReload(() => import("../pages/Blogs"));
 
 const PrivateRoutes = () => {
   const ErrorFallback = ({ error }) => {
@@ -49,12 +51,13 @@ const PrivateRoutes = () => {
               component={Dashboard}
               permission=""
             />
-            {/* <ProtectedRoute
+            <ProtectedRoute exact path="/" component={Home} permission="" />
+            <ProtectedRoute
               exact
-              path="/dashboard"
-              component={Dashboard}
+              path="/posts"
+              component={Posts}
               permission=""
-            /> */}
+            />
             <Route component={PageNotFound} permission="" />
           </Switch>
         </Suspense>

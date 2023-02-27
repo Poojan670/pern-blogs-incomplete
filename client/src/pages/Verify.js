@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { verify } from "../Redux/Auth/thunk";
 
@@ -7,6 +7,7 @@ const ResetPassword = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  // const loading = useSelector((state) => state.auth.loading);
 
   const onSubmit = () => {
     dispatch(verify(token, history));
@@ -50,9 +51,10 @@ const ResetPassword = () => {
             </div>
             <button
               type="submit"
+              // disabled={loading}
               className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "
             >
-              Reset passwod
+              Verify your email
             </button>
           </form>
         </div>

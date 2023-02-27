@@ -38,5 +38,6 @@ exports.login = async (req, res) => {
   res.json({
     access_token: generateAuthToken(user),
     refresh_token: generateAuthRefreshToken(user),
+    username: user.username,
   });
 };

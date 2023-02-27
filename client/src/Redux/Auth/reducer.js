@@ -30,6 +30,7 @@ const authReducer = (state = initialState, action) => {
       storage.removeItem("persist:root");
       localStorage.setItem("accessToken", action.payload.access_token);
       localStorage.setItem("refreshToken", action.payload.refresh_token);
+      localStorage.setItem("username", action.payload.username);
 
       return {
         ...state,

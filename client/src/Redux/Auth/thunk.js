@@ -3,15 +3,16 @@ import * as action from "./action";
 import * as API from "./api";
 import { authConstants } from "./constants";
 //login
-export const login = (username, password) => async (dispatch) => {
+export const login = (username, password, history) => async (dispatch) => {
   try {
     dispatch(action.loadingAction());
     const body = { username, password };
     const { data } = await API.login(body);
 
     //for storing the states when login success on the basis of which we can change the route of page.
-    successFunction(`Welcome ${data.user_name}`);
+    successFunction(`Welcome ${username}`);
     dispatch(action.loginSuccessAction({ ...data }));
+    history.push("/");
   } catch (error) {
     errorFunction(error.response.data.msg);
     dispatch(action.loginFailAction(error));

@@ -1,7 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import { ImFacebook, ImTwitter, ImLinkedin2 } from "react-icons/im";
 
 const Header = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const username = useSelector((state) => state.auth.username);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+  };
+
   return (
     <header className="bg-gray-50">
       <div
@@ -34,20 +44,38 @@ const Header = () => {
             >
               <ImLinkedin2 color="#888888" />
             </a>
-            <a
-              href="/login"
-              className="font-bold opacity-50 md:flex mx-auto -my-0.5"
-              color="#888888"
-            >
-              Login
-            </a>
-            <a
-              href="/register"
-              className="font-bold opacity-50 md:flex mx-auto -my-0.5"
-              color="#888888"
-            >
-              Register
-            </a>
+            {isAuthenticated ? (
+              <>
+                <a className="font-bold opacity-50 md:flex mx-auto -my-0.5">
+                  Welcome {username} 😄
+                </a>
+                <a
+                  href="/"
+                  onClick={handleLogout}
+                  className="font-bold opacity-50 md:flex mx-auto -my-0.5"
+                  color="#888888"
+                >
+                  Logout
+                </a>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/login"
+                  className="font-bold opacity-50 md:flex mx-auto -my-0.5"
+                  color="#888888"
+                >
+                  Login
+                </a>
+                <a
+                  href="/register"
+                  className="font-bold opacity-50 md:flex mx-auto -my-0.5"
+                  color="#888888"
+                >
+                  Register
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>
