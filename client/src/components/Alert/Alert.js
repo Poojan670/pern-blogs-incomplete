@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
- import { hideAlertAction, showAlertAction } from "../../Redux/Alert/action";
+import { hideAlertAction, showAlertAction } from "../../Redux/Alert/action";
 import { store } from "../../Redux/store";
 toast.configure();
 //toast for error
@@ -7,20 +7,20 @@ toast.configure();
 export const errorFunction = (error) => {
   const alertMessage = store.getState().alert.alertMessage;
   const errorMessage = typeof error === "string" ? error : "error";
-   if (alertMessage !== errorMessage) {
-     store.dispatch(showAlertAction(errorMessage));
-  toast.error(errorMessage, {
-    position: "top-right",
-    autoClose: 2500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    onClose() {
-      store.dispatch(hideAlertAction());
-    },
-  });
+  if (alertMessage !== errorMessage) {
+    store.dispatch(showAlertAction(errorMessage));
+    toast.error(errorMessage, {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      onClose() {
+        store.dispatch(hideAlertAction());
+      },
+    });
   }
 };
 

@@ -1,8 +1,6 @@
-'use strict';
+"use strict";
 
-const {
-  Model
-} = require('sequelize');
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -15,47 +13,49 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
+  User.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+          max: 15,
+          min: 3,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        validate: {
+          min: 5,
+          max: 20,
+          notEmpty: true,
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+          isEmail: true,
+          notEmpty: true,
+        },
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
-    username: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        max: 15,
-        min: 3
-      }
-    },
-    password: {
-      type: DataTypes.STRING,
-      validate: {
-        min: 5,
-        max: 20,
-        notEmpty: true
-      }
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      validate: {
-        isEmail: true,
-        notEmpty: true
-      }
-    },
-    isVerified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+    {
+      timestamps: true,
+      sequelize,
+      modelName: "User",
+      tableName: "users",
     }
-  }, {
-    timestamps: true,
-    sequelize,
-    modelName: 'User',
-    tableName: 'users'
-  });
+  );
   return User;
 };
-

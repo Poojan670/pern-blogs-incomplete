@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import React, { useEffect } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Wrapper = ({ children }) => {
+  useEffect(() => {
+    document.title = "Home";
+  });
 
-    useEffect(() => {
-        document.title = "Home"
-    })
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
+};
 
-    return (
-        <>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-        </>
-    )
-}
-
-export default Wrapper
+export default Wrapper;

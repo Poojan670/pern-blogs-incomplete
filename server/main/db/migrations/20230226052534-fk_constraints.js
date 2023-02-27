@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.addConstraint('categories', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.addConstraint("categories", {
       fields: ["user_id"],
       type: "foreign key",
       name: "category_fk_user",
@@ -14,7 +14,7 @@ module.exports = {
       },
     });
 
-    await queryInterface.addConstraint('blogs', {
+    await queryInterface.addConstraint("blogs", {
       fields: ["user_id"],
       type: "foreign key",
       name: "blogs_fk_user",
@@ -24,8 +24,8 @@ module.exports = {
         key: "id",
       },
     });
-    
-    await queryInterface.addConstraint('blogs', {
+
+    await queryInterface.addConstraint("blogs", {
       fields: ["category_id"],
       type: "foreign key",
       name: "blogs_fk_categories",
@@ -35,12 +35,11 @@ module.exports = {
         key: "id",
       },
     });
-
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.removeConstraint('categories', 'category_fk_user');
-    await queryInterface.removeConstraint('blogs', 'blogs_fk_user');
-    await queryInterface.removeConstraint('blogs', 'blogs_fk_categories');
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint("categories", "category_fk_user");
+    await queryInterface.removeConstraint("blogs", "blogs_fk_user");
+    await queryInterface.removeConstraint("blogs", "blogs_fk_categories");
+  },
 };

@@ -3,8 +3,8 @@ import alertReducer from "./Alert/reducer";
 import authReducer from "./Auth/reducer";
 
 const rootReducer = combineReducers({
-    alert: alertReducer,
-    auth: authReducer,
-})
+  alert: alertReducer,
+  auth: authReducer,
+});
 
 export default rootReducer;
