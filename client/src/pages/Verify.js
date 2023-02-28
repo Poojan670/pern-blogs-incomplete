@@ -7,7 +7,7 @@ const ResetPassword = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
-  // const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector((state) => state.auth.loading_verify);
 
   const onSubmit = () => {
     dispatch(verify(token, history));
@@ -27,11 +27,7 @@ const ResetPassword = () => {
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Verify your email
           </h2>
-          <form
-            onSubmit={onSubmit}
-            className="mt-4 space-y-4 lg:mt-5 md:space-y-5"
-            action="#"
-          >
+          <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
             <div>
               <label
                 htmlFor="text"
@@ -51,7 +47,8 @@ const ResetPassword = () => {
             </div>
             <button
               type="submit"
-              // disabled={loading}
+              disabled={loading}
+              onClick={onSubmit}
               className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "
             >
               Verify your email

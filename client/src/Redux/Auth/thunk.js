@@ -12,7 +12,7 @@ export const login = (username, password, history) => async (dispatch) => {
     //for storing the states when login success on the basis of which we can change the route of page.
     successFunction(`Welcome ${username}`);
     dispatch(action.loginSuccessAction({ ...data }));
-    history.push("/");
+    history.push("/dashboard");
   } catch (error) {
     errorFunction(error.response.data.msg);
     dispatch(action.loginFailAction(error));

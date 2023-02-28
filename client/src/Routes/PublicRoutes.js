@@ -8,6 +8,8 @@ import Verify from "../pages/Verify";
 import ResetPassword from "../pages/ResetPassword";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/Login";
+import DashBoard from "../pages/DashBoard";
+import UserList from "../pages/UserList";
 
 const PublicRoutes = () => {
   return (
@@ -20,6 +22,8 @@ const PublicRoutes = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/reset-password" component={ResetPassword} />
           <Route exact path="/verify" component={Verify} />
+          <Route exact path="/dashboard" component={DashBoard} />
+          <Route exact path="/users" component={UserList} />
           <Route component={PageNotFound} />
           <Route component={Home} />
         </Switch>

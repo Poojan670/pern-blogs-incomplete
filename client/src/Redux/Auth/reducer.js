@@ -6,6 +6,8 @@ const initialState = {
   loading: false,
   loading_reset: false,
   loading_reset_password: false,
+  loading_register: false,
+  loading_verify: false,
   username: null,
   message: [],
   userid: null,
@@ -26,6 +28,10 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading_reset: true };
     case authConstants.LOADING_RESET_PASSWORD:
       return { ...state, loading_reset_password: true };
+    case authConstants.LOADING_REGISTER:
+      return { ...state, loading_register: true };
+    case authConstants.LOADING_VERIFY:
+      return { ...state, loading_verify: true };
     case authConstants.LOGIN_SUCCESS:
       storage.removeItem("persist:root");
       localStorage.setItem("accessToken", action.payload.access_token);
@@ -113,6 +119,19 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case authConstants.REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loading_register: false,
+        authError: false,
+      };
+    case authConstants.REGISTER_FAIL:
+      return { ...state, loading: false, loading_register: false };
+    case authConstants.VERIFY_SUCCESS:
+      return { ...state, loading_verify: false, authError: false };
+    case authConstants.VERIFY_FAIL:
+      return { ...state, loading_verify: false };
     default:
       return state;
   }

@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
       errorFunction(`No Internet Connection !!!`);
     } else if (window.navigator.onLine) {
       config.headers["Authorization"] = localStorage.getItem("accessToken")
-        ? `Bearer ${localStorage.getItem("accessToken")}`
+        ? `${localStorage.getItem("accessToken")}`
         : null;
       config.baseURL =
         localStorage.getItem("url") !== null

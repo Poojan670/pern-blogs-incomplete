@@ -19,6 +19,8 @@ export const confirmPassword = (body) =>
   axiosInstance.post(`api/v1/user-app/password-reset/confirm/`, body);
 export const changePassword = (id, body) =>
   axiosInstance.patch(`api/v1/user-app/change-password/${id}`, body);
-export const getAllBranches = () => axiosInstance.get(`api/v1/branches`);
-export const checkSetupComplete = () =>
-  axiosInstance.get(`api/v1/core-app/setup-info`);
+// get user
+export const user = () => axiosInstance.get(`api/v1/user-app/me`);
+// user list
+export const userList = (page, limit) =>
+  axiosInstance.get(`api/v1/user-app/users?page=${page}&limit=${limit}`);
