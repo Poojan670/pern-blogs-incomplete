@@ -39,12 +39,15 @@ Object.keys(db).forEach((modelName) => {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 db.user = require("./user")(sequelize, DataTypes);
+db.tags = require("./tags")(sequelize, DataTypes);
 db.category = require("./category")(sequelize, DataTypes);
-db.blogs = require("./blogs")(sequelize, DataTypes);
+db.posts = require("./posts")(sequelize, DataTypes);
+db.postTags = require("./postTags")(sequelize, DataTypes);
+db.postContent = require("./postContent")(sequelize, DataTypes);
+db.comments = require("./comments")(sequelize, DataTypes);
 
-// db.sequelize.sync({ force: false, alter: false })
+db.sequelize.sync({ force: false, alter: false });
 
 module.exports = db;

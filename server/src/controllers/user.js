@@ -33,12 +33,11 @@ exports.register = async (req, res) => {
   try {
     user = new User(_.pick(req.body, ["username", "email", "password"]));
     user.password = await passwordHash(user.password);
+    user.isVerified = true;
     await user.save();
 
-    const verifyToken = generateVerificationToken(user.id);
-    // const url = `http://localhost:${process.env.process.env.CORS_ALLOWED_ORIGINS,}/api/v1/user-app/user/verify/${verifyToken}`;
-
-    await mail(user.email, verifyToken);
+    // const verifyToken = generateVerificationToken(user.id);
+    // await mail(user.email, verifyToken);
 
     return res.status(201).json({
       msg: `Sent a verification email to ${user.email}`,
@@ -81,7 +80,6 @@ exports.userVerify = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  // const user = await User.findByPk(req.user.id);
   const user = await User.findOne({
     where: { id: req.user.id },
     attributes: { exclude: "password" },

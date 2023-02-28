@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      userName: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
@@ -45,13 +45,25 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      fullName: { type: DataTypes.STRING(100), allowNull: true },
+      img: { type: DataTypes.STRING(500), defaultValue: "/media/avatar.png" },
+      content: DataTypes.TEXT,
+      role: {
+        type: DataTypes.ENUM({
+          values: ["ADMIN", "MOD", "USER"],
+        }),
+        defaultValue: "USER",
+      },
       isVerified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      verifiedAt: DataTypes.DATE,
+      lastLogin: DataTypes.DATE,
     },
     {
       timestamps: true,
+      underscored: true,
       sequelize,
       modelName: "User",
       tableName: "users",

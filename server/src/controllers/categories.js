@@ -1,11 +1,23 @@
 const User = require("../model").user;
-const Category = require("../model").category;
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const paginate = require("../../middleware/pagination");
+const { user, Category, sequelize } = require("../model");
 const validate = require("../validators/categories");
 
 exports.listCategories = async (req, res) => {
-  const result = await paginate(await Category.findAll(), req, res);
+  const categories = await Category.findAll({
+    attributes: {
+      include: [[sequelize.col("username"), "username"]],
+    },
+    include: [
+      {
+        model: user,
+        as: "User",
+        attributes: [],
+      },
+    ],
+  });
+  const result = await paginate(categories, req, res);
   res.json(result);
 };
 
@@ -23,7 +35,7 @@ exports.createCategory = async (req, res) => {
 
   category = await Category.create({
     title: req.body.title,
-    UserId: req.user.id,
+    user_id: req.user.id,
   });
   // category = new Category({
   //     title : req.body.title,

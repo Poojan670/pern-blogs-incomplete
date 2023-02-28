@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Category extends Model {
+  class Comments extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,39 +9,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.hasMany(Category, {
+      models.Posts.hasMany(Comments, {
+        foreignKey: "posts_id",
+        foreignKeyConstraint: true,
+        allowNull: false,
+      });
+      Comments.belongsTo(models.Posts);
+
+      models.User.hasMany(Comments, {
         foreignKey: "created_by",
         foreignKeyConstraint: true,
         allowNull: false,
       });
-      Category.belongsTo(models.User);
+      Comments.belongsTo(models.User);
 
-      Category.hasMany(Category, {
+      models.Posts.hasMany(Comments, {
         foreignKey: "parent",
         foreignKeyConstraint: true,
-        allowNull: true,
+        allowNull: false,
       });
 
-      Category.belongsTo(Category, {
+      Comments.belongsTo(models.Posts, {
         onDelete: "RESTRICT",
       });
     }
   }
 
-  Category.init(
+  Comments.init(
     {
-      title: {
-        type: DataTypes.STRING,
-        unique: true,
+      content: { type: DataTypes.TEXT, notEmpty: true, allowNull: false },
+      postsId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          min: 4,
-          max: 80,
           notEmpty: true,
+          notNull: true,
         },
       },
-      slug: { type: DataTypes.STRING(100) },
-      content: { type: DataTypes.TEXT },
       createdBy: DataTypes.INTEGER,
       parent: DataTypes.INTEGER,
     },
@@ -49,9 +53,9 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       underscored: true,
       sequelize,
-      modelName: "Category",
-      tableName: "categories",
+      modelName: "Comments",
+      tableName: "comments",
     }
   );
-  return Category;
+  return Comments;
 };

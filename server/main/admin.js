@@ -6,7 +6,7 @@ const Connect = require("connect-pg-simple");
 const session = require("express-session");
 
 const DEFAULT_ADMIN = {
-  email: process.env.DEFAULT_ADMIN_EMAIL,
+  email: process.env.DEFAULT_ADMIN_USERNAME,
   password: process.env.DEFAULT_ADMIN_PASSWORD,
 };
 
@@ -21,13 +21,7 @@ const userParent = {
   name: "users",
   icon: "User",
 };
-
-const categoryParent = {
-  name: "category",
-  icon: "Video",
-};
-
-const blogParent = {
+const postParent = {
   name: "blogs",
   icon: "blog",
 };
@@ -48,8 +42,12 @@ const adminJs = new AdminJS({
         },
       },
     },
-    { resource: db.category, options: { parent: categoryParent } },
-    { resource: db.blogs, options: { parent: blogParent } },
+    { resource: db.category, options: { parent: postParent } },
+    { resource: db.tags, options: { parent: postParent } },
+    { resource: db.posts, options: { parent: postParent } },
+    { resource: db.postTags, options: { parent: postParent } },
+    { resource: db.postContent, options: { parent: postParent } },
+    { resource: db.comments, options: { parent: postParent } },
   ],
 });
 

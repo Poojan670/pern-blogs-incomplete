@@ -7,7 +7,7 @@ const { generateAuthRefreshToken } = require("./token");
 
 function validate(auth) {
   const schema = Joi.object({
-    username: Joi.string().min(5).max(50).required(),
+    userName: Joi.string().min(5).max(50).required(),
     password: Joi.string().required(),
   });
   return schema.validate(auth);
@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
     return res.status(400).json({ msg: error.details[0].message });
   }
 
-  let user = await User.findOne({ where: { username: req.body.username } });
+  let user = await User.findOne({ where: { userName: req.body.userName } });
   if (!user) return res.status(400).json({ msg: "User Does not exist!" });
 
   const passwordValidate = await checkPassword(
@@ -35,6 +35,8 @@ exports.login = async (req, res) => {
       .status(403)
       .json({ msg: "You are'nt verified yet, Please try again!" });
   }
+  user.lastLogin = new Date();
+  await user.save();
   res.json({
     access_token: generateAuthToken(user),
     refresh_token: generateAuthRefreshToken(user),
