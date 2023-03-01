@@ -9,7 +9,23 @@ export const loadingResetAction = () => ({
 export const LoadingResetPasswordAction = () => ({
   type: authConstants.LOADING_RESET_PASSWORD,
 });
-
+export const LoadingRegister = () => ({
+  type: authConstants.LOADING_REGISTER,
+});
+export const loadingVerify = () => ({
+  type: authConstants.LOADING_VERIFY,
+});
+export const lodingReSendToken = () => ({
+  type: authConstants.LOADING_RESEND_TOKEN,
+});
+export const reSendTokenSucessAction = (data) => ({
+  type: authConstants.RESEND_TOKEN_SUCCESS,
+  payload: data,
+});
+export const reSendTokenFailAction = (error) => ({
+  type: authConstants.RESEND_TOKEN_FAIL,
+  payload: error,
+});
 export const loginSuccessAction = (data) => ({
   type: authConstants.LOGIN_SUCCESS,
   payload: data,

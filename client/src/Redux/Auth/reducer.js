@@ -8,14 +8,14 @@ const initialState = {
   loading_reset_password: false,
   loading_register: false,
   loading_verify: false,
-  username: null,
+  loading_resend_token: false,
+  userName: null,
   message: [],
   userid: null,
-  permissions: [],
   authError: false,
-  is_superuser: false,
+  role: "USER",
   img: null,
-  groups: [],
+  email: "",
 };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,22 +32,22 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading_register: true };
     case authConstants.LOADING_VERIFY:
       return { ...state, loading_verify: true };
+    case authConstants.LOADING_RESEND_TOKEN:
+      return { ...state, loading_resend_token: true };
     case authConstants.LOGIN_SUCCESS:
       storage.removeItem("persist:root");
       localStorage.setItem("accessToken", action.payload.access_token);
       localStorage.setItem("refreshToken", action.payload.refresh_token);
-      localStorage.setItem("username", action.payload.username);
+      localStorage.setItem("userName", action.payload.userName);
 
       return {
         ...state,
         isAuthenticated: true,
         loading: false,
-        username: action.payload.username,
+        userName: action.payload.userName,
         userid: action.payload.id,
         authError: false,
-        is_superuser: action.payload.is_superuser,
-        permissions: action.payload.permissions,
-        groups: action.payload.groups,
+        role: action.payload.role,
         img: action.payload.photo,
       };
     case authConstants.LOGIN_FAIL:
@@ -61,11 +61,8 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         username: "",
         userid: null,
-        permissions: [],
-        groups: [],
         authError: false,
-        is_superuser: false,
-        groups: [],
+        role: "USER",
         img: null,
       };
     case authConstants.LOGOUT_FAIL:
@@ -82,11 +79,10 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isAuthenticated: false,
-        permissions: [],
-        username: "",
+        userName: "",
         userid: null,
         authError: true,
-        is_superuser: false,
+        role: "",
         img: null,
       };
     case authConstants.RESET_SUCCESS:
@@ -122,8 +118,14 @@ const authReducer = (state = initialState, action) => {
     case authConstants.REGISTER_SUCCESS:
       return {
         ...state,
-        loading: false,
         loading_register: false,
+        authError: false,
+        email: action.payload.email,
+      };
+    case authConstants.RESEND_TOKEN_SUCCESS:
+      return {
+        ...state,
+        loading_resend_token: false,
         authError: false,
       };
     case authConstants.REGISTER_FAIL:
@@ -132,6 +134,8 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading_verify: false, authError: false };
     case authConstants.VERIFY_FAIL:
       return { ...state, loading_verify: false };
+    case authConstants.RESEND_TOKEN_FAIL:
+      return { ...state, loading_resend_token: false };
     default:
       return state;
   }

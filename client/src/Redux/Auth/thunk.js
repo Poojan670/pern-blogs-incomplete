@@ -21,10 +21,17 @@ export const login = (username, password, history) => async (dispatch) => {
 
 //register
 export const register =
-  (email, username, password, confirmPassword, history) => async (dispatch) => {
+  (email, userName, password, fullName, img, history) => async (dispatch) => {
     try {
-      dispatch(action.loadingAction());
-      const body = { email, username, password, confirmPassword };
+      const body = new FormData();
+      body.append("email", email);
+      body.append("userName", userName);
+      body.append("password", password);
+      body.append("fullName", fullName);
+      if (img) {
+        body.append("img", img);
+      }
+      dispatch(action.LoadingRegister());
       const { data } = await API.register(body);
       //for storing the states when login success on the basis of which we can change the route of page.
       successFunction(
@@ -40,7 +47,7 @@ export const register =
 
 export const verify = (token, history) => async (dispatch) => {
   try {
-    dispatch(action.loadingAction());
+    dispatch(action.loadingVerify());
     const { data } = await API.verify(token);
     successFunction(`User Registered Successfully`);
     dispatch(action.verifySuccess(data));
@@ -48,6 +55,18 @@ export const verify = (token, history) => async (dispatch) => {
   } catch (error) {
     errorFunction(error.response?.data.msg);
     dispatch(action.verifyFail(error));
+  }
+};
+
+export const reSendToken = (email) => async (dispatch) => {
+  try {
+    dispatch(action.lodingReSendToken());
+    const { data } = await API.reSendToken(email);
+    successFunction("Verification Code Resent");
+    dispatch(action.reSendTokenSucessAction(data));
+  } catch (error) {
+    errorFunction(error.response?.data.msg);
+    dispatch(action.reSendTokenFailAction(error));
   }
 };
 

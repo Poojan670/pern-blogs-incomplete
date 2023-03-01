@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { login } from "../Redux/Auth/thunk";

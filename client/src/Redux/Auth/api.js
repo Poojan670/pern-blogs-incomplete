@@ -5,10 +5,15 @@ export const login = (body) =>
   axiosInstance.post(`api/v1/user-app/login`, body);
 //for register
 export const register = (body) =>
-  axiosInstance.post(`api/v1/user-app/register`, body);
+  axiosInstance.post(`api/v1/user-app/register`, body, {
+    "Content-Type": "multipart/form-data",
+  });
 // verify user
 export const verify = (token) =>
   axiosInstance.get(`api/v1/user-app/verify/${token}`);
+// resend token
+export const reSendToken = (email) =>
+  axiosInstance.get(`api/v1/user-app/resend/${email}`);
 //for logout
 export const logout = (body) =>
   axiosInstance.post(`api/v1/user-app/logout`, body);

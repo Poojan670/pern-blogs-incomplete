@@ -16,7 +16,6 @@ module.exports = function validateUser(user) {
     userName: Joi.string().alphanum().min(5).max(15).required(),
     email: Joi.string().min(5).max(255).required().email(),
     password: passwordComplexity(complexityOptions).required(),
-    confirmPassword: Joi.string().required(),
     fullName: Joi.string().min(5).max(100).allow(null, ""),
     content: Joi.string().allow(null, ""),
     img: Joi.allow(null, ""),

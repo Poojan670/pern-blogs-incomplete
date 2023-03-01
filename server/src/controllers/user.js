@@ -33,8 +33,6 @@ exports.register = async (req, res, next) => {
   if (user) {
     return apiError(res, "User with this email or username already exists!");
   }
-  if (req.body.password != req.body.confirmPassword)
-    return apiError(res, "Password doesn't match");
   user = new User(
     _.pick(req.body, ["userName", "email", "password", "fullName", "content"])
   );

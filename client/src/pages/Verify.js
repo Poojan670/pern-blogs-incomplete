@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { verify } from "../Redux/Auth/thunk";
+import { verify, reSendToken } from "../Redux/Auth/thunk";
 
 const ResetPassword = () => {
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const loading = useSelector((state) => state.auth.loading_verify);
+  const loadingResend = useSelector((state) => state.auth.loading_resend_token);
+  const email = useSelector((state) => state.auth.email);
 
   const onSubmit = () => {
     dispatch(verify(token, history));
+  };
+
+  const reSendSubmit = () => {
+    dispatch(reSendToken(email));
   };
 
   return (
@@ -52,6 +58,14 @@ const ResetPassword = () => {
               className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "
             >
               Verify your email
+            </button>
+            <button
+              type="submit"
+              disabled={loadingResend}
+              onClick={reSendSubmit}
+              className="rounded-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 mx-[35%] border-b-4 border-blue-700 hover:border-blue-500"
+            >
+              Resend
             </button>
           </form>
         </div>

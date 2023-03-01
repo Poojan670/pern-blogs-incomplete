@@ -1,142 +1,124 @@
-import React, { useEffect, useState } from "react";
-import SideBar from "../components/SideBar";
-import UserList from "./UserList";
-import * as API from "../Redux/Auth/api";
+import DashboardLayout from "../layout/DashboardLayout";
+import CardLineChart from "../components/Charts/CardLineChart";
+import CardBarChart from "../components/Charts/CardBarChart";
+import Activities from "../components/Charts/Activities";
 
 const DashBoard = () => {
-  const [isOpen, setIsopen] = useState(false);
-  const [userData, setUserData] = useState();
-  const [userList, setUserList] = useState([]);
-
-  const ToggleSidebar = () => {
-    isOpen === true ? setIsopen(false) : setIsopen(true);
-  };
-
-  const [profile, setProfile] = useState(false);
-
-  const ToggleProfile = () => {
-    profile === true ? setProfile(false) : setProfile(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
-  };
-
-  useEffect(() => {
-    const user = async () => {
-      const data = await API.user();
-      setUserData(data.data);
-    };
-    user().catch((e) => console.log(e.msg));
-  }, []);
-
-  useEffect(() => {
-    const users = async () => {
-      const userList = await API.userList(1, 10);
-      setUserList(userList.data.results);
-    };
-    users().catch((e) => console.log(e.msg));
-  }, []);
-
+  const userList = [
+    {
+      id: 1,
+      username: "Poojan",
+      email: "po0janhunt@gmail.com",
+      blogsCount: 45,
+      commentsCount: 55,
+    },
+    {
+      id: 2,
+      username: "Ashish",
+      email: "aashish12@gmail.com",
+      blogsCount: 34,
+      commentsCount: 35,
+    },
+    {
+      id: 3,
+      username: "Dajju",
+      email: "dajju24@gmail.com",
+      blogsCount: 20,
+      commentsCount: 15,
+    },
+  ];
   return (
-    <>
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <div className="px-3 py-3 lg:px-5 lg:pl-3">
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              <button
-                type="button"
-                onClick={ToggleSidebar}
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              >
-                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    clipRule="evenodd"
-                    fillRule="evenodd"
-                    d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                  ></path>
-                </svg>
-              </button>
-              <a href="/" className="flex ml-2 md:mr-24">
-                <img src="blog.png" className="h-8 mr-3" alt="Logo" />
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  Blogs
-                </span>
-              </a>
-            </div>
-            <div className="flex items-center">
-              <span
-                className="font-bold opacity-50 md:flex mx-auto mt-1"
-                color="#888888"
-              >
-                Hello {userData?.username} !
-              </span>
-              <div className="flex items-center ml-3">
-                <div>
-                  <button
-                    type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                    onClick={ToggleProfile}
-                  >
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src="images/gintoki.png"
-                    />
-                  </button>
-                  <div
-                    className={`z-10 ml-[-150px] w-44 bg-white rounded divide-y divide-gray-100 shadow ${
-                      profile ? "absolute" : "hidden"
-                    }`}
-                  >
-                    <div className="px-2 py-3">
-                      <p
-                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                        role="none"
-                      >
-                        {userData?.email}
-                      </p>
-                    </div>
-                    <ul className="py-1">
-                      <li>
-                        <a
-                          href="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Dashboard
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="/"
-                          onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Sign out
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+    <DashboardLayout>
+      <main className="h-[100%] m-0 p-0">
+        <div className="fixed w-[50%] h-[50%] top-20 left-0">
+          <CardBarChart />
+        </div>
+        <div className="fixed w-[50%] h-[50%] top-20 left-[50%]">
+          <CardLineChart />
+        </div>
+        <div className="fixed w-[50%] h-[50%] top-[50%] left-0">
+          <Activities />
+        </div>
+        <div className="fixed w-[50%] h-[50%] top-[50%] left-[50%]">
+          <div className="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
+            <h6 className="flex justify-center px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-gray-900 opacity-70">
+              TOP Bloggers
+            </h6>
+          </div>
+          <div className="flex-auto px-0 pt-0 pb-2">
+            <div className="p-0 overflow-x-auto">
+              <table className="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                <thead className="align-bottom">
+                  <tr>
+                    <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                      Author
+                    </th>
+                    <th className="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                      roles
+                    </th>
+                    <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                      total posts
+                    </th>
+                    <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                      total comments
+                    </th>
+                    <th className="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userList.map((user, i) => {
+                    const { username, email, blogsCount, commentsCount } = user;
+                    return (
+                      <tr key={i}>
+                        <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                          <div className="flex px-2 py-1">
+                            <div>
+                              <img
+                                src="images/gintoki.png"
+                                className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
+                                alt="user1"
+                              />
+                            </div>
+                            <div className="flex flex-col justify-center">
+                              <h6 className="mb-0 leading-normal text-sm">
+                                {username}
+                              </h6>
+                              <p className="mb-0 leading-tight text-xs text-slate-400">
+                                {email}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                          <p className="mb-0 font-semibold leading-tight text-xs">
+                            Manager
+                          </p>
+                          <p className="mb-0 leading-tight text-xs text-slate-400">
+                            Organization
+                          </p>
+                        </td>
+                        <td className="p-2 leading-normal text-center align-middle bg-transparent border-b text-sm whitespace-nowrap shadow-transparent">
+                          <span className="bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900">
+                            {blogsCount}
+                          </span>
+                        </td>
+                        <td className="p-2 leading-normal text-center align-middle bg-transparent border-b text-sm whitespace-nowrap shadow-transparent">
+                          <span className="bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900">
+                            {commentsCount}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      </nav>
-
-      {isOpen && <SideBar />}
-      <UserList isOpen={isOpen} userList={userList} />
-    </>
+      </main>
+    </DashboardLayout>
   );
+  // return <>DashBoard{/* <UserList isOpen={isOpen} userList={userList} /> */}</>;
 };
 
 export default DashBoard;

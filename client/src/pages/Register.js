@@ -3,16 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Footer from "../components/sub-components/FormFooter";
 import { register } from "../Redux/Auth/thunk";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
   const { loading, loading_register } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = {
     email: "",
-    username: "",
+    userName: "",
     password: "",
-    confirmPassword: "",
+    fullName: "",
+    img: "",
   };
 
   const [data, setData] = useState(initialValues);
@@ -22,13 +25,19 @@ const Register = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  const togglePassword = (e) => {
+    e.preventDefault();
+    showPassword === false ? setShowPassword(true) : setShowPassword(false);
+  };
+
   const handleRegister = () => {
     dispatch(
       register(
         data.email,
-        data.username,
+        data.userName,
         data.password,
-        data.confirmPassword,
+        data.fullName,
+        data.img,
         history
       )
     );
@@ -38,7 +47,7 @@ const Register = () => {
     <>
       {loading ? (
         <div className="flex justify-center items-center p-10 mx-auto">
-          <img src="spinner.gif" />
+          <img src="spinner.gif" alt="spinner" />
         </div>
       ) : (
         <section className="bg-gray-50 dark:bg-gray-900">
@@ -55,7 +64,10 @@ const Register = () => {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Create and account
                 </h1>
-                <form className="space-y-4 md:space-y-6" action="#">
+                <form
+                  className="space-y-4 md:space-y-6 lg:space-y-2"
+                  action="#"
+                >
                   <div>
                     <label
                       htmlFor="email"
@@ -71,25 +83,40 @@ const Register = () => {
                       onChange={handleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="name@company.com"
-                      required=""
+                      required
                     />
                   </div>
                   <div>
                     <label
-                      htmlFor="username"
+                      htmlFor="userName"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
                       Your username
                     </label>
                     <input
                       type="text"
-                      name="username"
-                      id="username"
-                      value={data.username}
+                      name="userName"
+                      value={data.userName}
                       onChange={handleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="poojan"
-                      required=""
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="fullName"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Your fullname
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={data.fullName}
+                      onChange={handleChange}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Poojan Pradhan"
                     />
                   </div>
                   <div>
@@ -99,33 +126,44 @@ const Register = () => {
                     >
                       Password
                     </label>
+                    <div>
+                      {showPassword ? (
+                        <AiFillEye
+                          onClick={togglePassword}
+                          className="float-right -mb-[90px] mt-[10px] w-[3rem] h-6 cursor-pointer"
+                        />
+                      ) : (
+                        <AiFillEyeInvisible
+                          onClick={togglePassword}
+                          className="float-right -mb-[90px] mt-[10px] w-[3rem] h-6 cursor-pointer"
+                        />
+                      )}
+                    </div>
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       id="password"
                       value={data.password}
                       onChange={handleChange}
                       placeholder="••••••••"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required=""
+                      required
                     />
                   </div>
                   <div>
                     <label
-                      htmlFor="confirm-password"
+                      htmlFor="img"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Confirm password
+                      Your image
                     </label>
                     <input
-                      type="password"
-                      name="confirmPassword"
-                      id="confirmPassword"
-                      value={data.confirmPassword}
+                      type="file"
+                      alt="img"
+                      name="img"
+                      value={data.img}
                       onChange={handleChange}
-                      placeholder="••••••••"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      required=""
                     />
                   </div>
                   <div className="flex items-start">
@@ -146,7 +184,7 @@ const Register = () => {
                         I accept the{" "}
                         <a
                           className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                          href="#"
+                          href="/"
                         >
                           Terms and Conditions
                         </a>
