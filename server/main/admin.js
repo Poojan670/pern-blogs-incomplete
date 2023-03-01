@@ -48,6 +48,8 @@ const adminJs = new AdminJS({
     { resource: db.postTags, options: { parent: postParent } },
     { resource: db.postContent, options: { parent: postParent } },
     { resource: db.comments, options: { parent: postParent } },
+    { resource: db.ratings, options: { parent: postParent } },
+    { resource: db.likes, options: { parent: postParent } },
   ],
 });
 

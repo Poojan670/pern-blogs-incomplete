@@ -47,6 +47,8 @@ db.posts = require("./posts")(sequelize, DataTypes);
 db.postTags = require("./postTags")(sequelize, DataTypes);
 db.postContent = require("./postContent")(sequelize, DataTypes);
 db.comments = require("./comments")(sequelize, DataTypes);
+db.likes = require("./likes")(sequelize, DataTypes);
+db.ratings = require("./ratings")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false, alter: false });
 
