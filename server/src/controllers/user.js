@@ -1,4 +1,3 @@
-require("dotenv").config();
 const _ = require("lodash");
 const User = require("../model").user;
 const jwt = require("jsonwebtoken");
@@ -8,6 +7,7 @@ const { mail } = require("../utils/mail.js");
 const validate = require("../validators/user");
 const paginate = require("../../middleware/pagination");
 const { Op } = require("sequelize");
+const { apiError, apiSuccess } = require("../../middleware/error");
 
 exports.listUsers = async (req, res) => {
   const users = await User.findAll({ attributes: { exclude: "password" } });
@@ -15,68 +15,89 @@ exports.listUsers = async (req, res) => {
   res.json(result);
 };
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).json({ msg: error.details[0].message });
+  if (error) return apiError(res, error.details[0].message);
+  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+  let img;
+  if (!req.file) {
+    img = `${protocol}://${req.get("host")}//images//gintoki.png`;
+  } else {
+    img = `${protocol}://${req.get("host")}//images//${req.file.filename}`;
+  }
   let user = await User.findOne({
     where: {
-      [Op.or]: { email: req.body.email, username: req.body.username },
+      [Op.or]: { email: req.body.email, userName: req.body.userName },
     },
   });
   if (user) {
-    return res.status(400).json({
-      msg: "User with this email or username already exists!",
-    });
+    return apiError(res, "User with this email or username already exists!");
   }
   if (req.body.password != req.body.confirmPassword)
-    return res.status(400).json({ msg: "Password doesn't match" });
-  try {
-    user = new User(_.pick(req.body, ["username", "email", "password"]));
-    user.password = await passwordHash(user.password);
-    user.isVerified = true;
-    await user.save();
-
-    // const verifyToken = generateVerificationToken(user.id);
-    // await mail(user.email, verifyToken);
-
-    return res.status(201).json({
-      msg: `Sent a verification email to ${user.email}`,
-    });
-  } catch (err) {
-    res.status(400).json({
-      msg: `${err}`,
-    });
-  }
+    return apiError(res, "Password doesn't match");
+  user = new User(
+    _.pick(req.body, ["userName", "email", "password", "fullName", "content"])
+  );
+  user.password = await passwordHash(user.password);
+  user.img = img;
+  await user.save();
+  const verifyToken = generateVerificationToken(user.id);
+  await mail(user.email, verifyToken);
+  return apiSuccess(res, `Sent a verification email to ${user.email}`, 201);
 };
 
 exports.userVerify = async (req, res) => {
   const token = req.params.id;
-  if (!token) {
-    return res.status(422).json({ msg: "Missing Token" });
-  }
-
-  try {
-    payload = jwt.verify(token, process.env.TOKEN_SECRET);
-  } catch (err) {
-    return res.status(500).send(err);
-  }
-
+  if (!token) return apiError(res, "Missing Token");
+  payload = jwt.verify(token, process.env.TOKEN_SECRET);
   const user = await User.findOne({
     where: {
       id: payload.id,
     },
   });
-  if (!user) {
-    return res.status(404).json({
-      msg: "User does not  exists",
-    });
-  }
+  if (!user) return apiError(res, "User does not  exists");
   user.isVerified = true;
+  user.verifiedAt = new Date();
   await user.save();
+  return apiSuccess(res, "Account Verified");
+};
 
-  return res.status(200).json({
-    msg: "Account Verified",
+exports.resendToken = async (req, res) => {
+  if (!req.params.email) return apiError(res, "Missing Params");
+  const user = await User.findOne({ where: { email: req.params.email } });
+  if (user.isVerified) return apiError(res, "User already verified");
+  const verifyToken = generateVerificationToken(user.id);
+  await mail(user.email, verifyToken);
+  return apiSuccess(res, `Sent a verification email to ${user.email}`);
+};
+
+exports.updateUser = async (req, res) => {
+  if (req.params.id != req.user.id) return apiError(res, "Not Allowed", 401);
+  const user = await User.findByPk(req.params.id);
+  if (!user) return apiError(res, "User not found");
+  let img;
+  if (req.file) {
+    img = `${protocol}://${req.get("host")}//images//${req.file.filename}`;
+  } else {
+    img = user.img;
+  }
+  User.update({
+    fullName: req.body.fullName,
+    content: req.body.content,
+    img: img,
   });
+  return res.send(user);
+};
+
+exports.deleteUser = async (req, res) => {
+  await User.findByPk(req.params.id)
+    .then(function (user) {
+      user
+        .destroy()
+        .then((e) => apiError(res, "User deleted successfully", 404))
+        .catch((e) => apiError(res, "Error occurred"));
+    })
+    .catch((e) => apiError(res, "User not found"));
 };
 
 exports.getUser = async (req, res) => {
@@ -84,6 +105,6 @@ exports.getUser = async (req, res) => {
     where: { id: req.user.id },
     attributes: { exclude: "password" },
   });
-  if (!user) return res.status(403).json({ msg: "User not found!" });
+  if (!user) return apiError(res, "User not found!");
   res.send(user);
 };

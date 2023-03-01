@@ -17,6 +17,7 @@ module.exports = function (app) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(express.static("public"));
+  app.use("/images", express.static("images"));
   app.use(
     "/docs",
     swaggerUi.serve,
@@ -27,4 +28,16 @@ module.exports = function (app) {
 
   app.use("", user);
   app.use("", category);
+
+  app.use("*", (req, res) => {
+    res.status(404).json({
+      success: "false",
+      message: "Page not found",
+      error: {
+        statusCode: 404,
+        message: "You reached a route that is not defined on this server",
+        timestamp: new Date(),
+      },
+    });
+  });
 };

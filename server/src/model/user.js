@@ -46,7 +46,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       fullName: { type: DataTypes.STRING(100), allowNull: true },
-      img: { type: DataTypes.STRING(500), defaultValue: "/media/avatar.png" },
+      img: {
+        type: DataTypes.STRING(500),
+      },
       content: DataTypes.TEXT,
       role: {
         type: DataTypes.ENUM({

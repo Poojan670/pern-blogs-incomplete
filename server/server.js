@@ -7,7 +7,6 @@ process.env.TZ = "Asia/Kathmandu";
 
 require("./main/admin")(app);
 require("./main/api/routes")(app);
-require("./main/Joi/index")();
 
 const port = process.env.PORT || 5000;
 
