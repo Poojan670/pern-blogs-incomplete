@@ -8,7 +8,7 @@
     "migrate": "npx sequelize-cli db:migrate",
     "unmigrate": "npx sequelize-cli db:migrate:undo",
     "makemigrations": "npx sequelize-cli migration:create --name added_is_verified_column",
-    "createmigrations": "npx sequelize-cli model:generate --name Category --attributes title:string",
+    "createmigrations": "npx sequelize-cli model:generate --name User --attributes userName:string",
     "insert": "npx sequelize-cli seed:generate --name demo-user",
     "seed": "npx sequelize-cli db:seed:all",
     "swagger-autogen": "node swagger.js"

@@ -38,6 +38,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("./user")(sequelize, DataTypes);
@@ -50,6 +51,6 @@ db.comments = require("./comments")(sequelize, DataTypes);
 db.likes = require("./likes")(sequelize, DataTypes);
 db.ratings = require("./ratings")(sequelize, DataTypes);
 
-db.sequelize.sync({ force: false, alter: false });
+// db.sequelize.sync({ force: false, alter: false });
 
 module.exports = db;

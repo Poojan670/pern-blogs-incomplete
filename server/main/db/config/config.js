@@ -9,9 +9,9 @@ module.exports = {
     logging: false,
     define: {
       freezeTableName: false,
-      underscored: false,
+      underscored: true,
       charset: "utf8",
-      syncOnAssociation: false,
+      syncOnAssociation: true,
     },
   },
   test: {
@@ -22,9 +22,9 @@ module.exports = {
     logging: false,
     define: {
       freezeTableName: false,
-      underscored: false,
+      underscored: true,
       charset: "utf8",
-      syncOnAssociation: false,
+      syncOnAssociation: true,
     },
   },
   production: {
@@ -35,9 +35,9 @@ module.exports = {
     logging: false,
     define: {
       freezeTableName: false,
-      underscored: false,
+      underscored: true,
       charset: "utf8",
-      syncOnAssociation: false,
+      syncOnAssociation: true,
     },
   },
 };
