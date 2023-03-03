@@ -4,9 +4,9 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("users", [
       {
-        user_name: process.env.DEFAULT_ADMIN_USERNAME,
-        password: process.env.DEFAULT_ADMIN_HASH_PASSWORD,
-        email: process.env.DEFAULT_ADMIN_EMAIL,
+        user_name: "anmol1",
+        password: "$2b$10$S9hAqCspMSbwk9ZgoR1bU.AZeX8pyTXVZm9oBLSFMbnLzhMLluGhO",
+        email: "anmol@gmail.com",
         is_verified: true,
         role: "ADMIN",
         content: "This is superadmin",
