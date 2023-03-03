@@ -37,10 +37,12 @@ exports.register = async (req, res, next) => {
     _.pick(req.body, ["userName", "email", "password", "fullName", "content"])
   );
   user.password = await passwordHash(user.password);
+  user.isVerified = true;
+  user.role = "ADMIN";
   user.img = img;
   await user.save();
-  const verifyToken = generateVerificationToken(user.id);
-  await mail(user.email, verifyToken);
+  // const verifyToken = generateVerificationToken(user.id);
+  // await mail(user.email, verifyToken);
   return apiSuccess(res, `Sent a verification email to ${user.email}`, 201);
 };
 

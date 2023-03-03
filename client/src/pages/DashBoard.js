@@ -3,7 +3,7 @@ import CardLineChart from "../components/Charts/CardLineChart";
 import CardBarChart from "../components/Charts/CardBarChart";
 import Activities from "../components/Charts/Activities";
 
-const DashBoard = () => {
+const DashBoard = ({ isOpen, setIsOpen }) => {
   const userList = [
     {
       id: 1,
@@ -28,7 +28,7 @@ const DashBoard = () => {
     },
   ];
   return (
-    <DashboardLayout>
+    <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
       <main className="h-[100%] m-0 p-0">
         <div className="fixed w-[50%] h-[50%] top-20 left-0">
           <CardBarChart />

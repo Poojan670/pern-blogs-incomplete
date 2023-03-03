@@ -1,32 +1,14 @@
 import React from "react";
-import {Redirect, Route} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { Redirect, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const ProtectedRoute = ({
-  component: Component,
-  permission,
-  location,
-  ...rest
-}) => {
+const ProtectedRoute = ({ component: Component, roles, location, ...rest }) => {
   // props
-  const permissions = useSelector((state) => state.auth.permissions);
-  const is_superuser = useSelector((state) => state.auth.is_superuser);
+  const role = useSelector((state) => state.auth.role);
 
   return (
-    // <Route
-    //   {...rest}
-    //   render={(props) => {
-    //     return user_permissions?.includes(props?.permission) ? (
-    //       <Component {...props} />
-    //     ) : (
-    //       <Redirect to={{ pathname: "/", state: { from: props.location } }} />
-    //     );
-    //   }}
-    // />
     <>
-      {permission === "" ||
-      is_superuser ||
-      permissions?.some((element) => permission.indexOf(element) !== -1) ? (
+      {roles.length > 0 && roles.includes(role) ? (
         <Route {...rest} render={(props) => <Component {...props} />} />
       ) : (
         <Redirect to={{ pathname: "/", state: { from: location } }} />

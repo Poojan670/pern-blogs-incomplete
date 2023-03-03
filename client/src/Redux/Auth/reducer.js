@@ -48,7 +48,7 @@ const authReducer = (state = initialState, action) => {
         userid: action.payload.id,
         authError: false,
         role: action.payload.role,
-        img: action.payload.photo,
+        img: action.payload.img,
       };
     case authConstants.LOGIN_FAIL:
       return { ...state, isAuthenticated: false, loading: false, img: null };

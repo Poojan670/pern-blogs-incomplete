@@ -20,21 +20,24 @@ const lazyWithReload = (componentImport) =>
         window.localStorage.setItem("page-has-been-force-refreshed", "true");
         return window.location.reload();
       }
-
       // The page has already been reloaded
       // Assuming that user is already using the latest version of the application.
       throw error;
     }
   });
+
 const Dashboard = lazyWithReload(() => import("../pages/DashBoard"));
-const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
 const Home = lazyWithReload(() => import("../pages/Home"));
 const Posts = lazyWithReload(() => import("../pages/Blogs"));
+const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
+const UserList = lazyWithReload(() => import("../pages/UserList"));
+const Blogslist = lazyWithReload(() => import("../pages/BlogList"));
+const Category = lazyWithReload(() => import("../pages/Category"));
 
-const PrivateRoutes = () => {
+const PrivateRoutes = ({ isOpen, setIsOpen }) => {
   const ErrorFallback = ({ error }) => {
     return (
-      <div role="alert">
+      <div roles="alert">
         <p>Something went wrong:</p>
         <pre style={{ color: "red" }}>{error.message}</pre>
       </div>
@@ -45,20 +48,39 @@ const PrivateRoutes = () => {
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Suspense fallback={""}>
           <Switch>
+            // Dashboard
             <ProtectedRoute
               exact
               path="/dashboard"
-              component={Dashboard}
-              permission=""
-            />
-            <ProtectedRoute exact path="/" component={Home} permission="" />
+              roles={["ADMIN", "USER", "MOD"]}
+            >
+              <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
+            // Blogs list
             <ProtectedRoute
               exact
-              path="/posts"
-              component={Posts}
-              permission=""
+              path="/blogs-list"
+              component={Blogslist}
+              roles={["ADMIN", "MOD"]}
             />
-            <Route component={PageNotFound} permission="" />
+            // User List
+            <ProtectedRoute exact path="/users" roles={["ADMIN"]}>
+              <UserList isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
+            // Category List
+            <ProtectedRoute exact path="/blogs-category" roles={["ADMIN"]}>
+              <Category isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
+            // Home
+            <ProtectedRoute
+              exact
+              path="/"
+              component={Home}
+              roles={["ADMIN", "USER", "MOD"]}
+            />
+            // Posts
+            <ProtectedRoute exact path="/posts" component={Posts} roles={[]} />
+            <Route component={PageNotFound} roles={[]} />
           </Switch>
         </Suspense>
       </ErrorBoundary>

@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import DashboardNav from "../components/sub-components/DashboardNav";
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children, isOpen, setIsOpen }) => {
   useEffect(() => {
     document.title = "Dashboard";
   });
-
   return (
     <>
-      <DashboardNav />
+      <DashboardNav isOpen={isOpen} setIsOpen={setIsOpen} />
       <main>{children}</main>
     </>
   );

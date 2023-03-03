@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
     }
     //accessing new access token from refresh token
     else if (
-      error.response?.data.code === "token_not_valid" &&
+      error.response?.data.msg === "Token Expired" &&
       !originalRequest._retry
     ) {
       //call for refresh token

@@ -11,11 +11,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [username, setUsername] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   const remember = localStorage.getItem("remember_me");
-  const user = localStorage.getItem("username");
+  const user = localStorage.getItem("userName");
 
   const message = useSelector((state) => state.auth.message);
 
@@ -26,10 +26,9 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("submitted for login");
     localStorage.setItem("remember_me", remember);
-    localStorage.setItem("username", user ? user : "");
-    dispatch(login(username, password, history));
+    localStorage.setItem("userName", user ? user : "");
+    dispatch(login(userName, password, history));
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -56,7 +55,7 @@ const Login = () => {
                 </label>
                 <input
                   type="text"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => setUserName(e.target.value)}
                   name="username"
                   id="username"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

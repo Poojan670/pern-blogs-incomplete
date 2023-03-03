@@ -29,3 +29,6 @@ export const user = () => axiosInstance.get(`api/v1/user-app/me`);
 // user list
 export const userList = (page, limit) =>
   axiosInstance.get(`api/v1/user-app/users?page=${page}&limit=${limit}`);
+
+export const categoryList = (page, limit) =>
+  axiosInstance.get(`api/v1/category-app/category?page=${page}&limit=${limit}`);

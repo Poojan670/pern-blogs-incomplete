@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
     user.password
   );
   if (!passwordValidate) {
-    return res.status(400).json({ msg: "Invalid username/email or password" });
+    return res.status(400).json({ msg: "Invalid username or password" });
   }
 
   if (!user.isVerified) {
@@ -40,6 +40,7 @@ exports.login = async (req, res) => {
   res.json({
     access_token: generateAuthToken(user),
     refresh_token: generateAuthRefreshToken(user),
-    username: user.username,
+    userName: user.userName,
+    role: user.role,
   });
 };

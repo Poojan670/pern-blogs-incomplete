@@ -3,23 +3,32 @@ import SideBar from "../../components/SideBar";
 import * as API from "../../Redux/Auth/api";
 import { IoIosNotifications } from "react-icons/io";
 
-const DashboardNav = () => {
-  const [isOpen, setIsopen] = useState(false);
+const DashboardNav = ({ isOpen, setIsOpen }) => {
   const [userData, setUserData] = useState();
 
   const ToggleSidebar = () => {
-    isOpen === true ? setIsopen(false) : setIsopen(true);
+    isOpen === true ? setIsOpen(false) : setIsOpen(true);
   };
 
   const [profile, setProfile] = useState(false);
   const [notification, setNotification] = useState(false);
 
   const ToggleProfile = () => {
-    profile === true ? setProfile(false) : setProfile(true);
+    if (profile) {
+      setProfile(false);
+    } else {
+      setProfile(true);
+      setNotification(false);
+    }
   };
 
   const ToggleNotification = () => {
-    notification === true ? setNotification(false) : setNotification(true);
+    if (notification) {
+      setNotification(false);
+    } else {
+      setNotification(true);
+      setProfile(false);
+    }
   };
 
   const handleLogout = () => {
