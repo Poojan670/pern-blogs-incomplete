@@ -36,10 +36,9 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading_resend_token: true };
     case authConstants.LOGIN_SUCCESS:
       storage.removeItem("persist:root");
-      localStorage.setItem("accessToken", action.payload.access_token);
-      localStorage.setItem("refreshToken", action.payload.refresh_token);
+      localStorage.setItem("accessToken", action.payload.accessToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
       localStorage.setItem("userName", action.payload.userName);
-
       return {
         ...state,
         isAuthenticated: true,

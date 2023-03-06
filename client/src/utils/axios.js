@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const body = JSON.stringify({
-          refresh: localStorage.getItem("refreshToken"),
+          refreshToken: localStorage.getItem("refreshToken"),
         });
         localStorage.removeItem("accessToken");
         const response = await axiosInstance.post(
@@ -64,10 +64,10 @@ axiosInstance.interceptors.response.use(
           body
         );
         if (response.status === 200) {
-          localStorage.setItem("accessToken", response?.data.access);
+          localStorage.setItem("accessToken", response?.data.acessToken);
           originalRequest.headers[
             "Authorization"
-          ] = `Bearer ${response?.data.access}`;
+          ] = `${response?.data.accessToken}`;
           return axiosInstance(originalRequest);
         }
       } catch (error) {

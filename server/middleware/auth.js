@@ -9,9 +9,7 @@ module.exports = function auth(permissions = null) {
     try {
       const decode = jwt.decode(token, process.env.SECRET_KEY);
       if (Date.now() >= decode.exp * 1000) {
-        return res.status(400).json({
-          msg: "Token Expired",
-        });
+        return apiError(res, "Token Expired");
       }
       req.user = decode;
 

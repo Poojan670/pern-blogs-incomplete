@@ -40,12 +40,6 @@
                 },
                 "userName": {
                   "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "confirmPassword": {
-                  "example": "any"
                 }
               }
             }
@@ -67,9 +61,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -87,9 +78,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -128,9 +116,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       },
@@ -149,11 +134,7 @@
             "type": "string"
           }
         ],
-        "responses": {
-          "400": {
-            "description": "Bad Request"
-          }
-        }
+        "responses": {}
       }
     },
     "/api/v1/user-app/verify/{id}": {
@@ -193,12 +174,30 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "403": {
-            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/v1/user-app/refresh": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "refreshToken": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -228,9 +227,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       },
@@ -246,9 +242,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
@@ -272,9 +265,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }
