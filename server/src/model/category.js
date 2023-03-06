@@ -7,25 +7,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-      models.User.hasMany(Category, {
-        foreignKey: "created_by",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Category.belongsTo(models.User);
-
-      Category.hasMany(Category, {
-        foreignKey: "parent",
-        foreignKeyConstraint: true,
-        allowNull: true,
-      });
-
-      Category.belongsTo(Category, {
-        onDelete: "RESTRICT",
-      });
-    }
+    static associate(models) {}
   }
 
   Category.init(
@@ -42,8 +24,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       slug: { type: DataTypes.STRING(100) },
       content: { type: DataTypes.TEXT },
-      createdBy: DataTypes.INTEGER,
-      parent: DataTypes.INTEGER,
+      createdBy: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
+      parent: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: "categories",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: true,

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { apiError } = require("../middleware/error");
-const User = require("../src/model/index").user;
+const { User } = require("../src/model/index");
 
 module.exports = function auth(permissions = null) {
   return async (req, res, next) => {

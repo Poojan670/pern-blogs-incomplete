@@ -1,7 +1,7 @@
 require("dotenv").config();
 const Joi = require("joi");
 const { checkPassword } = require("./hash");
-const User = require("../model").user;
+const { User } = require("../model");
 const { generateAuthToken } = require("./token");
 const { generateAuthRefreshToken } = require("./token");
 

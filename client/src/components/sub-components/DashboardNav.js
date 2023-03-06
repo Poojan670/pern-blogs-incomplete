@@ -74,7 +74,7 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                 className="font-bold opacity-50 md:flex mx-auto mt-1"
                 color="#888888"
               >
-                Hello Poojan Pradhan !
+                Hello {userData?.fullName} !
               </span>
               <div className="flex items-center ml-3">
                 <IoIosNotifications

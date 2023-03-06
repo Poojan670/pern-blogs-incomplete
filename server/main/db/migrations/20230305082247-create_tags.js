@@ -4,35 +4,24 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface
-      .createTable("posts", {
+      .createTable("tags", {
         id: {
           type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
         },
         title: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.STRING,
+          unique: true,
           allowNull: false,
           validate: {
-            min: 10,
+            min: 4,
+            max: 80,
+            notEmpty: true,
           },
         },
         slug: Sequelize.STRING(100),
-        img: Sequelize.STRING(500),
-        categoryId: {
-          field: "category_id",
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          validate: {
-            notEmpty: true,
-
-            notNull: true,
-          },
-        },
-        views: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
-        },
+        content: Sequelize.TEXT,
         createdBy: {
           field: "created_by",
           type: Sequelize.INTEGER,
@@ -52,24 +41,12 @@ module.exports = {
         },
       })
       .then(() =>
-        queryInterface.addConstraint("posts", {
+        queryInterface.addConstraint("tags", {
           fields: ["created_by"],
           type: "foreign key",
-          name: "posts_fk_user",
+          name: "tags_fk_user",
           references: {
             table: "users",
-            fields: ["id"],
-            key: "id",
-          },
-        })
-      )
-      .then(() =>
-        queryInterface.addConstraint("posts", {
-          fields: ["category_id"],
-          type: "foreign key",
-          name: "posts_fk_category",
-          references: {
-            table: "categories",
             fields: ["id"],
             key: "id",
           },
@@ -78,8 +55,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("posts");
-    await queryInterface.removeConstraint("posts_fk_user");
-    await queryInterface.removeConstraint("posts_fk_category");
+    await queryInterface.dropTable("tags");
+    await queryInterface.removeConstraint("tags_fk_user");
   },
 };

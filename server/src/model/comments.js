@@ -9,29 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Posts.hasMany(Comments, {
-        foreignKey: "posts_id",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Comments.belongsTo(models.Posts);
-
-      models.User.hasMany(Comments, {
-        foreignKey: "created_by",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Comments.belongsTo(models.User);
-
-      models.Posts.hasMany(Comments, {
-        foreignKey: "parent",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-
-      Comments.belongsTo(models.Posts, {
-        onDelete: "RESTRICT",
-      });
     }
   }
 
@@ -46,8 +23,20 @@ module.exports = (sequelize, DataTypes) => {
           notNull: true,
         },
       },
-      createdBy: DataTypes.INTEGER,
-      parent: DataTypes.INTEGER,
+      createdBy: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
+      parent: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "comments",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: true,

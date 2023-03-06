@@ -4,34 +4,29 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface
-      .createTable("posts", {
+      .createTable("ratings", {
         id: {
           type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
         },
-        title: {
-          type: Sequelize.STRING(100),
-          allowNull: false,
-          validate: {
-            min: 10,
-          },
-        },
-        slug: Sequelize.STRING(100),
-        img: Sequelize.STRING(500),
-        categoryId: {
-          field: "category_id",
+        ratings: {
           type: Sequelize.INTEGER,
-          allowNull: false,
           validate: {
+            max: 5,
+            min: 1,
             notEmpty: true,
-
-            notNull: true,
           },
+          defaultValue: 1,
         },
-        views: {
+        postsId: {
+          field: "posts_id",
           type: Sequelize.INTEGER,
-          defaultValue: 0,
+          allowNull: true,
+          references: {
+            model: "posts",
+            key: "id",
+          },
         },
         createdBy: {
           field: "created_by",
@@ -52,10 +47,10 @@ module.exports = {
         },
       })
       .then(() =>
-        queryInterface.addConstraint("posts", {
+        queryInterface.addConstraint("ratings", {
           fields: ["created_by"],
           type: "foreign key",
-          name: "posts_fk_user",
+          name: "ratings_fk_user",
           references: {
             table: "users",
             fields: ["id"],
@@ -64,12 +59,12 @@ module.exports = {
         })
       )
       .then(() =>
-        queryInterface.addConstraint("posts", {
-          fields: ["category_id"],
+        queryInterface.addConstraint("ratings", {
+          fields: ["posts_id"],
           type: "foreign key",
-          name: "posts_fk_category",
+          name: "ratings_fk_posts",
           references: {
-            table: "categories",
+            table: "posts",
             fields: ["id"],
             key: "id",
           },
@@ -78,8 +73,8 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("posts");
-    await queryInterface.removeConstraint("posts_fk_user");
-    await queryInterface.removeConstraint("posts_fk_category");
+    await queryInterface.dropTable("ratings");
+    await queryInterface.removeConstraint("ratings_fk_user");
+    await queryInterface.removeConstraint("ratings_fk_posts");
   },
 };

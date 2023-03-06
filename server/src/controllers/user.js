@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const User = require("../model").user;
+const { User } = require("../model");
 const jwt = require("jsonwebtoken");
 const { generateVerificationToken } = require("../utils/token");
 const { passwordHash } = require("../utils/hash");
