@@ -4,7 +4,7 @@ const generateAuthToken = function (user) {
   const token = jwt.sign(
     {
       id: user.id,
-      username: user.username,
+      userName: user.userName,
     },
     process.env.SECRET_KEY,
     {
@@ -18,7 +18,7 @@ const generateAuthRefreshToken = function (user) {
   const token = jwt.sign(
     {
       id: user.id,
-      username: user.username,
+      userName: user.userName,
     },
     process.env.SECRET_KEY,
     {
