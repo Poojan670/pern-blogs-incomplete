@@ -7,6 +7,8 @@ import PrivateRoutes from "./Routes/PrivateRoutes";
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [isOpen, setIsOpen] = useState(false);
+  const authError = useSelector((state) => state.auth.authError);
+
   return (
     <>
       {isAuthenticated ? (
