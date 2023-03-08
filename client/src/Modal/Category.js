@@ -15,6 +15,9 @@ const Category = ({ showModel, setShowModal }) => {
   //state for disabling the submit button
   const [lock, setLock] = useState(false);
 
+  console.log(showModel, "showModal");
+  console.log(setShowModal, "setShowModal");
+
   const initialState = {
     title: edit ? category?.title : "",
     slug: edit ? category?.slug : "",
@@ -72,9 +75,9 @@ const Category = ({ showModel, setShowModal }) => {
     setLock(true);
     if (edit) {
       const id = category.id;
-      dispatch(updateCategory(id, { ...values }));
+      dispatch(updateCategory(id, values));
     } else {
-      dispatch(addCategory({ ...values }));
+      dispatch(addCategory(values));
     }
     setLock(false);
     setShowModal(false);

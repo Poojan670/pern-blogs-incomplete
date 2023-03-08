@@ -3,14 +3,15 @@ import * as action from "./action";
 import * as API from "./api";
 
 export const addCategory =
-  (title, slug, content, parent, history) => async (dispatch) => {
+  ({ title, slug, content, parent, history }) =>
+  async (dispatch) => {
     try {
       dispatch(action.loadingCategory);
-      const body = JSON.stringify({ title, slug, content, parent: parent?.id });
+      const body = { title, slug, content, parent };
       const { data } = await API.addCategory(body);
 
       successFunction(`Category Added Successfully`);
-      dispatch(action.categorySucessAction({ ...data }));
+      dispatch(action.categorySucessAction(data));
       history.push("/blogs-category");
     } catch (error) {
       errorFunction(error.response.data.msg);

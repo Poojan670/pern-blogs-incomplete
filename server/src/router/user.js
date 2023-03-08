@@ -23,6 +23,6 @@ router.delete(
 );
 router.get(`${prefix}/verify/:id`, user.userVerify);
 router.post(`${prefix}/login`, login);
-router.post(`${prefix}/refresh`, refreshToken);
+router.post(`${prefix}/login/refresh`, refreshToken);
 
 module.exports = router;

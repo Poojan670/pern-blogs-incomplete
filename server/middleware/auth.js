@@ -24,7 +24,7 @@ module.exports = function auth(permissions = null) {
         next();
       }
     } catch (err) {
-      apiError(res, `Invalid Token, Please try again due to ${err}`);
+      apiError(res, `Invalid Token, Please try again due to ${err}`, 401);
     }
   };
 };
