@@ -8,6 +8,7 @@ exports.listCategories = async (req, res) => {
   const categories = await db.sequelize.query(
     `select c.id, c.title, c.slug, c.content, c.parent, c.created_at as "createdAt", \
      u.user_name as "userName", \
+     u.img, \
      cd.title as "parentTitle" from categories c \
      inner join users u on u.id=c.created_by \
      left join categories cd on cd.id=c.parent \

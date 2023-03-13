@@ -125,7 +125,7 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                   >
                     <div className="px-2 py-3">
                       <p
-                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300 flex justify-center"
                         role="none"
                       >
                         {userData?.email}

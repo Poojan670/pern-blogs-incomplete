@@ -2,6 +2,8 @@ import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import ProtectedRoute from "./ProtectedRoute";
+import BlogList from "../pages/BlogList";
+import BlogsTable from "../pages/BlogsList";
 
 //for refreshing the page when lazy fails loading the component
 const lazyWithReload = (componentImport) =>
@@ -31,7 +33,8 @@ const Home = lazyWithReload(() => import("../pages/Home"));
 const Posts = lazyWithReload(() => import("../pages/Blogs"));
 const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
 const UserList = lazyWithReload(() => import("../pages/UserList"));
-const Blogslist = lazyWithReload(() => import("../pages/BlogList"));
+const Bloglist = lazyWithReload(() => import("../pages/BlogList"));
+const BlogsList = lazyWithReload(() => import("../pages/BlogsList"));
 const Category = lazyWithReload(() => import("../pages/Category"));
 
 const PrivateRoutes = ({ isOpen, setIsOpen }) => {
@@ -59,10 +62,14 @@ const PrivateRoutes = ({ isOpen, setIsOpen }) => {
             // Blogs list
             <ProtectedRoute
               exact
-              path="/blogs-list"
-              component={Blogslist}
+              path="/blogs-lists"
+              component={Bloglist}
               roles={["ADMIN", "MOD"]}
             />
+            // Blogs List
+            <ProtectedRoute exact path="/blogs-list" roles={["ADMIN", "MOD"]}>
+              <BlogsList isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
             // User List
             <ProtectedRoute exact path="/users" roles={["ADMIN"]}>
               <UserList isOpen={isOpen} setIsOpen={setIsOpen} />

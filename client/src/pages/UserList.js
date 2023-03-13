@@ -31,9 +31,18 @@ const UserList = ({ isOpen, setIsOpen }) => {
         </div>
         <div className="flex-auto px-0 pt-0 pb-2">
           <div className="p-0 overflow-x-auto">
-            <table className="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+            <table
+              className={
+                isOpen
+                  ? "items-center w-[62rem] mb-0 align-top border-gray-200 text-slate-500"
+                  : "items-center w-full mb-0 align-top border-gray-200 text-slate-500"
+              }
+            >
               <thead className="align-bottom">
                 <tr>
+                  <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                    S.N
+                  </th>
                   <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                     user
                   </th>
@@ -55,6 +64,11 @@ const UserList = ({ isOpen, setIsOpen }) => {
                     user;
                   return (
                     <tr key={i}>
+                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                        <h6 className="absolute mb-2 -mt-3 leading-normal text-bold ml-6">
+                          {i + 1}
+                        </h6>
+                      </td>
                       <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                         <div className="flex px-2 py-1">
                           <div>
