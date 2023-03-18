@@ -60,7 +60,7 @@ const Category = ({ isOpen, setIsOpen }) => {
               <table
                 className={
                   isOpen
-                    ? "w-[64rem] text-sm text-left text-gray-500 dark:text-gray-400"
+                    ? "md:w-[64rem] lg:w-[104rem] text-sm text-left text-gray-500 dark:text-gray-400"
                     : "w-full text-sm text-left text-gray-500 dark:text-gray-400"
                 }
               >

@@ -34,7 +34,7 @@ const UserList = ({ isOpen, setIsOpen }) => {
             <table
               className={
                 isOpen
-                  ? "items-center w-[62rem] mb-0 align-top border-gray-200 text-slate-500"
+                  ? "items-center md:w-[62rem] lg:w-[104rem] mb-0 align-top border-gray-200 text-slate-500"
                   : "items-center w-full mb-0 align-top border-gray-200 text-slate-500"
               }
             >
