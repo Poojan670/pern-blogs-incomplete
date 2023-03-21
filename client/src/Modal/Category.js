@@ -9,14 +9,11 @@ import { checkRedundantCategoryData } from "../utils/RedundantData/checkRedundan
 import { errorFunction } from "../components/Alert/Alert";
 import { addCategory, updateCategory } from "../Redux/Category/thunk";
 
-const Category = ({ showModel, setShowModal }) => {
+const Category = ({ showModel, setShowModal, onClickModal }) => {
   const { category, edit } = useSelector((state) => state.category);
   const dispatch = useDispatch();
   //state for disabling the submit button
   const [lock, setLock] = useState(false);
-
-  console.log(showModel, "showModal");
-  console.log(setShowModal, "setShowModal");
 
   const initialState = {
     title: edit ? category?.title : "",
@@ -97,7 +94,7 @@ const Category = ({ showModel, setShowModal }) => {
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
-              onClick={setShowModal}
+              onClick={onClickModal}
             >
               <path
                 fillRule="evenodd"
@@ -206,7 +203,7 @@ const Category = ({ showModel, setShowModal }) => {
                       type="submit"
                       className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      Submit
+                      {edit ? "Update" : "Submit"}
                     </button>
                   </Form>
                 );

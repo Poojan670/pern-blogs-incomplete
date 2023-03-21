@@ -22,6 +22,11 @@ router.get(
   auth(listCategoryPermission),
   categories.listCategories
 );
+router.patch(
+  `${prefix}/category/:id`,
+  auth(updateCategoryPermission),
+  categories.updateCategory
+);
 router.get(`${prefix}/category/:id`, auth(), categories.getCategory);
 
 module.exports = router;

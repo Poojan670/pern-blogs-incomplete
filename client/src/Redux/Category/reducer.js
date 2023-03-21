@@ -33,6 +33,27 @@ const categoryReducer = (state = initialState, action) => {
         edit: false,
         message: action.payload,
       };
+    case categoryConstants.UPDATE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading_category: false,
+        edit: true,
+        category: action.payload,
+      };
+    case categoryConstants.UPDATE_CATEGORY_FAIL:
+      return {
+        ...state,
+        loading_category: false,
+        edit: false,
+        message: action.payload,
+      };
+    case categoryConstants.EDIT_CATEGORY:
+      return {
+        ...state,
+        loading_category: false,
+        edit: true,
+        category: action.payload,
+      };
     default:
       return state;
   }

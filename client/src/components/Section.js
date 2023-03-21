@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Author from "./sub-components/Author";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay } from "swiper";
@@ -48,26 +49,26 @@ function Slide() {
   return (
     <div className="grid md:grid-cols-2">
       <div className="image">
-        <a href="/posts">
+        <Link to="/posts">
           <img src="images/gintoki.png" alt="" width={600} height={600} />
-        </a>
+        </Link>
       </div>
       <div className="info flex justify-center flex-col">
         <div className="category">
-          <a href="/posts" className="text-orange-600 hover:text-orange-800">
+          <Link to="/posts" className="text-orange-600 hover:text-orange-800">
             Business Travel
-          </a>
-          <a href="/posts" className="text-gray-800 hover:text-gray-600">
+          </Link>
+          <Link to="/posts" className="text-gray-800 hover:text-gray-600">
             -July 23,2022
-          </a>
+          </Link>
         </div>
         <div className="title">
-          <a
-            href="/posts"
-            className="text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600"
+          <Link
+            to="/posts"
+            className="text-3xl md:text-6xl font-bold text-gray-800 sover:text-gray-600"
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </a>
+          </Link>
         </div>
         <p className="text-gray-500 py-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui

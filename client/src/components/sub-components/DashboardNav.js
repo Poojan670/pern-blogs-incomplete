@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import SideBar from "../../components/SideBar";
 import * as API from "../../Redux/Auth/api";
 import { IoIosNotifications } from "react-icons/io";
@@ -62,12 +63,12 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                   ></path>
                 </svg>
               </button>
-              <a href="/" className="flex ml-2 md:mr-24">
+              <Link to="/" className="flex ml-2 md:mr-24">
                 <img src="blog.png" className="h-8 mr-3" alt="Logo" />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   Blogs
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex items-center">
               <span
@@ -90,19 +91,19 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                   }`}
                 >
                   <div className="px-2 py-3">
-                    <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300 flex justify-center">
                       poojan
                     </p>
                   </div>
                   <ul className="py-1">
                     <li>
-                      <a
-                        href="/dashboard"
+                      <Link
+                        to="/dashboard"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >
                         Notify
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -133,30 +134,30 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                     </div>
                     <ul className="py-1">
                       <li>
-                        <a
-                          href="/dashboard"
+                        <Link
+                          to="/"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >
-                          Dashboard
-                        </a>
+                          Home
+                        </Link>
                       </li>
                       <li>
-                        <a
-                          href="/"
+                        <Link
+                          to="/"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Settings
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a
-                          href="/"
+                        <Link
+                          to="/"
                           onClick={handleLogout}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Sign out
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>

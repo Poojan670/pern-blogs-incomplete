@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import DashboardLayout from "../layout/DashboardLayout";
 import * as API from "../Redux/Category/api";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import CategoryModal from "../Modal/Category";
+import { categoryConstants } from "../Redux/Category/constants";
 
 const Category = ({ isOpen, setIsOpen }) => {
   const [categories, setCategories] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const categories = async () => {
@@ -20,7 +23,8 @@ const Category = ({ isOpen, setIsOpen }) => {
     categories().catch((e) => console.log(e.msg));
   }, []);
 
-  const onClickModal = async () => {
+  const onClickModal = async (category) => {
+    dispatch({ type: categoryConstants.EDIT_CATEGORY, payload: category });
     showModal === false ? setShowModal(true) : setShowModal(false);
   };
 
@@ -28,7 +32,11 @@ const Category = ({ isOpen, setIsOpen }) => {
     <>
       <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
         {showModal ? (
-          <CategoryModal showModal={showModal} setShowModal={setShowModal} />
+          <CategoryModal
+            showModal={showModal}
+            setShowModal={setShowModal}
+            onClickModal={onClickModal}
+          />
         ) : (
           <div
             className={
@@ -87,9 +95,9 @@ const Category = ({ isOpen, setIsOpen }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {categories.map((user, i) => {
-                    const { title, slug, userName, createdAt, parentTitle } =
-                      user;
+                  {categories.map((category, i) => {
+                    const { title, slug, userName, createdAt, parent } =
+                      category;
                     return (
                       <tr
                         key={i}
@@ -120,7 +128,7 @@ const Category = ({ isOpen, setIsOpen }) => {
                             {userName}
                           </p>
                         </td>
-                        <td className="px-6 py-4">{parentTitle}</td>
+                        <td className="px-6 py-4">{parent?.title}</td>
                         <td className="px-6 py-4">
                           {createdAt?.substring(0, 10)}
                         </td>
@@ -128,6 +136,7 @@ const Category = ({ isOpen, setIsOpen }) => {
                           <Link
                             to="#"
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            onClick={() => onClickModal(category)}
                           >
                             Edit
                           </Link>

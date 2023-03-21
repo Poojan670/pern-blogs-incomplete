@@ -6,13 +6,33 @@ const { QueryTypes } = require("sequelize");
 
 exports.listCategories = async (req, res) => {
   const categories = await db.sequelize.query(
-    `select c.id, c.title, c.slug, c.content, c.parent, c.created_at as "createdAt", \
-     u.user_name as "userName", \
-     u.img, \
-     cd.title as "parentTitle" from categories c \
-     inner join users u on u.id=c.created_by \
-     left join categories cd on cd.id=c.parent \
-     order by c.id`,
+    `
+    SELECT 
+    c.id, 
+    c.title, 
+    c.slug, 
+    c.content,  
+    c.created_at as "createdAt",
+    u.user_name as "userName", 
+    u.img,
+    CASE 
+        WHEN cd.id IS NOT NULL 
+            THEN json_build_object('id', cd.id, 'title', cd.title)
+        ELSE NULL 
+    END as parent
+    FROM 
+        categories c 
+        INNER JOIN users u ON u.id = c.created_by 
+        LEFT JOIN categories cd ON cd.id = c.parent 
+    GROUP BY 
+      c.id, 
+      u.user_name, 
+      u.img, 
+      cd.id, 
+      cd.title
+    ORDER BY
+      c.id
+    `,
     { type: QueryTypes.SELECT }
   );
 
@@ -61,4 +81,24 @@ exports.getCategory = async (req, res) => {
   if (!CategoryObj)
     return apiError(res, `Category with this id : ${req.params.id} not found`);
   res.send(CategoryObj);
+};
+
+exports.updateCategory = async (req, res) => {
+  const CategoryObj = await Category.findByPk(req.params.id);
+  if (!CategoryObj)
+    return apiError(res, `Category with this id : ${req.params.id} not found`);
+
+  const { error } = validate(req.body);
+  if (error) return apiError(res, error.details[0].message);
+  const parent = null ? req.body.parent : req.body.parent.id;
+
+  updatedCategory = await CategoryObj.update({
+    title: req.body.title,
+    createdBy: req.user.id,
+    slug: req.body.slug,
+    content: req.body.content,
+    parent: parent,
+  });
+
+  res.status(200).send(updatedCategory);
 };

@@ -20,11 +20,17 @@ export const addCategory =
   };
 
 export const updateCategory =
-  (id, title, slug, content, parent) => async (dispatch) => {
+  (id, { title, slug, content, parent }) =>
+  async (dispatch) => {
     try {
       dispatch(action.loadingCategory);
-      const body = JSON.stringify({ title, slug, content, parent: parent?.id });
-      const { data } = await API.addCategory(id, body);
+      let body;
+      if (parent) {
+        body = { title, slug, content, parent };
+      } else {
+        body = { title, slug, content };
+      }
+      const { data } = await API.updateCategory(id, body);
 
       successFunction(`Category Updated Successfully`);
       dispatch(action.categorySucessAction({ ...data }));

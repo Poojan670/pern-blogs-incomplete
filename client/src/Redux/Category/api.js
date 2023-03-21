@@ -10,7 +10,7 @@ export const addCategory = (body) =>
   axiosInstance.post(`api/v1/category-app/category`, body);
 
 export const updateCategory = (id, body) =>
-  axiosInstance.post(`api/v1/category-app/category/${id}`, body);
+  axiosInstance.patch(`api/v1/category-app/category/${id}`, body);
 
 export const getCategory = (id) =>
   axiosInstance.get(`api/v1/category-app/category/${id}`);
