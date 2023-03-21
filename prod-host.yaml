@@ -1,0 +1,26 @@
+version: "3.0"
+
+services:
+  blogs-backend:
+    image: "blogs-backend:0.1"
+    network_mode: "host"
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    expose:
+      - 5000
+    restart: always
+    container_name: blogs-backend
+    volumes:
+      - /server/public/:/app/public
+
+  blogs-frontend:
+    image: "blogs-frontend:0.1"
+    network_mode: "host"
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    expose:
+      - 3000
+    restart: always
+    container_name: blogs-frontend

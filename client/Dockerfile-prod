@@ -1,0 +1,14 @@
+FROM node:14.18.0-alpine
+
+ENV CI=true
+WORKDIR /usr/app
+
+COPY package.json /usr/app
+COPY yarn.lock /usr/app
+COPY .env.development /usr/app
+
+RUN yarn install
+
+COPY . /usr/app
+
+CMD ["yarn", "build"]

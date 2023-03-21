@@ -1,0 +1,62 @@
+version: "3.0"
+
+services:
+  node:
+    image: "blogs-server:latest"
+    networks:
+      - blogs
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    restart: no
+    container_name: blogs-server
+    depends_on:
+      - postgres
+    volumes:
+      - ./server:/app
+
+  react:
+    image: "blogs-client:latest"
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - blogs
+    restart: no
+    container_name: blogs-client
+    depends_on:
+      - node
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/app
+
+  postgres:
+    image: "postgres:13.1-alpine"
+    networks:
+      - indigo
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: poojan12
+      POSTGRES_DB: blogs_db
+      PGDATA: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: no
+
+volumes:
+  dbdata:
+
+networks:
+  blogs:
+    driver: bridge

@@ -113,6 +113,14 @@ http://localhost:5000 to access server
 
 # Setup Client & Server with Docker
 
+Using Makefile
+
+```console
+$ make build
+$ make run
+$ make run-background
+```
+
 Using docker
 
 ```console
@@ -120,8 +128,20 @@ $ cd server && docker build -t blogs-client . && docker run -p 3000:3000 blogs-c
 $ cd client && docker build -t blogs-server . && docker run -p 5000:5000 blogs-server
 ```
 
-Directly using docker compose
+Using docker compose on local environment
 
 ```console
-$ docker compose up -d
+$ docker compose -f docker-compose.local up
+```
+
+Using docker compose on prod environment
+
+```console
+$ docker compose -f docker-compose.prod up
+```
+
+Using docker compose on host network environment
+
+```console
+$ docker compose -f prod-host up
 ```
