@@ -65,9 +65,9 @@ _setup .env inside server_
 ```console
 PORT=5000
 NODE_ENV='development'
-DEV_DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blog'
-TEST_DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blog'
-DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blog'
+DEV_DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blogs'
+TEST_DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blogs'
+DATABASE_URL='postgres://postgres:poojan12@localhost:5432/pern_blogs'
 SECRET_KEY='aoidsfjoin2oi1h38s12jvapoojanhanteyspo19idkjan'
 TOKEN_SECRET='asdfhasho1239nasdjf1`23'
 EMAIL_USERNAME='poojanbckup1@gmail.com'
