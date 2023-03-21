@@ -43,7 +43,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_PASSWORD: poojan12
-      POSTGRES_DB: blogs_db
+      POSTGRES_DB: pern_blogs
       PGDATA: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]

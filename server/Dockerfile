@@ -7,8 +7,6 @@ COPY ./yarn.lock ./
 
 RUN yarn
 
-RUN yarn add -g nodemon
-
 COPY . ./app
 
 EXPOSE 5000

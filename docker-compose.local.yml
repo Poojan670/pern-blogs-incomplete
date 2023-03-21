@@ -10,12 +10,13 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    restart: no
+    restart: "no"
     container_name: blogs-server
     depends_on:
       - postgres
     volumes:
       - ./server:/app
+      - /app/node_modules
 
   react:
     image: "blogs-client:latest"
@@ -24,7 +25,7 @@ services:
       - "3000:3000"
     networks:
       - blogs
-    restart: no
+    restart: "no"
     container_name: blogs-client
     depends_on:
       - node
@@ -33,11 +34,12 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./client:/app
+      - /app/node_modules
 
   postgres:
     image: "postgres:13.1-alpine"
     networks:
-      - indigo
+      - blogs
     ports:
       - "5432:5432"
     volumes:
@@ -45,14 +47,14 @@ services:
     container_name: postgres
     environment:
       POSTGRES_PASSWORD: poojan12
-      POSTGRES_DB: blogs_db
+      POSTGRES_DB: pern_blogs
       PGDATA: /var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: no
+    restart: "no"
 
 volumes:
   dbdata:
