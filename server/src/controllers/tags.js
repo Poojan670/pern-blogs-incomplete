@@ -1,8 +1,6 @@
-const { Tags } = require("../model");
+const { Tags, Category } = require("../model");
 const paginate = require("../../middleware/pagination");
 
 exports.listTags = async (req, res) => {
-  const tags = await Tags.findAll();
-  const result = await paginate(tags, req, res);
-  res.json(result);
+  res.json(await paginate(await Tags.findAll(), req, res));
 };

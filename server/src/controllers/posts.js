@@ -14,25 +14,22 @@ exports.createPosts = async (req, res) => {
   if (error) return apiError(res, error.details[0].message);
 
   const tags = req.body.tags;
-  const postContent = req.body.postContent;
+  const postContent = JSON.parse(req.body.postContent); // Parse the postContent string to JSON
   await tags.forEach((tag) => {
     const tagObj = Tags.findByPk(tag);
     if (!tagObj) return apiError(res, `Tag with this id : ${tag} not found`);
   });
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-  let img;
-  if (!req.file) {
-    img = `${protocol}://${req.get("host")}//images//gintoki.png`;
-  } else {
-    img = `${protocol}://${req.get("host")}//images//${req.file.filename}`;
-  }
+
+  const img = req.file
+    ? `${req.protocol}://${req.get("host")}//images//${req.file.filename}`
+    : null;
 
   const posts = await Posts.create({
     title: req.body.title,
     slug: req.body.title,
     createdBy: req.user.id,
     categoryId: req.body.categoryId,
-    img: img
+    img: img,
   });
 
   await tags.forEach((tag) => {
@@ -42,15 +39,20 @@ exports.createPosts = async (req, res) => {
     });
   });
 
-  await postContent.forEach((content) => {
-    PostContent.create({
-      img: content.img,
+  const postContentPromises = postContent.map(async (content) => {
+    const postContentImg = content.img
+      ? `${req.protocol}://${req.get("host")}//images//${content.img}`
+      : null;
+    const postContentItem = await PostContent.create({
+      img: postContentImg,
       content: content.content,
       postsId: posts.id,
     });
+    return postContentItem;
   });
+  const postContentItems = await Promise.all(postContentPromises);
 
-  res.status(201).send(posts);
+  res.status(201).send({ posts, postContentItems });
 };
 
 exports.getPost = async (req, res) => {

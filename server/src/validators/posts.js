@@ -1,8 +1,7 @@
 const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
 
 const tagsSchema = {
-  id: Joi.object.required(),
+  id: Joi.string().required(),
 };
 
 const postContent = {
@@ -15,9 +14,9 @@ module.exports = function validatePosts(posts) {
     title: Joi.string().min(10).max(100).required(),
     slug: Joi.string().min(2).max(100),
     img: Joi.allow(null, ""),
-    categoryId: Joi.object().required(),
-    tags: Joi.array.items(Joi.object(tagsSchema)).required(),
-    postContent: Joi.array.items(Joi.object(postContent)).required(),
+    categoryId: Joi.string().required(),
+    tags: Joi.array().items(Joi.object(tagsSchema)).required(),
+    postContent: Joi.array().items(Joi.object(postContent)).required(),
   });
   return schema.validate(posts);
 };

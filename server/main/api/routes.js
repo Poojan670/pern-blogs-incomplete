@@ -3,6 +3,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   swaggerUi = require("swagger-ui-express"),
   swaggerFile = require("../../swagger-output.json"),
+  transactionMiddleware = require("../../middleware/transaction"),
   user = require("../../src/router/user"),
   category = require("../../src/router/category"),
   tags = require("../../src/router/tags");
@@ -26,6 +27,8 @@ module.exports = function (app) {
       swaggerOptions: { persistAuthorization: true },
     })
   );
+
+  app.use(transactionMiddleware);
 
   app.use("", user);
   app.use("", category);

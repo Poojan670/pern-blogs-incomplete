@@ -9,6 +9,7 @@ const {
   updateTagsPermission,
   deleteTagsPermission,
 } = require("../permissions/roles");
+const { Tags, Category } = require("../model");
 
 const prefix = "/api/v1/tags-app";
 

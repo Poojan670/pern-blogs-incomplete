@@ -18,12 +18,11 @@ exports.listUsers = async (req, res) => {
 exports.register = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return apiError(res, error.details[0].message);
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   let img;
   if (!req.file) {
-    img = `${protocol}://${req.get("host")}//images//gintoki.png`;
+    img = `${req.protocol}://${req.get("host")}//images//gintoki.png`;
   } else {
-    img = `${protocol}://${req.get("host")}//images//${req.file.filename}`;
+    img = `${req.protocol}://${req.get("host")}//images//${req.file.filename}`;
   }
 
   let user = await User.findOne({
