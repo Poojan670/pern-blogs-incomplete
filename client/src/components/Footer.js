@@ -31,7 +31,8 @@ const Footer = () => {
           <p
             className="text-gray-400 text-center text-white gap-5
            font -bold mt-1 space-x-2 py-5 rounded-l space-y-7 flex-shrin w-fu h-28 l overflow-x-sc py-10 snap-x
-          overflow-x-scroll text-2xl p-10 transition-opacity duration-200 opacity-40 space-x-5 min-h-scree xl: space-y-w-28 filter duration grays ease-in group text-3xl  opacity h-full h-24
+          overflow-x-scroll text-2xl p-10 transition-opacity duration-200 opacity-40 space-x-5 min-h-scree
+           xl: space-y-w-28 filter duration grays ease-in group text-3xl  opacity h-full h-24
           top-0 grid-col gap-5 group relative border-gray-500 h-24 h-32 grid-cols-4
           "
           >

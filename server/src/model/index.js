@@ -51,9 +51,9 @@ const Comments = require("./comments")(sequelize, DataTypes);
 const Likes = require("./likes")(sequelize, DataTypes);
 const Ratings = require("./ratings")(sequelize, DataTypes);
 
-// assosciations
+// associations
 
-// Category Assosciations
+// Category Associations
 User.hasMany(Category, {
   foreignKey: "created_by",
   foreignKeyConstraint: true,
@@ -78,7 +78,11 @@ User.hasMany(Tags, {
   foreignKey: "created_by",
   foreignKeyConstraint: true,
 });
-Tags.belongsTo(User);
+Tags.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+  onDelete: "Cascade",
+});
 
 // posts
 Category.hasMany(Posts, {
@@ -87,21 +91,33 @@ Category.hasMany(Posts, {
 });
 Posts.belongsTo(Category, {
   onDelete: "RESTRICT",
+  foreignKey: "category_id",
+  foreignKeyConstraint: true,
 });
 
 User.hasMany(Posts, {
   foreignKey: "created_by",
   foreignKeyConstraint: true,
 });
-Posts.belongsTo(User);
-Posts.belongsToMany(Tags, { through: "post_tags" });
+Posts.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Posts.belongsToMany(Tags, {
+  through: "post_tags",
+  // foreignKeyConstraint: true,
+  // foreignKey: "tags_id",
+});
 
 // post content
 Posts.hasMany(PostContent, {
   foreignKey: "posts_id",
   foreignKeyConstraint: true,
 });
-PostContent.belongsTo(Posts);
+PostContent.belongsTo(Posts, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
 
 // likes
 Posts.hasMany(Likes, {
@@ -110,6 +126,7 @@ Posts.hasMany(Likes, {
 });
 Likes.belongsTo(Posts, {
   foreignKey: "comments_id",
+  foreignKeyConstraint: true,
 });
 Comments.hasMany(Likes, {
   foreignKey: "comments_id",
@@ -117,6 +134,7 @@ Comments.hasMany(Likes, {
 });
 Likes.belongsTo(Comments, {
   foreignKey: "comments_id",
+  foreignKeyConstraint: true,
 });
 
 User.hasMany(Likes, {
@@ -125,6 +143,7 @@ User.hasMany(Likes, {
 });
 Likes.belongsTo(User, {
   foreignKey: "created_by",
+  foreignKeyConstraint: true,
 });
 
 // comments
@@ -159,6 +178,7 @@ User.hasMany(Ratings, {
 });
 Ratings.belongsTo(User, {
   foreignKey: "created_by",
+  foreignKeyConstraint: true,
 });
 
 // db.sequelize.sync({ force: false, alter: false });

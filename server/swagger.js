@@ -30,6 +30,8 @@ const outputFile = './swagger-output.json';
 const endpointsFiles = [
     './src/router/user.js',
     './src/router/category.js',
+    './src/router/tags.js',
+    './src/router/posts.js',
 ];
 
 /* NOTE: if you use the express Router, you must pass in the

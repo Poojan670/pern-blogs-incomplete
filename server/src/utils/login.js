@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
   }
 
   if (!user.isVerified)
-    return apiError(res, "You are'nt verified yet, Please try again!", 403);
+    return apiError(res, "You are'nt verified yet, Please try again!");
   user.lastLogin = new Date();
   await user.save();
   res.json({

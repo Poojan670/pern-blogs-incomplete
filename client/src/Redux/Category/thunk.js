@@ -2,6 +2,15 @@ import { errorFunction, successFunction } from "../../components/Alert/Alert";
 import * as action from "./action";
 import * as API from "./api";
 
+export const listCategories = (page, limit) => async (dispatch) => {
+  try {
+    dispatch(action.loadingCategory);
+    const { data } = await API.categoryList(page, limit);
+  } catch (error) {
+    errorFunction(error.response.data.msg);
+  }
+};
+
 export const addCategory =
   ({ title, slug, content, parent, history }) =>
   async (dispatch) => {
@@ -33,7 +42,7 @@ export const updateCategory =
       const { data } = await API.updateCategory(id, body);
 
       successFunction(`Category Updated Successfully`);
-      dispatch(action.categorySucessAction({ ...data }));
+      dispatch(action.updateCategorySucessAction({ ...data }));
     } catch (error) {
       errorFunction(error.response.data.msg);
       dispatch(action.categoryFailAction(error));

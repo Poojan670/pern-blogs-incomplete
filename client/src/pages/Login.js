@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { login } from "../Redux/Auth/thunk";
 import { authConstants } from "../Redux/Auth/constants";
 import Footer from "../components/sub-components/FormFooter";
@@ -100,12 +100,12 @@ const Login = () => {
                     </label>
                   </div>
                 </div>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <button
                 type="submit"
@@ -117,12 +117,18 @@ const Login = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Dont have an account yet?{" "}
-                <a
-                  href="/register"
-                  className="font-medium text-primary-600 text-blue-500 hover:underline dark:text-primary-500"
+                <Link
+                  to="/register"
+                  className="font-medium text-blue-500 hover:underline dark:text-primary-500"
                 >
                   Sign up
-                </a>
+                </Link>
+                <Link
+                  to="/reset"
+                  className="font-medium text-blue-500 hover:underline dark:text-primary-500 ml-[3rem]"
+                >
+                  Unverified?
+                </Link>
               </p>
               <Footer />
             </form>

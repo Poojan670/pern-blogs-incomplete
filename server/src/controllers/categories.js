@@ -1,7 +1,7 @@
 const paginate = require("../../middleware/pagination");
-const { User, Category, db } = require("../model");
+const {Category, db } = require("../model");
 const validate = require("../validators/categories");
-const { apiError, apiSuccess } = require("../../middleware/error");
+const { apiError } = require("../../middleware/error");
 const { QueryTypes } = require("sequelize");
 
 exports.listCategories = async (req, res) => {
@@ -84,21 +84,34 @@ exports.getCategory = async (req, res) => {
 };
 
 exports.updateCategory = async (req, res) => {
-  const CategoryObj = await Category.findByPk(req.params.id);
-  if (!CategoryObj)
+  const category = await Category.findByPk(req.params.id);
+  if (!category)
     return apiError(res, `Category with this id : ${req.params.id} not found`);
 
   const { error } = validate(req.body);
   if (error) return apiError(res, error.details[0].message);
-  const parent = null ? req.body.parent : req.body.parent.id;
+  let parent = null;
+  if (req.body.parent) {
+    parent = req.body.parent.id;
+  }
 
-  updatedCategory = await CategoryObj.update({
+  const updatedCategory = await category.update({
     title: req.body.title,
-    createdBy: req.user.id,
     slug: req.body.slug,
     content: req.body.content,
     parent: parent,
   });
 
   res.status(200).send(updatedCategory);
+};
+
+exports.deleteCategory = async (req, res) => {
+  await Category.findByPk(req.params.id)
+    .then(function (category) {
+      category
+        .destroy()
+        .then((e) => apiError(res, "Category deleted successfully", 404))
+        .catch((e) => apiError(res, "Error occurred"));
+    })
+    .catch((e) => apiError(res, "Category not found"));
 };

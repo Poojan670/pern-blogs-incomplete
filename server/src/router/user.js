@@ -22,6 +22,7 @@ router.delete(
   user.deleteUser
 );
 router.get(`${prefix}/verify/:id`, user.userVerify);
+router.get(`${prefix}/resend/:email`, user.resendToken);
 router.post(`${prefix}/login`, login);
 router.post(`${prefix}/login/refresh`, refreshToken);
 

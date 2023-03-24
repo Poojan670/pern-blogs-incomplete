@@ -37,8 +37,10 @@ const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading_category: false,
-        edit: true,
-        category: action.payload,
+        edit: false,
+        categories: state.categories.filter((cat, i) =>
+          cat?.id === action.payload?.id ? action.payload : cat
+        ),
       };
     case categoryConstants.UPDATE_CATEGORY_FAIL:
       return {
@@ -53,6 +55,13 @@ const categoryReducer = (state = initialState, action) => {
         loading_category: false,
         edit: true,
         category: action.payload,
+      };
+    case categoryConstants.CLEAR_ALL_DATA:
+      console.log(state, "this is state");
+      return {
+        ...state,
+        loading_category: false,
+        edit: false,
       };
     default:
       return state;

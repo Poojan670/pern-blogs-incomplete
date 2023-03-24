@@ -35,6 +35,8 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
+    environment:
+      - WATCHPACK_POLLING=true
 
   postgres:
     image: "postgres:13.1-alpine"

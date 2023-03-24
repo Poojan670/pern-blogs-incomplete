@@ -4,7 +4,8 @@ const express = require("express"),
   swaggerUi = require("swagger-ui-express"),
   swaggerFile = require("../../swagger-output.json"),
   user = require("../../src/router/user"),
-  category = require("../../src/router/category");
+  category = require("../../src/router/category"),
+  tags = require("../../src/router/tags");
 
 module.exports = function (app) {
   app.use(
@@ -28,6 +29,7 @@ module.exports = function (app) {
 
   app.use("", user);
   app.use("", category);
+  app.use("", tags);
 
   app.use("*", (req, res) => {
     res.status(404).json({

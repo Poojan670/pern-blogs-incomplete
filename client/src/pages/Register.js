@@ -15,10 +15,10 @@ const Register = () => {
     userName: "",
     password: "",
     fullName: "",
-    img: "",
   };
 
   const [data, setData] = useState(initialValues);
+  const [file, setFile] = useState(null);
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -37,7 +37,7 @@ const Register = () => {
         data.userName,
         data.password,
         data.fullName,
-        data.img,
+        file,
         history
       )
     );
@@ -161,8 +161,8 @@ const Register = () => {
                       type="file"
                       alt="img"
                       name="img"
-                      value={data.img}
-                      onChange={handleChange}
+                      value={""}
+                      onChange={(e) => setFile(e.target.files[0])}
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                   </div>

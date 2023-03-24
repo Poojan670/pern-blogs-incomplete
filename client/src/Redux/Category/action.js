@@ -19,3 +19,7 @@ export const updateCategoryFailAction = (error) => ({
   type: categoryConstants.UPDATE_CATEGORY_FAIL,
   payload: error,
 });
+export const clearAllDataAction = (data) => ({
+  type: categoryConstants.CLEAR_ALL_DATA,
+  payload: data,
+});

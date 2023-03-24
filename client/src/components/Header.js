@@ -31,7 +31,9 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search.."
-            className="mt-1 block w-60 px-3 py-2 bg-white border-slate-300 rounded-full text-sm shadow-sm placeholder-slate-500 focus: outline-none focus:border-sky-500 focus:ring-sky-500"
+            className="mt-1 block w-60 px-3 py-2 bg-white border-slate-300
+            rounded-full text-sm shadow-sm placeholder-slate-500
+             focus: outline-none focus:border-sky-500 focus:ring-sky-500"
           />
         </div>
         <div className="shrink w-80 sm:order-2">
@@ -70,7 +72,8 @@ const Header = () => {
                 <div>
                   <button
                     type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4
+                     focus:ring-gray-300 dark:focus:ring-gray-600"
                     onClick={ToggleProfile}
                   >
                     <img
@@ -80,13 +83,15 @@ const Header = () => {
                     />
                   </button>
                   <div
-                    className={`z-10 ml-[-150px] w-44 bg-white rounded divide-y divide-gray-100 shadow ${
+                    className={`z-10 ml-[-150px] w-44 bg-white rounded divide-y
+                     divide-gray-100 shadow ${
                       profile ? "absolute" : "hidden"
                     }`}
                   >
                     <div className="px-2 py-3">
                       <p
-                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300 flex justify-center"
+                        className="text-sm font-medium text-gray-900 truncate
+                         dark:text-gray-300 flex justify-center"
                         role="none"
                       >
                         {userData?.userName}
@@ -96,7 +101,8 @@ const Header = () => {
                       <li>
                         <Link
                           to="/dashboard"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                           role="menuitem"
                         >
                           Dashboard
@@ -105,7 +111,8 @@ const Header = () => {
                       <li>
                         <Link
                           to="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Settings
                         </Link>
@@ -114,7 +121,8 @@ const Header = () => {
                         <Link
                           to="/"
                           onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Sign out
                         </Link>

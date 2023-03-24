@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
 import DashboardLayout from "../layout/DashboardLayout";
 import * as API from "../Redux/Category/api";
-import { Link } from "react-router-dom";
-import { RxCross2 } from "react-icons/rx";
-import { TiTick } from "react-icons/ti";
+import {Link} from "react-router-dom";
 import CategoryModal from "../Modal/Category";
-import { categoryConstants } from "../Redux/Category/constants";
+import {categoryConstants} from "../Redux/Category/constants";
 
 const Category = ({ isOpen, setIsOpen }) => {
   const [categories, setCategories] = useState([]);
@@ -23,20 +21,16 @@ const Category = ({ isOpen, setIsOpen }) => {
     categories().catch((e) => console.log(e.msg));
   }, []);
 
-  const onClickModal = async (category) => {
+  const handleEdit = async (category) => {
     dispatch({ type: categoryConstants.EDIT_CATEGORY, payload: category });
-    showModal === false ? setShowModal(true) : setShowModal(false);
+    setShowModal(true);
   };
 
   return (
     <>
       <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
         {showModal ? (
-          <CategoryModal
-            showModal={showModal}
-            setShowModal={setShowModal}
-            onClickModal={onClickModal}
-          />
+          <CategoryModal showModal={showModal} setShowModal={setShowModal} />
         ) : (
           <div
             className={
@@ -57,7 +51,7 @@ const Category = ({ isOpen, setIsOpen }) => {
                 />
                 <button
                   type="button"
-                  onClick={onClickModal}
+                  onClick={(e) => setShowModal(true)}
                   className="bg-blue-500 hover:animate-bounce hover:bg-black flex justify-center px-6 w-10 font-bold uppercase border-gray-200 cursor-pointer rounded-md text-gray-50 opacity-70 mt-2 border-solid whitespace-nowrap"
                 >
                   Add
@@ -136,7 +130,7 @@ const Category = ({ isOpen, setIsOpen }) => {
                           <Link
                             to="#"
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            onClick={() => onClickModal(category)}
+                            onClick={(e) => handleEdit(category)}
                           >
                             Edit
                           </Link>

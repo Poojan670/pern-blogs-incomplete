@@ -27,6 +27,11 @@ router.patch(
   auth(updateCategoryPermission),
   categories.updateCategory
 );
+router.delete(
+  `${prefix}/category/:id`,
+  auth(deleteCategoryPermission),
+  categories.deleteCategory
+);
 router.get(`${prefix}/category/:id`, auth(), categories.getCategory);
 
 module.exports = router;

@@ -11,7 +11,7 @@
     "createmigrations": "npx sequelize-cli model:generate --name User --attributes userName:string",
     "insert": "npx sequelize-cli seed:generate --name demo-user",
     "seed": "npx sequelize-cli db:seed:all",
-    "swagger-autogen": "node swagger.js"
+    "swagger": "node swagger.js"
   },
   "keywords": [
     "node",
