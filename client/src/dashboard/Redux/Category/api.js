@@ -1,4 +1,4 @@
-import axiosInstance from "../../utils/axios";
+import axiosInstance from "../../../utils/axios";
 
 export const getPrevious = (previous) => axiosInstance.get(previous);
 export const getNext = (next) => axiosInstance.get(next);

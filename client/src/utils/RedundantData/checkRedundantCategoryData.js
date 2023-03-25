@@ -1,5 +1,5 @@
 import axios from "axios";
-import { checkRedundantData } from "../../Redux/Category/api";
+import { checkRedundantData } from "../../dashboard/Redux/Category/api";
 
 let cancelToken;
 export const checkRedundantCategoryData = async (e) => {

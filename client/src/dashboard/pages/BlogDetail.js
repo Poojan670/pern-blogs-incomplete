@@ -16,7 +16,7 @@ const BlogDetail = () => {
                   />
                   <div>
                     <a
-                      href="#"
+                      href="client/src/pages#"
                       rel="author"
                       className="text-xl font-bold text-gray-900 dark:text-white"
                     >
@@ -384,7 +384,7 @@ const BlogDetail = () => {
                     >
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Edit
@@ -392,7 +392,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Remove
@@ -400,7 +400,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Report
@@ -487,7 +487,7 @@ const BlogDetail = () => {
                     >
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Edit
@@ -495,7 +495,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Remove
@@ -503,7 +503,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Report
@@ -585,7 +585,7 @@ const BlogDetail = () => {
                     >
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Edit
@@ -593,7 +593,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Remove
@@ -601,7 +601,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Report
@@ -686,7 +686,7 @@ const BlogDetail = () => {
                     >
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Edit
@@ -694,7 +694,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Remove
@@ -702,7 +702,7 @@ const BlogDetail = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="client/src/pages#"
                           className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Report
@@ -755,7 +755,7 @@ const BlogDetail = () => {
           </h2>
           <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
             <article className="max-w-xs">
-              <a href="#">
+              <a href="client/src/pages#">
                 <img
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png"
                   className="mb-5 rounded-lg"
@@ -763,21 +763,21 @@ const BlogDetail = () => {
                 />
               </a>
               <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                <a href="#">Our first office</a>
+                <a href="client/src/pages#">Our first office</a>
               </h2>
               <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
                 Over the past year, Volosoft has undergone many changes! After
                 months of preparation.
               </p>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
               >
                 Read in 2 minutes
               </a>
             </article>
             <article className="max-w-xs">
-              <a href="#">
+              <a href="client/src/pages#">
                 <img
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png"
                   className="mb-5 rounded-lg"
@@ -785,21 +785,21 @@ const BlogDetail = () => {
                 />
               </a>
               <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                <a href="#">Enterprise design tips</a>
+                <a href="client/src/pages#">Enterprise design tips</a>
               </h2>
               <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
                 Over the past year, Volosoft has undergone many changes! After
                 months of preparation.
               </p>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
               >
                 Read in 12 minutes
               </a>
             </article>
             <article className="max-w-xs">
-              <a href="#">
+              <a href="client/src/pages#">
                 <img
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-3.png"
                   className="mb-5 rounded-lg"
@@ -807,21 +807,21 @@ const BlogDetail = () => {
                 />
               </a>
               <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                <a href="#">We partnered with Google</a>
+                <a href="client/src/pages#">We partnered with Google</a>
               </h2>
               <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
                 Over the past year, Volosoft has undergone many changes! After
                 months of preparation.
               </p>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
               >
                 Read in 8 minutes
               </a>
             </article>
             <article className="max-w-xs">
-              <a href="#">
+              <a href="client/src/pages#">
                 <img
                   src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-4.png"
                   className="mb-5 rounded-lg"
@@ -829,14 +829,14 @@ const BlogDetail = () => {
                 />
               </a>
               <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                <a href="#">Our first project with React</a>
+                <a href="client/src/pages#">Our first project with React</a>
               </h2>
               <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
                 Over the past year, Volosoft has undergone many changes! After
                 months of preparation.
               </p>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
               >
                 Read in 4 minutes
@@ -856,7 +856,7 @@ const BlogDetail = () => {
               Stay up to date with the roadmap progress, announcements and
               exclusive discounts feel free to sign up with your email.
             </p>
-            <form action="#">
+            <form action="client/src/pages#">
               <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
                 <div className="relative w-full">
                   <label
@@ -896,7 +896,7 @@ const BlogDetail = () => {
               <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer dark:text-gray-300">
                 We care about the protection of your data.{" "}
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="font-medium text-primary-600 dark:text-primary-500 hover:underline"
                 >
                   Read our Privacy Policy
@@ -917,22 +917,22 @@ const BlogDetail = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="#" className=" hover:underline">
+                  <a href="client/src/pages#" className=" hover:underline">
                     About
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Careers
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Brand Center
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Blog
                   </a>
                 </li>
@@ -944,22 +944,22 @@ const BlogDetail = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Discord Server
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Twitter
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Facebook
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Contact Us
                   </a>
                 </li>
@@ -971,17 +971,17 @@ const BlogDetail = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Licensing
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Terms
                   </a>
                 </li>
@@ -993,22 +993,22 @@ const BlogDetail = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="#" className=" hover:underline">
+                  <a href="client/src/pages#" className=" hover:underline">
                     About
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Careers
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Brand Center
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Blog
                   </a>
                 </li>
@@ -1020,22 +1020,22 @@ const BlogDetail = () => {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     iOS
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Android
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     Windows
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="client/src/pages#" className="hover:underline">
                     MacOS
                   </a>
                 </li>
@@ -1045,7 +1045,7 @@ const BlogDetail = () => {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="text-center">
             <a
-              href="#"
+              href="client/src/pages#"
               className="flex justify-center items-center mb-5 text-2xl font-semibold text-gray-900 dark:text-white"
             >
               <svg
@@ -1196,7 +1196,7 @@ const BlogDetail = () => {
             </a>
             <span className="block text-sm text-center text-gray-500 dark:text-gray-400">
               © 2021-2022{" "}
-              <a href="#" className="hover:underline">
+              <a href="client/src/pages#" className="hover:underline">
                 Flowbite™
               </a>
               . All Rights Reserved.
@@ -1204,7 +1204,7 @@ const BlogDetail = () => {
             <ul className="flex justify-center mt-5 space-x-5">
               <li>
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
                 >
                   <svg
@@ -1223,7 +1223,7 @@ const BlogDetail = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
                 >
                   <svg
@@ -1242,7 +1242,7 @@ const BlogDetail = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
                 >
                   <svg
@@ -1257,7 +1257,7 @@ const BlogDetail = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
                 >
                   <svg
@@ -1276,7 +1276,7 @@ const BlogDetail = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="client/src/pages#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400"
                 >
                   <svg

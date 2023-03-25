@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import alertReducer from "./Alert/reducer";
 import authReducer from "./Auth/reducer";
-import categoryReducer from "./Category/reducer";
+import categoryReducer from "../dashboard/Redux/Category/reducer";
 
 const rootReducer = combineReducers({
   alert: alertReducer,

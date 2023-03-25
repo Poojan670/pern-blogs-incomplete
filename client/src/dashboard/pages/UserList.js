@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as API from "../Redux/Auth/api";
+import * as API from "../../Redux/Auth/api";
 import DashboardLayout from "../layout/DashboardLayout";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";

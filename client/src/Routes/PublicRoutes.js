@@ -8,7 +8,7 @@ import Verify from "../pages/Verify";
 import ResetPassword from "../pages/ResetPassword";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/Login";
-import BlogDetail from "../pages/BlogDetail";
+import BlogDetail from "../dashboard/pages/BlogDetail";
 
 const PublicRoutes = ({ isOpen, setIsOpen }) => {
   return (

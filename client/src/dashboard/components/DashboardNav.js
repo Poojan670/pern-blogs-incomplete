@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SideBar from "../../components/SideBar";
+import SideBar from "./SideBar";
 import * as API from "../../Redux/Auth/api";
 import { IoIosNotifications } from "react-icons/io";
 

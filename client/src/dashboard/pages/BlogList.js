@@ -40,7 +40,7 @@ const BlogList = () => {
               <span className="text-sm">14 days ago</span>
             </div>
             <h2 className="mb-4 text-2xl font-bold tracking-tight text-gray-700 dark:text-white">
-              <a href="#">How to be quick</a>
+              <a href="client/src/pages#">How to be quick</a>
             </h2>
             <p className="mb-5 font-medium text-gray-400 dark:text-gray-400 tracking-wide">
               Static websites are now used to bootstrap lots of websites and are
@@ -58,7 +58,7 @@ const BlogList = () => {
                 <span className="font-medium dark:text-white">Jese Leos</span>
               </div>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
               >
                 Read more
@@ -98,7 +98,7 @@ const BlogList = () => {
               <span className="text-sm">14 days ago</span>
             </div>
             <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              <a href="#">Our first project with React</a>
+              <a href="client/src/pages#">Our first project with React</a>
             </h2>
             <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
               Static websites are now used to bootstrap lots of websites and are
@@ -116,7 +116,7 @@ const BlogList = () => {
                 <span className="font-medium dark:text-white">Bonnie Green</span>
               </div>
               <a
-                href="#"
+                href="client/src/pages#"
                 className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
               >
                 Read more

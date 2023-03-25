@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import DashboardNav from "../components/sub-components/DashboardNav";
+import DashboardNav from "../components/DashboardNav";
 
 const DashboardLayout = ({ children, isOpen, setIsOpen }) => {
   useEffect(() => {

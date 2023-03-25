@@ -1,4 +1,4 @@
-import { errorFunction, successFunction } from "../../components/Alert/Alert";
+import { errorFunction, successFunction } from "../../../components/Alert/Alert";
 import * as action from "./action";
 import * as API from "./api";
 

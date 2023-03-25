@@ -2,8 +2,8 @@ import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import ProtectedRoute from "./ProtectedRoute";
-import BlogList from "../pages/BlogList";
-import BlogsTable from "../pages/BlogsList";
+import BlogList from "../dashboard/pages/BlogList";
+import BlogsTable from "../dashboard/pages/BlogsList";
 
 //for refreshing the page when lazy fails loading the component
 const lazyWithReload = (componentImport) =>
@@ -28,14 +28,14 @@ const lazyWithReload = (componentImport) =>
     }
   });
 
-const Dashboard = lazyWithReload(() => import("../pages/DashBoard"));
+const Dashboard = lazyWithReload(() => import("../dashboard/pages/DashBoard"));
 const Home = lazyWithReload(() => import("../pages/Home"));
 const Posts = lazyWithReload(() => import("../pages/Blogs"));
 const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
-const UserList = lazyWithReload(() => import("../pages/UserList"));
-const Bloglist = lazyWithReload(() => import("../pages/BlogList"));
-const BlogsList = lazyWithReload(() => import("../pages/BlogsList"));
-const Category = lazyWithReload(() => import("../pages/Category"));
+const UserList = lazyWithReload(() => import("../dashboard/pages/UserList"));
+const Bloglist = lazyWithReload(() => import("../dashboard/pages/BlogList"));
+const BlogsList = lazyWithReload(() => import("../dashboard/pages/BlogsList"));
+const Category = lazyWithReload(() => import("../dashboard/pages/Category"));
 
 const PrivateRoutes = ({ isOpen, setIsOpen }) => {
   const ErrorFallback = ({ error }) => {

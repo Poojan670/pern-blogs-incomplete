@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AsyncPaginate } from "react-select-async-paginate";
-import TextError from "../TextError/TextError";
+import TextError from "../../TextError/TextError";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../utils/axios";
-import { checkRedundantCategoryData } from "../utils/RedundantData/checkRedundantCategoryData";
-import { errorFunction } from "../components/Alert/Alert";
+import axiosInstance from "../../utils/axios";
+import { checkRedundantCategoryData } from "../../utils/RedundantData/checkRedundantCategoryData";
+import { errorFunction } from "../../components/Alert/Alert";
 import { addCategory, updateCategory } from "../Redux/Category/thunk";
 import { clearAllDataAction } from "../Redux/Category/action";
 
@@ -125,7 +125,7 @@ const Category = ({ showModel, setShowModal }) => {
             >
               {(formik) => {
                 return (
-                  <Form className="space-y-6" action="#">
+                  <Form className="space-y-6" action="client/src/dashboard/Modal#">
                     <div>
                       <label
                         htmlFor="title"
