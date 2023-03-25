@@ -105,8 +105,6 @@ Posts.belongsTo(User, {
 });
 Posts.belongsToMany(Tags, {
   through: "post_tags",
-  // foreignKeyConstraint: true,
-  // foreignKey: "tags_id",
 });
 
 // post content

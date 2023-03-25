@@ -16,10 +16,8 @@ exports.deleteCategoryPermission = [ROLES.ADMIN];
 
 // TagsPermission
 exports.postTagsPermission = [ROLES.ADMIN];
-exports.listTagsPermission = [ROLES.ADMIN, ROLES.MOD];
 exports.updateTagsPermission = [ROLES.ADMIN, ROLES.MOD];
 exports.deleteTagsPermission = [ROLES.ADMIN];
-
 
 // Category Permission
 exports.postPermission = [ROLES.ADMIN, ROLES.MOD, ROLES.USER];

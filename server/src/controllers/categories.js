@@ -1,5 +1,5 @@
 const paginate = require("../../middleware/pagination");
-const {Category, db } = require("../model");
+const { Category, db } = require("../model");
 const validate = require("../validators/categories");
 const { apiError } = require("../../middleware/error");
 const { QueryTypes } = require("sequelize");

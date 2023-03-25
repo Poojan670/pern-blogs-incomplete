@@ -17,5 +17,6 @@ router.post(
 router.get(`${prefix}/posts`, posts.listPosts);
 router.delete(`${prefix}/posts/:id`, auth(postPermission), posts.deletePost);
 router.get(`${prefix}/posts/:id`, posts.getPost);
+router.get(`${prefix}/posts-summary/:id`, posts.getPostSummary);
 
 module.exports = router;

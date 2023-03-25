@@ -1,12 +1,122 @@
 const paginate = require("../../middleware/pagination");
-const { Tags, Posts, PostTags, PostContent } = require("../model");
+const {
+  Tags,
+  Posts,
+  PostTags,
+  PostContent,
+  User,
+  Category,
+  Ratings,
+  Likes,
+  Comments,
+} = require("../model");
 const validate = require("../validators/posts");
 const { apiError } = require("../../middleware/error");
+const { Sequelize } = require("sequelize");
 
 exports.listPosts = async (req, res) => {
   const posts = await Posts.findAll();
   const result = await paginate(posts, req, res);
   res.json(result);
+};
+
+exports.getPostSummary = async (req, res) => {
+  const post = await Posts.findByPk(req.params.id, {
+    attributes: [
+      [Sequelize.col("user_name"), "userName"],
+      [Sequelize.fn("COUNT", Sequelize.col("likes.id")), "likesCount"],
+      [Sequelize.fn("COUNT", Sequelize.col("dislikes.id")), "dislikesCount"],
+    ],
+    include: [
+      {
+        model: User,
+        attributes: [],
+      },
+      {
+        model: Category,
+      },
+      {
+        model: PostTags,
+      },
+      {
+        model: Ratings,
+        attributes: ["ratings"],
+      },
+      {
+        model: PostContent,
+      },
+      {
+        model: Likes,
+        where: {
+          likeTyp: "LIKE",
+        },
+        as: "likes",
+        required: false,
+        attributes: [],
+      },
+      {
+        model: Likes,
+        where: {
+          likeTyp: "DISLIKE",
+        },
+        as: "dislikes",
+        required: false,
+        attributes: [],
+      },
+      {
+        model: Comments,
+        attributes: [
+          [
+            Sequelize.fn("COUNT", Sequelize.col("commentLikes.id")),
+            "likesCount",
+          ],
+          [
+            Sequelize.fn("COUNT", Sequelize.col("commentDislikes.id")),
+            "dislikesCount",
+          ],
+        ],
+        include: [
+          {
+            model: Likes,
+            where: {
+              likeTyp: "LIKE",
+            },
+            as: "commentLikes",
+            required: false,
+            attributes: [],
+          },
+          {
+            model: Likes,
+            where: {
+              likeTyp: "DISLIKE",
+            },
+            as: "commentDislikes",
+            required: false,
+            attributes: [],
+          },
+        ],
+      },
+    ],
+    group: [
+      "Posts.id",
+      "User.id",
+      "Category.id",
+      "PostTags.id",
+      "Ratings.id",
+      "PostContent.id",
+      "Likes.id",
+      "dislikes.id",
+      "Comments.id",
+      "commentLikes.id",
+      "commentDislikes.id",
+    ],
+  });
+
+  if (!post) {
+    return apiError(res, `Post with thid id : ${req.params.id} not found`);
+  }
+
+  return res.json(post);
 };
 
 exports.createPosts = async (req, res) => {

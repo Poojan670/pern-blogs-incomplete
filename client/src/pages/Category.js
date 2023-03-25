@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import DashboardLayout from "../layout/DashboardLayout";
 import * as API from "../Redux/Category/api";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import CategoryModal from "../Modal/Category";
-import {categoryConstants} from "../Redux/Category/constants";
+import { categoryConstants } from "../Redux/Category/constants";
 
 const Category = ({ isOpen, setIsOpen }) => {
   const [categories, setCategories] = useState([]);
@@ -14,7 +14,7 @@ const Category = ({ isOpen, setIsOpen }) => {
 
   useEffect(() => {
     const categories = async () => {
-      const categoryList = await API.categoryList(1, 10);
+      const categoryList = await API.categoryList(0, 10);
       setCategories(categoryList.data.results);
       setCount(categoryList.data.count);
     };

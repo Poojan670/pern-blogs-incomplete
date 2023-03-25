@@ -2,10 +2,10 @@ import { errorFunction, successFunction } from "../../components/Alert/Alert";
 import * as action from "./action";
 import * as API from "./api";
 
-export const listCategories = (page, limit) => async (dispatch) => {
+export const listCategories = (offset, limit) => async (dispatch) => {
   try {
     dispatch(action.loadingCategory);
-    const { data } = await API.categoryList(page, limit);
+    const { data } = await API.categoryList(offset, limit);
   } catch (error) {
     errorFunction(error.response.data.msg);
   }

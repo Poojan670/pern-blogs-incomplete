@@ -3,19 +3,36 @@ async function paginate(data, req, res) {
   const offset = parseInt(query.offset) || 0;
   const limit = parseInt(query.limit) || 10;
   const ordering = query.ordering || "";
+  const search = query.search || "";
 
   const result = {};
 
   // Filter
   let filteredData = [...data];
   for (const key in query) {
-    if (key === "offset" || key === "limit" || key === "ordering") {
+    if (
+      key === "offset" ||
+      key === "limit" ||
+      key === "ordering" ||
+      key === "search"
+    ) {
       continue;
     }
     filteredData = filteredData.filter(
       (item) =>
         item[key] &&
         item[key].toString().toLowerCase().includes(query[key].toLowerCase())
+    );
+  }
+
+  // Search
+  if (search) {
+    filteredData = filteredData.filter(
+      (item) =>
+        Object.values(item)
+          .join(" ")
+          .toLowerCase()
+          .indexOf(search.toLowerCase()) !== -1
     );
   }
 
@@ -51,10 +68,11 @@ async function paginate(data, req, res) {
     result.next = {
       url: `${baseUrl}?offset=${
         offset + limit
-      }&limit=${limit}&ordering=${ordering}`,
+      }&limit=${limit}&ordering=${ordering}&search=${search}`,
       offset: offset + limit,
       limit: limit,
       ordering: ordering,
+      search: search,
     };
   }
 
@@ -63,10 +81,11 @@ async function paginate(data, req, res) {
       url: `${baseUrl}?offset=${Math.max(
         offset - limit,
         0
-      )}&limit=${limit}&ordering=${ordering}`,
+      )}&limit=${limit}&ordering=${ordering}&search=${search}`,
       offset: Math.max(offset - limit, 0),
       limit: limit,
       ordering: ordering,
+      search: search,
     };
   }
 
