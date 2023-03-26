@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import CategoryModal from "../Modal/Category";
 import { categoryConstants } from "../Redux/Category/constants";
 
-const Category = ({ isOpen, setIsOpen }) => {
+const Category = ({ isOpen, setIsOpen, theme }) => {
   const [categories, setCategories] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +28,7 @@ const Category = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
+      <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}>
         {showModal ? (
           <CategoryModal showModal={showModal} setShowModal={setShowModal} />
         ) : (

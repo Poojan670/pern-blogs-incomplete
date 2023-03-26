@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from "../layout/DashboardLayout";
 import * as API from "../Redux/Tags/api";
 import { Link } from "react-router-dom";
 import TagsModal from "../Modal/Tags";
 import { tagsConstants } from "../Redux/Tags/constants";
-import { getAllTags, getTag } from "../Redux/Tags/thunk";
+import { getAllTags, getTag, getPageTags } from "../Redux/Tags/thunk";
 
-const Tags = ({ isOpen, setIsOpen }) => {
-  const [tags, setTags] = useState([]);
+const Tags = ({ isOpen, setIsOpen, theme }) => {
+  // const [tags, setTags] = useState([]);
   const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const tags = useSelector((state) => state.tag.tags);
+  const next = useSelector((state) => state.manufacturer.next);
+  const previous = useSelector((state) => state.manufacturer.previous);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+
+  // for pagination
+  const [pageNumberLimit] = useState(5);
+
+  // // change page
+  // const paginate = (number) => {
+  //   dispatch(getPageTags({ number, postsPerPage }));
+  // };
 
   useEffect(() => {
-    const tags = async () => {
-      const tagsList = await API.getAllTags();
-      setTags(tagsList.data.results);
-      setCount(tagsList.data.count);
-    };
-    tags().catch((e) => console.log(e.msg));
+    dispatch(getTag(postsPerPage));
   }, []);
+
+  // useEffect(() => {
+  //   const tags = async () => {
+  //     const tagsList = await API.getAllTags();
+  //     setTags(tagsList.data.results);
+  //     setCount(tagsList.data.count);
+  //   };
+  //   tags().catch((e) => console.log(e.msg));
+  // }, []);
 
   const handleEdit = async (tag) => {
     dispatch({ type: tagsConstants.TAGS_EDIT_SUCCESS, payload: tag });
@@ -29,7 +45,7 @@ const Tags = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
+      <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}>
         {showModal ? (
           <TagsModal showModal={showModal} setShowModal={setShowModal} />
         ) : (
@@ -76,10 +92,7 @@ const Tags = ({ isOpen, setIsOpen }) => {
                       Title
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Author
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Parent
+                      Slug
                     </th>
                     <th scope="col" className="px-6 py-3">
                       createdAt
@@ -91,7 +104,7 @@ const Tags = ({ isOpen, setIsOpen }) => {
                 </thead>
                 <tbody>
                   {tags.map((tag, i) => {
-                    const { title, slug, userName, createdAt, parent } = tag;
+                    const { title, slug, createdAt } = tag;
                     return (
                       <tr
                         key={i}
@@ -105,24 +118,12 @@ const Tags = ({ isOpen, setIsOpen }) => {
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
                           {title}
+                        </th>
+                        <td className="px-6 py-4">
                           <p className="mb-0 leading-tight text-xs text-slate-400">
                             {slug}
                           </p>
-                        </th>
-
-                        <td className="px-6 py-2">
-                          <button type="button">
-                            <img
-                              className="w-8 h-8 rounded-full ml-2"
-                              src="images/me.jpg"
-                              alt=""
-                            />
-                          </button>
-                          <p className="mb-0 leading-tight text-xs text-slate-400 ml-1">
-                            {userName}
-                          </p>
                         </td>
-                        <td className="px-6 py-4">{parent?.title}</td>
                         <td className="px-6 py-4">
                           {createdAt?.substring(0, 10)}
                         </td>

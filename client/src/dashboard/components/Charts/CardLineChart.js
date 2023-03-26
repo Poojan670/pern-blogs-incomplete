@@ -1,7 +1,8 @@
 import React from "react";
 import Chart from "chart.js";
+import classNames from "classnames";
 
-export default function CardLineChart() {
+export default function CardLineChart({ theme }) {
   React.useEffect(() => {
     var config = {
       type: "line",
@@ -108,7 +109,12 @@ export default function CardLineChart() {
   }, []);
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blue-400">
+      <div
+        className={classNames(
+          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blue-400",
+          theme === "dark" && "bg-gray-800"
+        )}
+      >
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">

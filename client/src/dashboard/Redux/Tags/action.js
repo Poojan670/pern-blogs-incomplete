@@ -55,3 +55,8 @@ export const updateTagsFailAction = (error) => ({
   type: tagsConstants.UPDATE_TAGS_FAIL,
   payload: error,
 });
+
+export const clearAllDataAction = () => ({
+  type: tagsConstants.CLEAR_ALL_DATA,
+  payload: [],
+});

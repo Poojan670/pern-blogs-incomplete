@@ -58,19 +58,19 @@ export const getPageTags =
   };
 //create  Tags
 export const createTag =
-  ({ name, code, display_order, active }, currentPage) =>
+  ({ title, slug, content }, currentPage) =>
   async (dispatch) => {
     try {
-      const body = JSON.stringify({ name, code, display_order, active });
+      const body = JSON.stringify({ title, slug, content });
       dispatch(action.loadingAction());
       const { data } = await API.createTag(body);
       // for the case when it is created from other modal
       dispatch(action.createTagsSuccessAction(data));
-      successFunction("Item Category Created Successfully ");
+      successFunction("Tags Created Successfully ");
       dispatch(getPageTags({ number: currentPage, postsPerPage: 10 }));
     } catch (error) {
       dispatch(action.createTagsFailAction(error));
-      errorFunction("Failed to create item category.");
+      errorFunction("Failed to create Tags");
     }
   };
 // Delete  Tags
@@ -89,15 +89,13 @@ export const deleteTag = (id) => async (dispatch) => {
 
 //update
 export const updateTag =
-  (id, { name, code, display_order, active, remarks }) =>
+  (id, { title, slug, content }) =>
   async (dispatch) => {
     try {
       const body = JSON.stringify({
-        name,
-        code,
-        display_order,
-        active,
-        remarks,
+        title,
+        slug,
+        content,
       });
       dispatch(action.loadingUpdateAction());
       const { data } = await API.updateTag(id, body);

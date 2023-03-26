@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
@@ -58,7 +59,7 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
               path="/dashboard"
               roles={["ADMIN", "USER", "MOD"]}
             >
-              <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} />
+              <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Blogs list
             <ProtectedRoute
@@ -73,11 +74,11 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
             </ProtectedRoute>
             // User List
             <ProtectedRoute exact path="/users" roles={["ADMIN"]}>
-              <UserList isOpen={isOpen} setIsOpen={setIsOpen} />
+              <UserList isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Category List
             <ProtectedRoute exact path="/blogs-category" roles={["ADMIN"]}>
-              <Category isOpen={isOpen} setIsOpen={setIsOpen} />
+              <Category isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Home
             <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
@@ -85,7 +86,7 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
             </ProtectedRoute>
             // Tags
             <ProtectedRoute exact path="/tags" roles={["ADMIN", "MOD"]}>
-              <Tags theme={theme} />
+              <Tags theme={theme} isOpen={isOpen} setIsOpen={setIsOpen} />
             </ProtectedRoute>
             // Posts
             <ProtectedRoute exact path="/posts" component={Posts} roles={[]} />

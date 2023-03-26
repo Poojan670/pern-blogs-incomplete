@@ -24,6 +24,14 @@ const Header = ({ theme }) => {
 
   const headerClass = `${theme === "dark" ? "bg-gray-800" : ""} bg-gray-50`;
 
+  const profileTextClass = classNames(
+    "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+    theme === "dark" && " hover:bg-gray-600 hover:text-white"
+  );
+
+  const searchClass =
+    "mt-1 block w-60 px-3 py-2 bg-white border-slate-300 rounded-full text-sm shadow-sm placeholder-slate-500 focus: outline-none focus:border-sky-500 focus:ring-sky-500";
+
   return (
     <header className={headerClass}>
       <div
@@ -31,13 +39,7 @@ const Header = ({ theme }) => {
             items-center sm:flex-row sm:justify-between text-center py-3"
       >
         <div className="md:flex-none w-96 order-2 sm:order-1 flex justify-center py-4 sm:py-0">
-          <input
-            type="text"
-            placeholder="Search.."
-            className="mt-1 block w-60 px-3 py-2 bg-white border-slate-300
-            rounded-full text-sm shadow-sm placeholder-slate-500
-             focus: outline-none focus:border-sky-500 focus:ring-sky-500"
-          />
+          <input type="text" placeholder="Search.." className={searchClass} />
         </div>
         <div className="shrink w-80 sm:order-2">
           <Link
@@ -106,7 +108,7 @@ const Header = ({ theme }) => {
                     <div className="px-2 py-3">
                       <p
                         className="text-sm font-medium text-gray-900 truncate
-                         dark:text-gray-300 flex justify-center"
+                          flex justify-center"
                         role="none"
                       >
                         {userData?.userName}
@@ -116,19 +118,14 @@ const Header = ({ theme }) => {
                       <li>
                         <Link
                           to="/dashboard"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
-                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className={profileTextClass}
                           role="menuitem"
                         >
                           Dashboard
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
-                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
+                        <Link to="/" className={profileTextClass}>
                           Settings
                         </Link>
                       </li>
@@ -136,8 +133,7 @@ const Header = ({ theme }) => {
                         <Link
                           to="/"
                           onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
-                          dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className={profileTextClass}
                         >
                           Sign out
                         </Link>

@@ -8,7 +8,7 @@ export const getTag = (postsPerPage) =>
 
 //obtaining all data
 export const getAllTags = () =>
-  axiosInstance.get(`api/v1/tags-app/tags?ordering=-id`);
+  axiosInstance.get(`api/v1/tags-app/tags?ordering=-id&limit=10`);
 
 //obtaining the previous page data from paginated data
 export const getPrevious = (previous) => axiosInstance.get(previous);

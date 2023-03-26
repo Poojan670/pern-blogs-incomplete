@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import * as API from "../../Redux/Auth/api";
 import { IoIosNotifications } from "react-icons/io";
+import classNames from "classnames";
 
-const DashboardNav = ({ isOpen, setIsOpen }) => {
+const DashboardNav = ({ isOpen, setIsOpen, theme }) => {
   const [userData, setUserData] = useState();
 
   const ToggleSidebar = () => {
@@ -44,16 +45,31 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
     };
     user().catch((e) => console.log(e.msg));
   }, []);
+
+  const profileTextClass = classNames(
+    "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+    theme === "dark" && " hover:bg-gray-600 hover:text-white"
+  );
+
+  const sideBarClass = classNames(
+    "inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ",
+    theme === "dark" && "text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
+  );
   return (
     <>
-      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+      <nav
+        className={classNames(
+          "fixed top-0 z-50 w-full bg-gray-50 border-b border-gray-200 ",
+          theme === "dark" && "bg-gray-800 border-gray-700"
+        )}
+      >
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex justify-between">
             <div className="flex items-center">
               <button
                 type="button"
                 onClick={ToggleSidebar}
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className={sideBarClass}
               >
                 <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -65,14 +81,22 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
               </button>
               <Link to="/" className="flex ml-2 md:mr-24">
                 <img src="blog.png" className="h-8 mr-3" alt="Logo" />
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                <span
+                  className={classNames(
+                    "self-center text-xl font-semibold sm:text-2xl whitespace-nowrap",
+                    theme === "dark" && "text-slate-300"
+                  )}
+                >
                   Blogs
                 </span>
               </Link>
             </div>
             <div className="flex items-center">
               <span
-                className="font-bold opacity-50 md:flex mx-auto mt-1"
+                className={classNames(
+                  "font-bold opacity-50 md:flex mx-auto mt-1",
+                  theme === "dark" && "text-slate-300 opacity-100"
+                )}
                 color="#888888"
               >
                 Hello {userData?.fullName} !
@@ -80,7 +104,10 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
               <div className="flex items-center ml-3">
                 <IoIosNotifications
                   onClick={ToggleNotification}
-                  className="flex-shrink-0 w-6 h-6 mr-5 mt-1 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 cursor-pointer dark:group-hover:text-white"
+                  className={classNames(
+                    "flex-shrink-0 w-6 h-6 mr-5 mt-1 text-gray-500 transition duration-75  group-hover:text-gray-900 cursor-pointer ",
+                    theme === "dark" && "group-hover:text-white text-slate-300"
+                  )}
                 />
                 <div className="absolute top-1 px-1.5 py-0.5 translate-x-1/2 bg-red-500 border border-white rounded-full text-xs text-white">
                   12
@@ -136,17 +163,14 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                       <li>
                         <Link
                           to="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className={profileTextClass}
                           role="menuitem"
                         >
                           Home
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="/"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
+                        <Link to="/" className={profileTextClass}>
                           Settings
                         </Link>
                       </li>
@@ -154,7 +178,7 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
                         <Link
                           to="/"
                           onClick={handleLogout}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                          className={profileTextClass}
                         >
                           Sign out
                         </Link>
@@ -167,7 +191,7 @@ const DashboardNav = ({ isOpen, setIsOpen }) => {
           </div>
         </div>
       </nav>
-      {isOpen && <SideBar />}
+      {isOpen && <SideBar theme={theme} />}
     </>
   );
 };

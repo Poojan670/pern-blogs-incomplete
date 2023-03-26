@@ -2,8 +2,9 @@ import DashboardLayout from "../layout/DashboardLayout";
 import CardLineChart from "../components/Charts/CardLineChart";
 import CardBarChart from "../components/Charts/CardBarChart";
 import Activities from "../components/Charts/Activities";
+import classNames from "classnames";
 
-const DashBoard = ({ isOpen, setIsOpen }) => {
+const DashBoard = ({ isOpen, setIsOpen, theme }) => {
   const userList = [
     {
       id: 1,
@@ -28,20 +29,45 @@ const DashBoard = ({ isOpen, setIsOpen }) => {
     },
   ];
   return (
-    <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
+    <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}>
       <main className="h-[100%] m-0 p-0">
-        <div className="fixed w-[50%] h-[50%] top-20 left-0">
-          <CardBarChart />
+        <div
+          className={classNames(
+            "fixed w-[50%] h-[50%] top-20 left-0",
+            theme === "dark" && "bg-gray-800"
+          )}
+        >
+          <CardBarChart theme={theme} />
         </div>
-        <div className="fixed w-[50%] h-[50%] top-20 left-[50%]">
-          <CardLineChart />
+        <div
+          className={classNames(
+            "fixed w-[50%] h-[50%] top-20 left-[50%]",
+            theme === "dark" && "bg-gray-800"
+          )}
+        >
+          <CardLineChart theme={theme} />
         </div>
         <div className="fixed w-[50%] h-[50%] top-[50%] left-0">
-          <Activities />
+          <Activities theme={theme} />
         </div>
-        <div className="fixed w-[50%] h-[50%] top-[50%] left-[50%]">
-          <div className="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
-            <h6 className="flex justify-center px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-gray-900 opacity-70">
+        <div
+          className={classNames(
+            "fixed w-[50%] h-[50%] top-[50%] left-[50%] ",
+            theme === "dark" && "bg-gray-800"
+          )}
+        >
+          <div
+            className={classNames(
+              "p-6 pb-0 mb-0 bg-gray-50",
+              theme === "dark" && "bg-gray-800"
+            )}
+          >
+            <h6
+              className={classNames(
+                "flex justify-center px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-gray-900 opacity-70",
+                theme === "dark" && "text-gray-300 opacity-100"
+              )}
+            >
               TOP Bloggers
             </h6>
           </div>

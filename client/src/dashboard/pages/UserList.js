@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 
-const UserList = ({ isOpen, setIsOpen }) => {
+const UserList = ({ isOpen, setIsOpen, theme }) => {
   const [userList, setUserList] = useState([]);
   useEffect(() => {
     const users = async () => {
@@ -16,7 +16,7 @@ const UserList = ({ isOpen, setIsOpen }) => {
   }, []);
 
   return (
-    <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen}>
+    <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}>
       <div
         className={
           isOpen

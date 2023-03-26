@@ -52,7 +52,7 @@ const Login = ({ theme }) => {
         <div
           className={classNames(
             "w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700",
-            theme === "dark" && "bg-gray-300"
+            theme === "dark" && "bg-gray-400"
           )}
         >
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -108,7 +108,10 @@ const Login = ({ theme }) => {
                   <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
+                      className={classNames(
+                        "text-gray-500",
+                        theme === "dark" && "text-slate-800"
+                      )}
                     >
                       Remember me
                     </label>
@@ -136,7 +139,12 @@ const Login = ({ theme }) => {
               >
                 Sign in
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p
+                className={classNames(
+                  "text-sm font-light text-gray-500",
+                  theme === "dark" && "text-slate-800"
+                )}
+              >
                 Dont have an account yet?{" "}
                 <Link
                   to="/register"

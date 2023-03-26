@@ -71,7 +71,7 @@ const Register = ({ theme }) => {
             <div
               className={classNames(
                 "w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0",
-                theme === "dark" && "bg-gray-300 border-gray-300"
+                theme === "dark" && "bg-gray-400 border-gray-300"
               )}
             >
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -193,7 +193,10 @@ const Register = ({ theme }) => {
                     <div className="ml-3 text-sm">
                       <label
                         htmlFor="terms"
-                        className="font-light text-gray-500 dark:text-gray-300"
+                        className={classNames(
+                          "font-light text-gray-500",
+                          theme === "dark" && "text-slate-800"
+                        )}
                       >
                         I accept the{" "}
                         <Link
@@ -220,7 +223,12 @@ const Register = ({ theme }) => {
                   >
                     Create an account
                   </button>
-                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                  <p
+                    className={classNames(
+                      "text-sm font-light text-gray-500",
+                      theme === "dark" && "text-slate-800"
+                    )}
+                  >
                     Already have an account?{" "}
                     <Link
                       to="/login"
