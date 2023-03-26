@@ -72,6 +72,13 @@ export const confirmFailAction = (error) => ({
   type: authConstants.PASSWORD_CONFIRM_FAIL,
   payload: error,
 });
+export const forgotPasswordSuccessAction = () => ({
+  type: authConstants.FORGOT_PASSWORD_SUCCESS,
+});
+export const forgotPasswordFailAction = (error) => ({
+  type: authConstants.FORGOT_PASSWORD_SUCCESS,
+  payload: error,
+});
 export const changePasswordSuccessAction = (response) => ({
   type: authConstants.PASSWORD_CHANGE_SUCCESS,
   payload: response,

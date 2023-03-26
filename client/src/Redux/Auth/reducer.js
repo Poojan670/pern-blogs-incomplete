@@ -114,6 +114,17 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case authConstants.FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading_reset: false,
+        authError: false,
+      };
+    case authConstants.FORGOT_PASSWORD_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     case authConstants.REGISTER_SUCCESS:
       return {
         ...state,

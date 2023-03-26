@@ -22,6 +22,8 @@ export const resetPassword = (body) =>
   axiosInstance.post(`api/v1/user-app/password-reset/`, body);
 export const confirmPassword = (body) =>
   axiosInstance.post(`api/v1/user-app/password-reset/confirm/`, body);
+export const forgotPassword = (body) =>
+  axiosInstance.post(`api/v1/user-app/password-reset/forgot/`, body);
 export const changePassword = (id, body) =>
   axiosInstance.patch(`api/v1/user-app/change-password/${id}`, body);
 // get user

@@ -1,54 +1,71 @@
+import classNames from "classnames";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Author from "./sub-components/Author";
 
-const Popular = () => {
+const Popular = ({ theme }) => {
   return (
-    <section className="container mx-auto md:px-20 py-16">
-      <h1 className="font-bold text-4xl py-12 text-center">Most Popular</h1>
+    <section
+      className={classNames(
+        "container mx-auto md:px-20 py-16",
+        theme === "dark" && "bg-gray-800"
+      )}
+    >
+      <h1
+        className={classNames(
+          "font-bold text-4xl py-12 text-center",
+          theme === "dark" && "text-slate-300"
+        )}
+      >
+        Most Popular
+      </h1>
 
       <Swiper slidesPerView={2}>
         <SwiperSlide>
-          <Post />
+          <Post theme={theme} />
         </SwiperSlide>
         <SwiperSlide>
-          <Post />
+          <Post theme={theme} />
         </SwiperSlide>
         <SwiperSlide>
-          <Post />
+          <Post theme={theme} />
         </SwiperSlide>
         <SwiperSlide>
-          <Post />
+          <Post theme={theme} />
         </SwiperSlide>
       </Swiper>
     </section>
   );
 };
 
-function Post() {
+function Post({ theme }) {
   return (
     <div className="grid">
       <div className="images">
-        <a href="/#">
+        <Link to="/#">
           <img src="images/gintoki.png" alt="" width={600} height={400} />
-        </a>
+        </Link>
       </div>
       <div className="info flex justify-center flex-col py-4">
         <div className="category">
-          <a href="/#" className="text-orange-600 hover:text-orange-800">
+          <Link to="/#" className="text-orange-600 hover:text-orange-800">
             Business Travel
-          </a>
-          <a href="/#" className="text-gray-800 hover:text-gray-600">
+          </Link>
+          <Link to="/#" className="text-gray-800 hover:text-gray-600">
             -July 23,2022
-          </a>
+          </Link>
         </div>
         <div className="title">
-          <a
-            href="/#"
-            className="text-3xl md:text-4xl font-bold text-gray-800 hover:text-gray-600"
+          <Link
+            to="/#"
+            className={classNames(
+              "text-3xl md:text-4xl font-bold text-gray-800 hover:text-gray-600",
+              theme === "dark" && "text-slate-300"
+            )}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </a>
+          </Link>
         </div>
         <p className="text-gray-500 py-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate qui
@@ -57,7 +74,7 @@ function Post() {
           cupiditate ea reprehenderit.
         </p>
         <h1>
-          <Author />
+          <Author theme={theme} />
         </h1>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Author from "./Author";
 
 const Related = () => {
@@ -20,7 +21,7 @@ function Post() {
   return (
     <div className="flex gap-5">
       <div className="image flex flex-col justify-start">
-        <a href="/#">
+        <Link to="/#">
           <img
             src="images/gintoki.png"
             alt=""
@@ -28,24 +29,24 @@ function Post() {
             height={200}
             className="rounded"
           />
-        </a>
+        </Link>
       </div>
       <div className="info flex justify-center flex-col">
         <div className="category">
-          <a href="/#" className="text-orange-600 hover:text-orange-800">
+          <Link to="/#" className="text-orange-600 hover:text-orange-800">
             Business Travel
-          </a>
-          <a href="/#" className="text-gray-800 hover:text-gray-600">
+          </Link>
+          <Link to="/#" className="text-gray-800 hover:text-gray-600">
             -July 23,2022
-          </a>
+          </Link>
         </div>
         <div className="title">
-          <a
-            href="/#"
+          <Link
+            to="/#"
             className="text-xl font-bold text-gray-800 hover:text-gray-600"
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </a>
+          </Link>
         </div>
         <Author />
       </div>

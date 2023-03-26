@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import classNames from "classnames";
 
 import { ImFacebook, ImTwitter, ImLinkedin2 } from "react-icons/im";
 
-const Header = () => {
+const Header = ({ theme }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const userData = useSelector((state) => state.auth);
 
@@ -21,8 +22,10 @@ const Header = () => {
     sessionStorage.clear();
   };
 
+  const headerClass = `${theme === "dark" ? "bg-gray-800" : ""} bg-gray-50`;
+
   return (
-    <header className="bg-gray-50">
+    <header className={headerClass}>
       <div
         className="xl:container xl:mx-auto flex flex-col 
             items-center sm:flex-row sm:justify-between text-center py-3"
@@ -37,7 +40,13 @@ const Header = () => {
           />
         </div>
         <div className="shrink w-80 sm:order-2">
-          <Link to="/" className="font-bold uppercase text-3xl">
+          <Link
+            to="/"
+            className={classNames(
+              "font-bold uppercase text-3xl",
+              theme === "dark" && "text-slate-300"
+            )}
+          >
             Blogs
           </Link>
         </div>
@@ -47,6 +56,7 @@ const Header = () => {
               href="https://www.facebook.com/Hunt3rr/"
               target="_blank"
               className="mt-2"
+              rel="noreferrer"
             >
               <ImFacebook color="#888888" />
             </a>
@@ -54,6 +64,7 @@ const Header = () => {
               href="https://twitter.com/po0_jan"
               target="_blank"
               className="mt-2"
+              rel="noreferrer"
             >
               <ImTwitter color="#888888" />
             </a>
@@ -61,14 +72,20 @@ const Header = () => {
               href="https://www.linkedin.com/in/poojan-pradhan-8709b0217/"
               target="_blank"
               className="mt-2"
+              rel="noreferrer"
             >
               <ImLinkedin2 color="#888888" />
             </a>
             {isAuthenticated ? (
               <>
-                <a className="font-bold opacity-50 md:flex mt-[0.35rem]">
+                <p
+                  className={classNames(
+                    "font-bold opacity-50 md:flex mt-[0.35rem]",
+                    theme === "dark" && "text-gray-50 opacity-80"
+                  )}
+                >
                   Welcome {userData?.userName} 😄
-                </a>
+                </p>
                 <div>
                   <button
                     type="button"
@@ -84,9 +101,7 @@ const Header = () => {
                   </button>
                   <div
                     className={`z-10 ml-[-150px] w-44 bg-white rounded divide-y
-                     divide-gray-100 shadow ${
-                      profile ? "absolute" : "hidden"
-                    }`}
+                     divide-gray-100 shadow ${profile ? "absolute" : "hidden"}`}
                   >
                     <div className="px-2 py-3">
                       <p
@@ -135,14 +150,20 @@ const Header = () => {
               <>
                 <Link
                   to="/login"
-                  className="font-bold opacity-50 md:flex mt-[0.35rem]"
+                  className={classNames(
+                    "font-bold opacity-50 md:flex mt-[0.35rem]",
+                    theme === "dark" && "text-white"
+                  )}
                   color="#888888"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="font-bold opacity-50 md:flex mt-[0.35rem]"
+                  className={classNames(
+                    "font-bold opacity-50 md:flex mt-[0.35rem]",
+                    theme === "dark" && "text-white"
+                  )}
                   color="#888888"
                 >
                   Register

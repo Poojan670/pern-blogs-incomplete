@@ -115,6 +115,21 @@ export const confirmPassword =
     }
   };
 
+export const forgotPassword = (email, history) => async (dispatch) => {
+  try {
+    dispatch(action.loadingResetAction());
+    const body = JSON.stringify({ email });
+    await API.forgotPassword(body);
+    dispatch(action.forgotPasswordSuccessAction());
+    successFunction(`Password Reset Email Sent!`);
+    dispatch({ type: authConstants.FORGOT_PASSWORD_SUCCESS, payload: [] });
+    history.push("/reset-password");
+  } catch (error) {
+    dispatch(action.forgotPasswordFailAction());
+    errorFunction(`Failed to send mail`);
+  }
+};
+
 export const changePassword =
   (id, password, old_password, confirm_password, history) =>
   async (dispatch) => {

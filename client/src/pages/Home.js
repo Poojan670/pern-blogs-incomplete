@@ -5,14 +5,14 @@ import Latest from "../components/Latest";
 import Popular from "../components/Popular";
 import Business from "../components/Business";
 
-const Home = () => {
+const Home = ({ theme }) => {
   return (
     <div>
-      <Wrapper>
-        <Section />
-        <Latest />
-        <Popular />
-        <Business />
+      <Wrapper theme={theme}>
+        <Section theme={theme} />
+        <Latest theme={theme} />
+        <Popular theme={theme} />
+        <Business theme={theme} />
       </Wrapper>
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Footer from "../components/sub-components/FormFooter";
 import { register } from "../Redux/Auth/thunk";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import classNames from "classnames";
 
-const Register = () => {
+const Register = ({ theme }) => {
   const { loading, loading_register } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -50,16 +51,29 @@ const Register = () => {
           <img src="spinner.gif" alt="spinner" />
         </div>
       ) : (
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section
+          className={classNames(
+            "bg-gray-50 dark:bg-gray-900",
+            theme === "dark" && "bg-gray-800"
+          )}
+        >
           <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a
-              href="/"
-              className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+            <Link
+              to="/"
+              className={classNames(
+                "flex items-center mb-6 text-2xl font-semibold text-gray-900",
+                theme === "dark" && "text-slate-300"
+              )}
             >
               <img className="w-8 h-8 mr-2" src="blog.png" alt="logo" />
               Blogs
-            </a>
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            </Link>
+            <div
+              className={classNames(
+                "w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0",
+                theme === "dark" && "bg-gray-300 border-gray-300"
+              )}
+            >
               <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Create and account
@@ -182,12 +196,15 @@ const Register = () => {
                         className="font-light text-gray-500 dark:text-gray-300"
                       >
                         I accept the{" "}
-                        <a
-                          className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                          href="/"
+                        <Link
+                          className={classNames(
+                            "font-medium text-primary-600 hover:underline dark:text-primary-500",
+                            theme === "dark" && "text-slate-800"
+                          )}
+                          to="/"
                         >
                           Terms and Conditions
-                        </a>
+                        </Link>
                       </label>
                     </div>
                   </div>
@@ -195,18 +212,25 @@ const Register = () => {
                     type="button"
                     onClick={handleRegister}
                     disabled={loading_register}
-                    className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "
+                    className={classNames(
+                      "w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ",
+                      theme === "dark" &&
+                        "bg-slate-800 border-slate-700 hover:bg-slate-600 hover:border-slate-500"
+                    )}
                   >
                     Create an account
                   </button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Already have an account?{" "}
-                    <a
-                      href="/login"
-                      className="font-medium text-primary-600 text-blue-500 hover:underline dark:text-primary-500"
+                    <Link
+                      to="/login"
+                      className={classNames(
+                        "font-medium text-primary-600 hover:underline",
+                        theme === "dark" && " text-slate-800"
+                      )}
                     >
                       Login here
-                    </a>
+                    </Link>
                   </p>
                   <Footer />
                 </form>

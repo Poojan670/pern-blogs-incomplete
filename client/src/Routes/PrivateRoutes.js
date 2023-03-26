@@ -36,8 +36,9 @@ const UserList = lazyWithReload(() => import("../dashboard/pages/UserList"));
 const Bloglist = lazyWithReload(() => import("../dashboard/pages/BlogList"));
 const BlogsList = lazyWithReload(() => import("../dashboard/pages/BlogsList"));
 const Category = lazyWithReload(() => import("../dashboard/pages/Category"));
+const Tags = lazyWithReload(() => import("../dashboard/pages/Tags"));
 
-const PrivateRoutes = ({ isOpen, setIsOpen }) => {
+const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
   const ErrorFallback = ({ error }) => {
     return (
       <div roles="alert">
@@ -79,12 +80,13 @@ const PrivateRoutes = ({ isOpen, setIsOpen }) => {
               <Category isOpen={isOpen} setIsOpen={setIsOpen} />
             </ProtectedRoute>
             // Home
-            <ProtectedRoute
-              exact
-              path="/"
-              component={Home}
-              roles={["ADMIN", "USER", "MOD"]}
-            />
+            <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
+              <Home theme={theme} />
+            </ProtectedRoute>
+            // Tags
+            <ProtectedRoute exact path="/tags" roles={["ADMIN", "MOD"]}>
+              <Tags theme={theme} />
+            </ProtectedRoute>
             // Posts
             <ProtectedRoute exact path="/posts" component={Posts} roles={[]} />
             <Route component={PageNotFound} roles={[]} />
