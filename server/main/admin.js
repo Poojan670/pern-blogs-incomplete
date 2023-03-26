@@ -1,7 +1,18 @@
 const AdminJS = require("adminjs");
 const AdminJSExpress = require("@adminjs/express");
 const AdminJSSequelize = require("@adminjs/sequelize");
-const db = require("../src/model/index");
+const {
+  db,
+  User,
+  Tags,
+  Category,
+  Comments,
+  Likes,
+  PostContent,
+  PostTags,
+  Posts,
+  Ratings,
+} = require("../src/model/index");
 const Connect = require("connect-pg-simple");
 const session = require("express-session");
 
@@ -32,7 +43,7 @@ const adminJs = new AdminJS({
   rootPath: "/admin",
   resources: [
     {
-      resource: db.user,
+      resource: User,
       options: {
         parent: userParent,
         properties: {
@@ -42,14 +53,14 @@ const adminJs = new AdminJS({
         },
       },
     },
-    { resource: db.category, options: { parent: postParent } },
-    { resource: db.tags, options: { parent: postParent } },
-    { resource: db.posts, options: { parent: postParent } },
-    { resource: db.postTags, options: { parent: postParent } },
-    { resource: db.postContent, options: { parent: postParent } },
-    { resource: db.comments, options: { parent: postParent } },
-    { resource: db.ratings, options: { parent: postParent } },
-    { resource: db.likes, options: { parent: postParent } },
+    { resource: Category, options: { parent: postParent } },
+    { resource: Tags, options: { parent: postParent } },
+    { resource: Posts, options: { parent: postParent } },
+    { resource: PostTags, options: { parent: postParent } },
+    { resource: PostContent, options: { parent: postParent } },
+    { resource: Comments, options: { parent: postParent } },
+    { resource: Ratings, options: { parent: postParent } },
+    { resource: Likes, options: { parent: postParent } },
   ],
 });
 

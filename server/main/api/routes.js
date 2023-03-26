@@ -3,8 +3,13 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   swaggerUi = require("swagger-ui-express"),
   swaggerFile = require("../../swagger-output.json"),
+  transactionMiddleware = require("../../middleware/transaction"),
   user = require("../../src/router/user"),
-  category = require("../../src/router/category");
+  category = require("../../src/router/category"),
+  tags = require("../../src/router/tags"),
+  posts = require("../../src/router/posts"),
+  likes = require("../../src/router/likes"),
+  ratings = require("../../src/router/ratings");
 
 module.exports = function (app) {
   app.use(
@@ -26,8 +31,14 @@ module.exports = function (app) {
     })
   );
 
+  app.use(transactionMiddleware);
+
   app.use("", user);
   app.use("", category);
+  app.use("", tags);
+  app.use("", posts);
+  app.use("", likes);
+  app.use("", ratings);
 
   app.use("*", (req, res) => {
     res.status(404).json({

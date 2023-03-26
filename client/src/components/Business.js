@@ -1,26 +1,46 @@
+import classNames from "classnames";
 import React from "react";
 import Author from "./sub-components/Author";
 
-const Business = () => {
+const Business = ({ theme }) => {
   return (
-    <section className="container mx-auto md:px-20 py-16">
+    <section
+      className={classNames(
+        "container mx-auto md:px-20 py-16",
+        theme === "dark" && "bg-gray-800"
+      )}
+    >
       <div className="grid lg:grid-cols-2">
         <div className="item">
-          <h1 className="font-bold text-4xl py-12">Business</h1>
+          <h1
+            className={classNames(
+              "font-bold text-4xl py-12",
+              theme === "dark" && "text-slate-300"
+            )}
+          >
+            Business
+          </h1>
           <div className="flex flex-col gap-6">
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            <Post theme={theme} />
+            <Post theme={theme} />
+            <Post theme={theme} />
+            <Post theme={theme} />
           </div>
         </div>
         <div className="item">
-          <h1 className="font-bold text-4xl py-12">Travel</h1>
+          <h1
+            className={classNames(
+              "font-bold text-4xl py-12",
+              theme === "dark" && "text-slate-300"
+            )}
+          >
+            Travel
+          </h1>
           <div className="flex flex-col gap-6">
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            <Post theme={theme} />
+            <Post theme={theme} />
+            <Post theme={theme} />
+            <Post theme={theme} />
           </div>
         </div>
       </div>
@@ -28,7 +48,7 @@ const Business = () => {
   );
 };
 
-function Post() {
+function Post({ theme }) {
   return (
     <div className="flex gap-5">
       <div className="image flex flex-col justify-start">
@@ -54,12 +74,15 @@ function Post() {
         <div className="title">
           <a
             href="/#"
-            className="text-xl font-bold text-gray-800 hover:text-gray-600"
+            className={classNames(
+              "text-xl font-bold text-gray-800 hover:text-gray-600",
+              theme === "dark" && "text-slate-300"
+            )}
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </a>
         </div>
-        <Author />
+        <Author theme={theme} />
       </div>
     </div>
   );

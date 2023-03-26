@@ -1,0 +1,83 @@
+version: "3.2"
+
+services:
+  node:
+    image: "blogs-server:1.0"
+    networks:
+      - blogs
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: blogs-server
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./server/public:/app/public
+      - static:/app/static
+      - media:/app/media
+    command: yarn start
+
+  react:
+    image: "blogs-client:1.0"
+    stdin_open: true
+    networks:
+      - blogs
+    restart: unless-stopped
+    container_name: blogs-client
+    depends_on:
+      - node
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+  postgres:
+    image: "postgres:13.1-alpine"
+    networks:
+      - blogs
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: poojan12
+      POSTGRES_DB: pern_blogs
+      PGDATA: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - build:/usr/app/build
+      - static:/app/static
+      - media:/app/media
+    ports:
+      - "80:80"
+    depends_on:
+      - node
+    networks:
+      - blogs
+
+  redis:
+    image: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - blogs
+
+volumes:
+  dbdata:
+  static:
+  media:
+
+networks:
+  blogs:
+    driver: bridge

@@ -9,13 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Posts.hasMany(PostContent, {
-        foreignKey: "posts_id",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-
-      PostContent.belongsTo(models.Posts);
     }
   }
 
@@ -29,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
           notNull: true,
+        },
+        references: {
+          model: "posts",
+          key: "id",
         },
       },
     },

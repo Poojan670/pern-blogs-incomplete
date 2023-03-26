@@ -9,22 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Posts.hasMany(Ratings, {
-        foreignKey: "posts_id",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Ratings.belongsTo(models.Posts);
-
-      models.User.hasMany(Ratings, {
-        foreignKey: "created_by",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-
-      Ratings.belongsTo(models.User, {
-        foreignKey: "created_by",
-      });
     }
   }
 
@@ -33,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       postsId: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        references: {
+          model: "posts",
+          key: "id",
+        },
       },
       ratings: {
         type: DataTypes.INTEGER,
@@ -43,7 +31,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         defaultValue: 1,
       },
-      createdBy: DataTypes.INTEGER,
+      createdBy: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: true,

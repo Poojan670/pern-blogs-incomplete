@@ -3,7 +3,7 @@ require("express-async-errors");
 const router = express.Router();
 const user = require("../controllers/user");
 const auth = require("../../middleware/auth");
-const { login } = require("../utils/login");
+const { login, refreshToken } = require("../utils/login");
 const upload = require("../utils/storage");
 const {
   listUsersPermission,
@@ -22,6 +22,8 @@ router.delete(
   user.deleteUser
 );
 router.get(`${prefix}/verify/:id`, user.userVerify);
+router.get(`${prefix}/resend/:email`, user.resendToken);
 router.post(`${prefix}/login`, login);
+router.post(`${prefix}/login/refresh`, refreshToken);
 
 module.exports = router;

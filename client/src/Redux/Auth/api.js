@@ -22,6 +22,8 @@ export const resetPassword = (body) =>
   axiosInstance.post(`api/v1/user-app/password-reset/`, body);
 export const confirmPassword = (body) =>
   axiosInstance.post(`api/v1/user-app/password-reset/confirm/`, body);
+export const forgotPassword = (body) =>
+  axiosInstance.post(`api/v1/user-app/password-reset/forgot/`, body);
 export const changePassword = (id, body) =>
   axiosInstance.patch(`api/v1/user-app/change-password/${id}`, body);
 // get user
@@ -29,6 +31,3 @@ export const user = () => axiosInstance.get(`api/v1/user-app/me`);
 // user list
 export const userList = (page, limit) =>
   axiosInstance.get(`api/v1/user-app/users?page=${page}&limit=${limit}`);
-
-export const categoryList = (page, limit) =>
-  axiosInstance.get(`api/v1/category-app/category?page=${page}&limit=${limit}`);

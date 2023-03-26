@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { apiError } = require("../middleware/error");
-const User = require("../src/model/index").user;
+const { User } = require("../src/model/index");
 
 module.exports = function auth(permissions = null) {
   return async (req, res, next) => {
@@ -9,9 +9,7 @@ module.exports = function auth(permissions = null) {
     try {
       const decode = jwt.decode(token, process.env.SECRET_KEY);
       if (Date.now() >= decode.exp * 1000) {
-        return res.status(400).json({
-          msg: "Token Expired",
-        });
+        return apiError(res, "Token Expired");
       }
       req.user = decode;
 
@@ -26,7 +24,7 @@ module.exports = function auth(permissions = null) {
         next();
       }
     } catch (err) {
-      apiError(res, `Invalid Token, Please try again due to ${err}`);
+      apiError(res, `Invalid Token, Please try again due to ${err}`, 401);
     }
   };
 };

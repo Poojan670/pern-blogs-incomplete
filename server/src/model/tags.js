@@ -9,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.hasMany(Tags, {
-        foreignKey: "created_by",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Tags.belongsTo(models.User);
     }
   }
 
@@ -32,7 +26,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       slug: { type: DataTypes.STRING(100) },
       content: DataTypes.TEXT,
-      createdBy: DataTypes.INTEGER,
+      createdBy: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: true,

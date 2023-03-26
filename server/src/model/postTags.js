@@ -18,8 +18,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      postsId: DataTypes.INTEGER,
-      tagsId: DataTypes.INTEGER,
+      postsId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "posts",
+          key: "id",
+        },
+      },
+      tagsId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "tags",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: false,

@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const User = require("../model").user;
+const { User } = require("../model");
 const jwt = require("jsonwebtoken");
 const { generateVerificationToken } = require("../utils/token");
 const { passwordHash } = require("../utils/hash");
@@ -18,13 +18,13 @@ exports.listUsers = async (req, res) => {
 exports.register = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return apiError(res, error.details[0].message);
-  const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   let img;
   if (!req.file) {
-    img = `${protocol}://${req.get("host")}//images//gintoki.png`;
+    img = `${req.protocol}://${req.get("host")}//images//gintoki.png`;
   } else {
-    img = `${protocol}://${req.get("host")}//images//${req.file.filename}`;
+    img = `${req.protocol}://${req.get("host")}//images//${req.file.filename}`;
   }
+
   let user = await User.findOne({
     where: {
       [Op.or]: { email: req.body.email, userName: req.body.userName },
@@ -37,7 +37,7 @@ exports.register = async (req, res, next) => {
     _.pick(req.body, ["userName", "email", "password", "fullName", "content"])
   );
   user.password = await passwordHash(user.password);
-  user.isVerified = true;
+  user.isVerified = false;
   user.img = img;
   await user.save();
   const verifyToken = generateVerificationToken(user.id);
@@ -48,7 +48,11 @@ exports.register = async (req, res, next) => {
 exports.userVerify = async (req, res) => {
   const token = req.params.id;
   if (!token) return apiError(res, "Missing Token");
-  payload = jwt.verify(token, process.env.TOKEN_SECRET);
+  try {
+    payload = jwt.verify(token, process.env.TOKEN_SECRET);
+  } catch (err) {
+    return apiError(res, err);
+  }
   const user = await User.findOne({
     where: {
       id: payload.id,
@@ -71,7 +75,7 @@ exports.resendToken = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  if (req.params.id != req.user.id) return apiError(res, "Not Allowed", 401);
+  if (req.params.id !== req.user.id) return apiError(res, "Not Allowed", 401);
   const user = await User.findByPk(req.params.id);
   if (!user) return apiError(res, "User not found");
   let img;

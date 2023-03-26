@@ -10,22 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Category.hasMany(Posts, {
-        foreignKey: "category_id",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Posts.belongsTo(models.Category, {
-        onDelete: "RESTRICT",
-      });
-
-      models.User.hasMany(Posts, {
-        foreignKey: "created_by",
-        foreignKeyConstraint: true,
-        allowNull: false,
-      });
-      Posts.belongsTo(models.User);
-      Posts.belongsToMany(models.Tags, { through: "post_tags" });
     }
   }
   Posts.init(
@@ -41,13 +25,27 @@ module.exports = (sequelize, DataTypes) => {
       img: DataTypes.STRING(500),
       categoryId: {
         type: DataTypes.INTEGER,
+        references: {
+          model: "categories",
+          key: "id",
+        },
         allowNull: false,
         validate: {
           notEmpty: true,
           notNull: true,
         },
       },
-      createdBy: DataTypes.INTEGER,
+      views: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      createdBy: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: true,

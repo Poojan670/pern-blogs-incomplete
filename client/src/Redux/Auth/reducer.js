@@ -36,10 +36,9 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading_resend_token: true };
     case authConstants.LOGIN_SUCCESS:
       storage.removeItem("persist:root");
-      localStorage.setItem("accessToken", action.payload.access_token);
-      localStorage.setItem("refreshToken", action.payload.refresh_token);
+      localStorage.setItem("accessToken", action.payload.accessToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
       localStorage.setItem("userName", action.payload.userName);
-
       return {
         ...state,
         isAuthenticated: true,
@@ -111,6 +110,17 @@ const authReducer = (state = initialState, action) => {
         authError: false,
       };
     case authConstants.PASSWORD_CHANGE_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case authConstants.FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading_reset: false,
+        authError: false,
+      };
+    case authConstants.FORGOT_PASSWORD_FAIL:
       return {
         ...state,
         loading: false,

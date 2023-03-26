@@ -1,10 +1,23 @@
+import classNames from "classnames";
 import React from "react";
 
-const NewsLetter = () => {
+const NewsLetter = ({ theme }) => {
   return (
-    <section className="bg-gray-50 mt-20">
+    <section
+      className={classNames(
+        "bg-gray-50 mt-0",
+        theme === "dark" && "bg-gray-800"
+      )}
+    >
       <div className="container mx-auto md:px-20 py-16 text-center">
-        <h1 className="font-bold text-3xl">Subscribe NewsLetter</h1>
+        <h1
+          className={classNames(
+            "font-bold text-3xl",
+            theme === "dark" && "text-slate-300"
+          )}
+        >
+          Subscribe NewsLetter
+        </h1>
         <div className="py-4">
           <input
             type="text"
@@ -13,7 +26,12 @@ const NewsLetter = () => {
             placeholder="Enter your Email.."
           />
         </div>
-        <button className="bg-blue-400 px-20 py-3 rounded-full text-gray-50 text-xl">
+        <button
+          className={classNames(
+            "bg-blue-400 px-20 py-3 rounded-full text-gray-50 text-xl",
+            theme === "dark" && "bg-slate-700"
+          )}
+        >
           Subscribe
         </button>
       </div>

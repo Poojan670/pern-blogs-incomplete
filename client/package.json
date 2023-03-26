@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "chart.js": "2.9.3",
+    "classnames": "^2.3.2",
     "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
     "react": "17.0.2",
@@ -23,9 +24,11 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
+    "reselect": "^4.1.7",
     "simplebar-react": "^2.4.1",
     "swiper": "^8.3.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",

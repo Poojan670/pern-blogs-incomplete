@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { login } from "../Redux/Auth/thunk";
 import { authConstants } from "../Redux/Auth/constants";
 import Footer from "../components/sub-components/FormFooter";
+import classNames from "classnames";
 
-const Login = () => {
+const Login = ({ theme }) => {
   // props
   const loading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
@@ -31,16 +32,29 @@ const Login = () => {
     dispatch(login(userName, password, history));
   };
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section
+      className={classNames(
+        "bg-gray-50 dark:bg-gray-900",
+        theme === "dark" && "bg-gray-800"
+      )}
+    >
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="/"
-          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+        <Link
+          to="/"
+          className={classNames(
+            "flex items-center mb-6 text-2xl font-semibold text-gray-900",
+            theme === "dark" && "text-slate-300"
+          )}
         >
           <img className="w-8 h-8 mr-2" src="blog.png" alt="logo" />
           Blogs
-        </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        </Link>
+        <div
+          className={classNames(
+            "w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700",
+            theme === "dark" && "bg-gray-400"
+          )}
+        >
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
@@ -94,35 +108,62 @@ const Login = () => {
                   <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
+                      className={classNames(
+                        "text-gray-500",
+                        theme === "dark" && "text-slate-800"
+                      )}
                     >
                       Remember me
                     </label>
                   </div>
                 </div>
-                <a
-                  href="/"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                <Link
+                  to="/forgot-password"
+                  className={classNames(
+                    "font-medium text-primary-600 hover:underline",
+                    theme === "dark" && " text-slate-800"
+                  )}
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <button
                 type="submit"
                 onClick={handleLogin}
                 disabled={loading}
-                className="w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded "
+                className={classNames(
+                  "w-full bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded ",
+                  theme === "dark" &&
+                    "bg-slate-800 border-slate-700 hover:bg-slate-600 hover:border-slate-500"
+                )}
               >
                 Sign in
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p
+                className={classNames(
+                  "text-sm font-light text-gray-500",
+                  theme === "dark" && "text-slate-800"
+                )}
+              >
                 Dont have an account yet?{" "}
-                <a
-                  href="/register"
-                  className="font-medium text-primary-600 text-blue-500 hover:underline dark:text-primary-500"
+                <Link
+                  to="/register"
+                  className={classNames(
+                    "font-medium text-primary-600 hover:underline",
+                    theme === "dark" && " text-slate-800"
+                  )}
                 >
                   Sign up
-                </a>
+                </Link>
+                <Link
+                  to="/reset"
+                  className={classNames(
+                    "font-medium text-primary-600 hover:underline ml-[3rem]",
+                    theme === "dark" && " text-slate-800"
+                  )}
+                >
+                  Unverified?
+                </Link>
               </p>
               <Footer />
             </form>

@@ -41,16 +41,155 @@ Object.keys(db).forEach((modelName) => {
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./user")(sequelize, DataTypes);
-db.tags = require("./tags")(sequelize, DataTypes);
-db.category = require("./category")(sequelize, DataTypes);
-db.posts = require("./posts")(sequelize, DataTypes);
-db.postTags = require("./postTags")(sequelize, DataTypes);
-db.postContent = require("./postContent")(sequelize, DataTypes);
-db.comments = require("./comments")(sequelize, DataTypes);
-db.likes = require("./likes")(sequelize, DataTypes);
-db.ratings = require("./ratings")(sequelize, DataTypes);
+const User = require("./user")(sequelize, DataTypes);
+const Tags = require("./tags")(sequelize, DataTypes);
+const Category = require("./category")(sequelize, DataTypes);
+const Posts = require("./posts")(sequelize, DataTypes);
+const PostTags = require("./postTags")(sequelize, DataTypes);
+const PostContent = require("./postContent")(sequelize, DataTypes);
+const Comments = require("./comments")(sequelize, DataTypes);
+const Likes = require("./likes")(sequelize, DataTypes);
+const Ratings = require("./ratings")(sequelize, DataTypes);
 
-db.sequelize.sync({ force: false, alter: false });
+// associations
 
-module.exports = db;
+// Category Associations
+User.hasMany(Category, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Category.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+
+Category.hasMany(Category, {
+  foreignKey: "parent",
+  foreignKeyConstraint: true,
+});
+
+Category.belongsTo(Category, {
+  foreignKey: "parent",
+  onDelete: "Cascade",
+});
+
+// tags
+User.hasMany(Tags, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Tags.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+  onDelete: "Cascade",
+});
+
+// posts
+Category.hasMany(Posts, {
+  foreignKey: "category_id",
+  foreignKeyConstraint: true,
+});
+Posts.belongsTo(Category, {
+  onDelete: "RESTRICT",
+  foreignKey: "category_id",
+  foreignKeyConstraint: true,
+});
+
+User.hasMany(Posts, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Posts.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Posts.belongsToMany(Tags, {
+  through: "post_tags",
+});
+
+// post content
+Posts.hasMany(PostContent, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
+PostContent.belongsTo(Posts, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
+
+// likes
+Posts.hasMany(Likes, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
+Likes.belongsTo(Posts, {
+  foreignKey: "comments_id",
+  foreignKeyConstraint: true,
+});
+Comments.hasMany(Likes, {
+  foreignKey: "comments_id",
+  foreignKeyConstraint: true,
+});
+Likes.belongsTo(Comments, {
+  foreignKey: "comments_id",
+  foreignKeyConstraint: true,
+});
+
+User.hasMany(Likes, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Likes.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+
+// comments
+Posts.hasMany(Comments, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
+Comments.belongsTo(Posts);
+User.hasMany(Comments, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Comments.belongsTo(User);
+Posts.hasMany(Comments, {
+  foreignKey: "parent",
+  foreignKeyConstraint: true,
+});
+Comments.belongsTo(Posts, {
+  foreignKey: "parent",
+  onDelete: "RESTRICT",
+});
+
+// ratings
+Posts.hasMany(Ratings, {
+  foreignKey: "posts_id",
+  foreignKeyConstraint: true,
+});
+Ratings.belongsTo(Posts);
+User.hasMany(Ratings, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+Ratings.belongsTo(User, {
+  foreignKey: "created_by",
+  foreignKeyConstraint: true,
+});
+
+// db.sequelize.sync({ force: false, alter: false });
+
+module.exports = {
+  db,
+  User,
+  Tags,
+  Category,
+  Posts,
+  PostTags,
+  PostContent,
+  Comments,
+  Likes,
+  Ratings,
+};

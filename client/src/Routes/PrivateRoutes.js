@@ -1,7 +1,10 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import ProtectedRoute from "./ProtectedRoute";
+import BlogList from "../dashboard/pages/BlogList";
+import BlogsTable from "../dashboard/pages/BlogsList";
 
 //for refreshing the page when lazy fails loading the component
 const lazyWithReload = (componentImport) =>
@@ -26,15 +29,17 @@ const lazyWithReload = (componentImport) =>
     }
   });
 
-const Dashboard = lazyWithReload(() => import("../pages/DashBoard"));
+const Dashboard = lazyWithReload(() => import("../dashboard/pages/DashBoard"));
 const Home = lazyWithReload(() => import("../pages/Home"));
 const Posts = lazyWithReload(() => import("../pages/Blogs"));
 const PageNotFound = lazyWithReload(() => import("../pages/PageNotFound"));
-const UserList = lazyWithReload(() => import("../pages/UserList"));
-const Blogslist = lazyWithReload(() => import("../pages/BlogList"));
-const Category = lazyWithReload(() => import("../pages/Category"));
+const UserList = lazyWithReload(() => import("../dashboard/pages/UserList"));
+const Bloglist = lazyWithReload(() => import("../dashboard/pages/BlogList"));
+const BlogsList = lazyWithReload(() => import("../dashboard/pages/BlogsList"));
+const Category = lazyWithReload(() => import("../dashboard/pages/Category"));
+const Tags = lazyWithReload(() => import("../dashboard/pages/Tags"));
 
-const PrivateRoutes = ({ isOpen, setIsOpen }) => {
+const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
   const ErrorFallback = ({ error }) => {
     return (
       <div roles="alert">
@@ -54,30 +59,35 @@ const PrivateRoutes = ({ isOpen, setIsOpen }) => {
               path="/dashboard"
               roles={["ADMIN", "USER", "MOD"]}
             >
-              <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} />
+              <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Blogs list
             <ProtectedRoute
               exact
-              path="/blogs-list"
-              component={Blogslist}
+              path="/blogs-lists"
+              component={Bloglist}
               roles={["ADMIN", "MOD"]}
             />
+            // Blogs List
+            <ProtectedRoute exact path="/blogs-list" roles={["ADMIN", "MOD"]}>
+              <BlogsList isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
             // User List
             <ProtectedRoute exact path="/users" roles={["ADMIN"]}>
-              <UserList isOpen={isOpen} setIsOpen={setIsOpen} />
+              <UserList isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Category List
             <ProtectedRoute exact path="/blogs-category" roles={["ADMIN"]}>
-              <Category isOpen={isOpen} setIsOpen={setIsOpen} />
+              <Category isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Home
-            <ProtectedRoute
-              exact
-              path="/"
-              component={Home}
-              roles={["ADMIN", "USER", "MOD"]}
-            />
+            <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
+              <Home theme={theme} />
+            </ProtectedRoute>
+            // Tags
+            <ProtectedRoute exact path="/tags" roles={["ADMIN", "MOD"]}>
+              <Tags theme={theme} isOpen={isOpen} setIsOpen={setIsOpen} />
+            </ProtectedRoute>
             // Posts
             <ProtectedRoute exact path="/posts" component={Posts} roles={[]} />
             <Route component={PageNotFound} roles={[]} />

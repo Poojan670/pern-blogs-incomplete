@@ -1,6 +1,7 @@
+import classNames from "classnames";
 import React from "react";
 
-const Author = () => {
+const Author = ({ theme }) => {
   return (
     <div className="author flex py-5">
       <img
@@ -13,7 +14,10 @@ const Author = () => {
       <div className="flex flex-col justify-center px-4">
         <a
           href="/#"
-          className="text-md font-bold text-gray-800 hover:text-gray-600"
+          className={classNames(
+            "text-md font-bold text-gray-800 hover:text-gray-600",
+            theme === "dark" && "text-slate-300 hover:text-gray-400"
+          )}
         >
           Poojan Pradhan
         </a>

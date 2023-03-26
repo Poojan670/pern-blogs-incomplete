@@ -1,35 +1,38 @@
-const swaggerAutogen = require('swagger-autogen')();
+const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
-    info: {
-        version: '1.0.0',
-        title: "pern-blogs",
-        description: 'PERN stack Blogs Application for for regular blogs and articles sharing',
+  info: {
+    version: "1.0.0",
+    title: "pern-blogs",
+    description:
+      "PERN stack Blogs Application for for regular blogs and articles sharing",
+  },
+  host: "",
+  basePath: "/",
+  schemes: ["http"],
+  consumes: ["application/json"],
+  produces: ["application/json"],
+  tags: [],
+  securityDefinitions: {
+    Bearer: {
+      type: "apiKey",
+      in: "header", // can be "header", "query" or "cookie"
+      name: "Authorization", // name of the header, query parameter or cookie
+      description: "Please enter a valid token to test the requests below...",
     },
-    host: '',
-    basePath: '/',
-    schemes: ['http'],
-    consumes: ['application/json'],
-    produces: ['application/json'],
-    tags: [
-    ],
-    securityDefinitions: {
-        Bearer: {
-            type: "apiKey",
-            in: "header", // can be "header", "query" or "cookie"
-            name: "Authorization", // name of the header, query parameter or cookie
-            description:
-                "Please enter a valid token to test the requests below...",
-        },
-    },
-    definitions: {},          // by default: empty object (Swagger 2.0)
-    components: {}            // by default: empty object (OpenAPI 3.x)
+  },
+  definitions: {}, // by default: empty object (Swagger 2.0)
+  components: {}, // by default: empty object (OpenAPI 3.x)
 };
 
-const outputFile = './swagger-output.json';
+const outputFile = "./swagger-output.json";
 const endpointsFiles = [
-    './src/router/user.js',
-    './src/router/category.js',
+  "./src/router/user.js",
+  "./src/router/category.js",
+  "./src/router/tags.js",
+  "./src/router/posts.js",
+  "./src/router/likes.js",
+  "./src/router/ratings.js",
 ];
 
 /* NOTE: if you use the express Router, you must pass in the
