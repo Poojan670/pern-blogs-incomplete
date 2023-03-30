@@ -35,15 +35,15 @@ const Category = ({ showModel, setShowModal }) => {
     parent: Yup.object().nullable(true),
   });
 
-  const loadCategoryList = async (search, loadOptions, { limit, page }) => {
+  const loadCategoryList = async (search, loadOptions, { limit, offset }) => {
     const { data } = await axiosInstance(
-      `/api/v1/category-app/category?search=${search}&offset=${page}&limit=${limit}`
+      `/api/v1/category-app/category?search=${search}&offset=${offset}&limit=${limit}`
     );
     return {
       options: data?.results,
       hasMore: false,
       additional: {
-        page: limit,
+        offset: limit,
         limit: limit + 10,
       },
     };
@@ -69,7 +69,7 @@ const Category = ({ showModel, setShowModal }) => {
   };
 
   const onSubmit = (values) => {
-    const { title, slug, content, parent, history } = values;
+    const { title, slug, content, parent } = values;
     setLock(true);
     if (edit) {
       const id = category.id;
@@ -125,7 +125,10 @@ const Category = ({ showModel, setShowModal }) => {
             >
               {(formik) => {
                 return (
-                  <Form className="space-y-6" action="client/src/dashboard/Modal#">
+                  <Form
+                    className="space-y-6"
+                    action="client/src/dashboard/Modal#"
+                  >
                     <div>
                       <label
                         htmlFor="title"
@@ -207,7 +210,7 @@ const Category = ({ showModel, setShowModal }) => {
                         }}
                         loadOptions={loadCategoryList}
                         additional={{
-                          page: 1,
+                          offset: 0,
                           limit: 10,
                         }}
                       />

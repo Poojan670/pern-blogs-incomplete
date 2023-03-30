@@ -93,14 +93,15 @@ const DashBoard = ({ isOpen, setIsOpen, theme }) => {
                 </thead>
                 <tbody>
                   {userList.map((user, i) => {
-                    const { username, email, blogsCount, commentsCount } = user;
+                    const { username, email, blogsCount, commentsCount, img } =
+                      user;
                     return (
                       <tr key={i}>
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                           <div className="flex px-2 py-1">
                             <div>
                               <img
-                                src="images/gintoki.png"
+                                src={img}
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="user1"
                               />

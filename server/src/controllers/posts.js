@@ -12,154 +12,289 @@ const {
 } = require("../model");
 const validate = require("../validators/posts");
 const { apiError } = require("../../middleware/error");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 exports.listPosts = async (req, res) => {
-  const posts = await Posts.findAll();
+  const posts = await Posts.findAll({
+    attributes: [
+      "id",
+      "title",
+      "slug",
+      "img",
+      "content",
+      "createdAt",
+      "categoryId",
+      "views",
+    ],
+    include: [
+      {
+        model: Category,
+        attributes: ["id", "title"],
+      },
+      {
+        model: User,
+        attributes: ["id", "img", "userName", "role"],
+      },
+    ],
+  });
+  const result = await paginate(posts, req, res);
+  res.json(result);
+};
+
+exports.listRelatedPosts = async (req, res) => {
+  const postsId = req.params.id;
+  const categoryId = req.params.categoryId;
+  const posts = await Posts.findAll({
+    attributes: [
+      "id",
+      "title",
+      "slug",
+      "img",
+      "content",
+      "createdAt",
+      "categoryId",
+    ],
+    where: {
+      id: {
+        [Op.not]: postsId,
+      },
+    },
+    include: [
+      {
+        model: Category,
+        attributes: ["id", "title"],
+        where: {
+          id: {
+            [Op.eq]: categoryId,
+          },
+        },
+      },
+      {
+        model: User,
+        attributes: ["id", "img", "userName", "role"],
+      },
+    ],
+  });
+  const result = await paginate(posts, req, res);
+  res.json(result);
+};
+
+exports.listTrendingPosts = async (req, res) => {
+  const today = new Date(); // get today's date
+  const oneWeekAgo = new Date(today); // create a new Date object
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const posts = await Posts.findAll({
+    attributes: [
+      "id",
+      "title",
+      "slug",
+      "img",
+      "content",
+      "createdAt",
+      "categoryId",
+      "views",
+    ],
+    where: {
+      createdAt: {
+        [Op.between]: [oneWeekAgo, today],
+      },
+    },
+    include: [
+      {
+        model: Category,
+        attributes: ["id", "title"],
+      },
+      {
+        model: User,
+        attributes: ["id", "img", "userName", "role"],
+      },
+    ],
+  });
   const result = await paginate(posts, req, res);
   res.json(result);
 };
 
 exports.getPostSummary = async (req, res) => {
-  const post = await Posts.findByPk(req.params.id, {
-    attributes: [
-      [Sequelize.col("user_name"), "userName"],
-      [Sequelize.fn("COUNT", Sequelize.col("likes.id")), "likesCount"],
-      [Sequelize.fn("COUNT", Sequelize.col("dislikes.id")), "dislikesCount"],
-    ],
-    include: [
-      {
-        model: User,
-        attributes: [],
-      },
-      {
-        model: Category,
-      },
-      {
-        model: PostTags,
-      },
-      {
-        model: Ratings,
-        attributes: ["ratings"],
-      },
-      {
-        model: PostContent,
-      },
-      {
-        model: Likes,
-        where: {
-          likeTyp: "LIKE",
-        },
-        as: "likes",
-        required: false,
-        attributes: [],
-      },
-      {
-        model: Likes,
-        where: {
-          likeTyp: "DISLIKE",
-        },
-        as: "dislikes",
-        required: false,
-        attributes: [],
-      },
-      {
-        model: Comments,
-        attributes: [
-          [
-            Sequelize.fn("COUNT", Sequelize.col("commentLikes.id")),
-            "likesCount",
-          ],
-          [
-            Sequelize.fn("COUNT", Sequelize.col("commentDislikes.id")),
-            "dislikesCount",
-          ],
+  try {
+    const post = await Posts.findByPk(req.params.id, {
+      attributes: [
+        "id",
+        "title",
+        "img",
+        "content",
+        "createdAt",
+        "updatedAt",
+        "createdBy",
+        "views",
+        // [Sequelize.col("user_name"), "createdBy"],
+        [
+          Sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM likes
+            WHERE posts_id = ${req.params.id}
+            AND type = 'POST'
+            AND like_type = 'LIKE'
+          )`),
+          "likesCount",
         ],
-        include: [
-          {
-            model: Likes,
-            where: {
-              likeTyp: "LIKE",
-            },
-            as: "commentLikes",
-            required: false,
-            attributes: [],
-          },
-          {
-            model: Likes,
-            where: {
-              likeTyp: "DISLIKE",
-            },
-            as: "commentDislikes",
-            required: false,
-            attributes: [],
-          },
+        [
+          Sequelize.literal(`(
+            SELECT COUNT(*)
+            FROM likes
+            WHERE posts_id = ${req.params.id}
+            AND type = 'POST'
+            AND like_type = 'DISLIKE'
+          )`),
+          "dislikesCount",
         ],
-      },
-    ],
-    group: [
-      "Posts.id",
-      "User.id",
-      "Category.id",
-      "PostTags.id",
-      "Ratings.id",
-      "PostContent.id",
-      "Likes.id",
-      "dislikes.id",
-      "Comments.id",
-      "commentLikes.id",
-      "commentDislikes.id",
-    ],
-  });
+        // [Sequelize.fn("COUNT", Sequelize.col("Likes.posts_id")), "likesCount"],
+        // [Sequelize.fn("COUNT", Sequelize.col("dislikes.id")), "dislikesCount"],
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ["img", "userName", "role"],
+        },
+        {
+          model: Category,
+          attributes: ["id", "title"],
+        },
+        {
+          model: Tags,
+          through: PostTags,
+          attributes: ["id", "title"],
+        },
+        {
+          model: Ratings,
+          attributes: ["id", "ratings"],
+        },
+        {
+          model: PostContent,
+          attributes: ["id", "img", "content"],
+        },
+        {
+          model: Likes,
+          where: {
+            likeType: "LIKE",
+            type: "POST",
+          },
+          required: false,
+          attributes: [],
+        },
+        // {
+        //   model: Comments,
+        //   attributes: [
+        //     [
+        //       Sequelize.fn("COUNT", Sequelize.col("commentLikes.id")),
+        //       "likesCount",
+        //     ],
+        //     [
+        //       Sequelize.fn("COUNT", Sequelize.col("commentDislikes.id")),
+        //       "dislikesCount",
+        //     ],
+        //   ],
+        //   include: [
+        //     {
+        //       model: Likes,
+        //       where: {
+        //         likeTyp: "LIKE",
+        //       },
+        //       as: "commentLikes",
+        //       required: false,
+        //       attributes: [],
+        //     },
+        //     {
+        //       model: Likes,
+        //       where: {
+        //         likeTyp: "DISLIKE",
+        //       },
+        //       as: "commentDislikes",
+        //       required: false,
+        //       attributes: [],
+        //     },
+        //   ],
+        // },
+      ],
+      group: [
+        "User.id",
+        "User.user_name",
+        "Category.id",
+        "Tags.id",
+        "Posts.id",
+        "Tags.post_tags.post_id",
+        "Tags.post_tags.tag_id",
+        "Tags.post_tags.created_at",
+        "Tags.post_tags.updated_at",
+        "Ratings.id",
+        "PostContents.id",
+      ],
+    });
+    if (!post) {
+      return apiError(res, `Post with thid id : ${req.params.id} not found`);
+    }
 
-  if (!post) {
-    return apiError(res, `Post with thid id : ${req.params.id} not found`);
+    const postInstance = await Posts.findByPk(req.params.id);
+    await postInstance.increment("views");
+
+    return res.json(post);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-
-  return res.json(post);
 };
 
 exports.createPosts = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return apiError(res, error.details[0].message);
 
+  const images = req.files;
+
   const tags = req.body.tags;
-  const postContent = JSON.parse(req.body.postContent); // Parse the postContent string to JSON
+  const postContent = req.body.postContent;
   await tags.forEach((tag) => {
-    const tagObj = Tags.findByPk(tag);
-    if (!tagObj) return apiError(res, `Tag with this id : ${tag} not found`);
+    const tagObj = Tags.findByPk(tag.id);
+    if (!tagObj) return apiError(res, `Tag with this id : ${tag.id} not found`);
   });
 
-  const img = req.file
-    ? `${req.protocol}://${req.get("host")}//images//${req.file.filename}`
+  const img = images[0]
+    ? `${req.protocol}://${req.get("host")}//images//${images[0].filename}`
     : null;
 
   const posts = await Posts.create({
     title: req.body.title,
-    slug: req.body.title,
+    slug: req.body.slug,
+    content: req.body.content,
     createdBy: req.user.id,
-    categoryId: req.body.categoryId,
+    categoryId: req.body.category,
     img: img,
   });
 
   await tags.forEach((tag) => {
     PostTags.create({
-      tagsId: tag,
+      tagsId: tag.id,
       postsId: posts.id,
     });
   });
 
-  const postContentPromises = postContent.map(async (content) => {
-    const postContentImg = content.img
-      ? `${req.protocol}://${req.get("host")}//images//${content.img}`
-      : null;
-    const postContentItem = await PostContent.create({
-      img: postContentImg,
-      content: content.content,
-      postsId: posts.id,
-    });
-    return postContentItem;
+  const postContentPromises = postContent.map(async (content, i) => {
+    try {
+      const postContentImg = images[i + 1]
+        ? `${req.protocol}://${req.get("host")}//images//${
+            images[i + 1].filename
+          }`
+        : null;
+      const postContentItem = await PostContent.create({
+        img: postContentImg,
+        content: content.content,
+        postsId: posts.id,
+      });
+      return postContentItem;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   });
+
   const postContentItems = await Promise.all(postContentPromises);
 
   res.status(201).send({ posts, postContentItems });

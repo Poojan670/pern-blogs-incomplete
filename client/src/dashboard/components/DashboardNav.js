@@ -142,7 +142,7 @@ const DashboardNav = ({ isOpen, setIsOpen, theme }) => {
                   >
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="images/me.jpg"
+                      src={userData?.img}
                       alt=""
                     />
                   </button>

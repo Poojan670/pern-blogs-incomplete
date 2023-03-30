@@ -43,11 +43,7 @@ export const handleSearch = (search, postsPerPage) =>
   );
 
 // checking the redundant data
-export const checkRedundantDataCode = (e, cancelToken) =>
-  axiosInstance.get(`api/v1/tags-app/tags?code=${e.target.value}`, {
-    cancelToken: cancelToken.token,
-  });
-export const checkRedundantDataName = (e, cancelToken) =>
-  axiosInstance.get(`api/v1/tags-app/tags?name=${e.target.value}`, {
+export const checkRedundantTagsTitle = (e, cancelToken) =>
+  axiosInstance.get(`api/v1/tags-app/tags?title=${e.target.value}`, {
     cancelToken: cancelToken.token,
   });

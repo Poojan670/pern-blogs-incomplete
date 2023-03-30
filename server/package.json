@@ -7,7 +7,7 @@
     "start": "nodemon server.js",
     "migrate": "npx sequelize-cli db:migrate",
     "unmigrate": "npx sequelize-cli db:migrate:undo",
-    "makemigrations": "npx sequelize-cli migration:create --name altered_paaras_column",
+    "makemigrations": "npx sequelize-cli migration:create --name alter_comments_post_id",
     "createmigrations": "npx sequelize-cli model:generate --name User --attributes userName:string",
     "insert": "npx sequelize-cli seed:generate --name demo-user",
     "seed": "npx sequelize-cli db:seed:all",

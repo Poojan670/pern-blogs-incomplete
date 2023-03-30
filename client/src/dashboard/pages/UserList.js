@@ -9,7 +9,7 @@ const UserList = ({ isOpen, setIsOpen, theme }) => {
   const [userList, setUserList] = useState([]);
   useEffect(() => {
     const users = async () => {
-      const userList = await API.userList(1, 10);
+      const userList = await API.userList(0, 10);
       setUserList(userList.data.results);
     };
     users().catch((e) => console.log(e.msg));

@@ -9,7 +9,7 @@ import ResetPassword from "../pages/ResetPassword";
 import ForgotPassword from "../pages/ForgotPassword";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/Login";
-import BlogDetail from "../dashboard/pages/BlogDetail";
+import BlogDetails from "../pages/Blogs";
 
 const PublicRoutes = ({ theme }) => {
   return (
@@ -31,7 +31,9 @@ const PublicRoutes = ({ theme }) => {
             <ForgotPassword theme={theme} />
           </Route>
           <Route exact path="/verify" component={Verify} />
-          <Route exact path="/blogs-detail" component={BlogDetail} />
+          <Route exact path="/blog-details/:id/:categoryId">
+            <BlogDetails theme={theme} />
+          </Route>
           <Route component={PageNotFound} />
         </Switch>
       </Suspense>

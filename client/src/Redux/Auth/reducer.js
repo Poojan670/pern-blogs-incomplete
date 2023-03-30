@@ -39,6 +39,7 @@ const authReducer = (state = initialState, action) => {
       localStorage.setItem("accessToken", action.payload.accessToken);
       localStorage.setItem("refreshToken", action.payload.refreshToken);
       localStorage.setItem("userName", action.payload.userName);
+      localStorage.setItem("img", action.payload.img);
       return {
         ...state,
         isAuthenticated: true,

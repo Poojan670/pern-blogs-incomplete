@@ -17,6 +17,7 @@ module.exports = function (app) {
       origin: ["http://localhost:3000", "http://localhost:3001"],
     })
   );
+  app.use(transactionMiddleware);
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,8 +31,6 @@ module.exports = function (app) {
       swaggerOptions: { persistAuthorization: true },
     })
   );
-
-  app.use(transactionMiddleware);
 
   app.use("", user);
   app.use("", category);

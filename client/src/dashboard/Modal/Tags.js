@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TextError from "../../TextError/TextError";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { checkRedundantCategoryData } from "../../utils/RedundantData/checkRedundantCategoryData";
+import { checkRedundantTagsData } from "../../utils/RedundantData/checkRedundantTagsData.";
 import { errorFunction } from "../../components/Alert/Alert";
 import { createTag, updateTag } from "../Redux/Tags/thunk";
 import { clearAllDataAction } from "../Redux/Tags/action";
@@ -33,7 +33,7 @@ const Tags = ({ showModel, setShowModal }) => {
   const handleChange = async (e) => {
     if (edit && e.target.value !== tag?.title) {
       if (e.target.value.trim() && e.target.value !== "") {
-        const result = await checkRedundantCategoryData(e);
+        const result = await checkRedundantTagsData(e);
         result
           ? errorFunction("Tag with this title already exists ") ||
             setLock(true)
@@ -41,7 +41,7 @@ const Tags = ({ showModel, setShowModal }) => {
       }
     }
     if (!edit && e.target.value.trim() && e.target.value !== "") {
-      const result = await checkRedundantCategoryData(e);
+      const result = await checkRedundantTagsData(e);
       result
         ? errorFunction("Tag with this title already exists ") || setLock(true)
         : setLock(false);
@@ -49,7 +49,7 @@ const Tags = ({ showModel, setShowModal }) => {
   };
 
   const onSubmit = (values) => {
-    const { title, slug, content, history } = values;
+    const { title, slug, content } = values;
     setLock(true);
     if (edit) {
       const id = tag.id;

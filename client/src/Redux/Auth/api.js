@@ -29,5 +29,7 @@ export const changePassword = (id, body) =>
 // get user
 export const user = () => axiosInstance.get(`api/v1/user-app/me`);
 // user list
-export const userList = (page, limit) =>
-  axiosInstance.get(`api/v1/user-app/users?page=${page}&limit=${limit}`);
+export const userList = (offset, limit) =>
+  axiosInstance.get(
+    `api/v1/user-app/users?offset=${offset}&limit=${limit}&ordering=-10`
+  );

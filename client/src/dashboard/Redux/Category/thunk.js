@@ -1,4 +1,7 @@
-import { errorFunction, successFunction } from "../../../components/Alert/Alert";
+import {
+  errorFunction,
+  successFunction,
+} from "../../../components/Alert/Alert";
 import * as action from "./action";
 import * as API from "./api";
 
@@ -11,8 +14,20 @@ export const listCategories = (offset, limit) => async (dispatch) => {
   }
 };
 
+export const getPageCategories =
+  ({ number, postsPerPage }) =>
+  async (dispatch) => {
+    try {
+      dispatch(action.loadingCategoryAction());
+      const { data } = await API.getPageCategories(number, postsPerPage);
+      dispatch(action.getCategoriesSuccessAction(data));
+    } catch (error) {
+      dispatch(action.getCategoriesFailAction(error));
+    }
+  };
+
 export const addCategory =
-  ({ title, slug, content, parent, history }) =>
+  ({ title, slug, content, parent }, currentPage) =>
   async (dispatch) => {
     try {
       dispatch(action.loadingCategory);
@@ -21,7 +36,7 @@ export const addCategory =
 
       successFunction(`Category Added Successfully`);
       dispatch(action.categorySucessAction(data));
-      history.push("/blogs-category");
+      dispatch(getPageCategories({ number: currentPage, postsPerPage: 10 }));
     } catch (error) {
       errorFunction(error.response.data.msg);
       dispatch(action.categoryFailAction(error));

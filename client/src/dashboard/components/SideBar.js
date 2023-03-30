@@ -81,7 +81,7 @@ const SideBar = ({ theme }) => {
             </Link>
           </li>
           <li>
-            <Link to="/blogs-list" className={linkClass}>
+            <Link to="/blogs-lists" className={linkClass}>
               <MdArticle className={iconsClass} />
               <span className={buttonClassName}>Blogs</span>
             </Link>

@@ -19,6 +19,11 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         loading_category: true,
       };
+    case categoryConstants.LOADING_CATEGORIES:
+      return {
+        ...state,
+        loading_category: true,
+      };
     case categoryConstants.ADD_CATEGORY_SUCCESS:
       return {
         ...state,
@@ -57,11 +62,26 @@ const categoryReducer = (state = initialState, action) => {
         category: action.payload,
       };
     case categoryConstants.CLEAR_ALL_DATA:
-      console.log(state, "this is state");
       return {
         ...state,
         loading_category: false,
         edit: false,
+      };
+    case categoryConstants.GET_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: action.payload.results,
+        edit: false,
+        count: action.payload.count,
+        next: action.payload.next,
+        previous: action.payload.previous,
+        loading: false,
+      };
+    case categoryConstants.GET_CATEGORIES_FAIL:
+      return {
+        ...state,
+        edit: false,
+        loading: false,
       };
     default:
       return state;

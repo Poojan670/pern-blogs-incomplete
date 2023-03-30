@@ -90,7 +90,7 @@ const Category = ({ isOpen, setIsOpen, theme }) => {
                 </thead>
                 <tbody>
                   {categories.map((category, i) => {
-                    const { title, slug, userName, createdAt, parent } =
+                    const { title, slug, userName, createdAt, parent, img } =
                       category;
                     return (
                       <tr
@@ -114,7 +114,7 @@ const Category = ({ isOpen, setIsOpen, theme }) => {
                           <button type="button">
                             <img
                               className="w-8 h-8 rounded-full ml-2"
-                              src="images/me.jpg"
+                              src={img}
                               alt=""
                             />
                           </button>

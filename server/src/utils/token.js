@@ -8,7 +8,7 @@ const generateAuthToken = function (user) {
     },
     process.env.SECRET_KEY,
     {
-      expiresIn: "10m",
+      expiresIn: "1d",
     }
   );
   return token;

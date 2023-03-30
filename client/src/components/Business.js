@@ -3,48 +3,56 @@ import React from "react";
 import Author from "./sub-components/Author";
 
 const Business = ({ theme }) => {
+  const bg = {
+    background:
+      theme === "dark"
+        ? "url('images/test.png')no-repeat"
+        : "url('images/kagura.png')no-repeat",
+    backgroundPosition: theme === "dark" ? "top" : "right",
+    backgroundColor:
+      theme === "dark" ? "rgb(31, 41, 55)" : "rgb(249, 250, 251)",
+  };
   return (
-    <section
-      className={classNames(
-        "container mx-auto md:px-20 py-16",
-        theme === "dark" && "bg-gray-800"
-      )}
+    <div
+      className={classNames("bg-gray-50", theme === "dark" && "bg-gray-800")}
     >
-      <div className="grid lg:grid-cols-2">
-        <div className="item">
-          <h1
-            className={classNames(
-              "font-bold text-4xl py-12",
-              theme === "dark" && "text-slate-300"
-            )}
-          >
-            Business
-          </h1>
-          <div className="flex flex-col gap-6">
-            <Post theme={theme} />
-            <Post theme={theme} />
-            <Post theme={theme} />
-            <Post theme={theme} />
+      <section className="container mx-auto md:px-20 py-16" style={bg}>
+        <div className="grid lg:grid-cols-2">
+          <div className="item">
+            <h1
+              className={classNames(
+                "font-bold text-4xl py-12",
+                theme === "dark" && "text-slate-300"
+              )}
+            >
+              Business
+            </h1>
+            <div className="flex flex-col gap-6">
+              <Post theme={theme} />
+              <Post theme={theme} />
+              <Post theme={theme} />
+              <Post theme={theme} />
+            </div>
+          </div>
+          <div className="item">
+            <h1
+              className={classNames(
+                "font-bold text-4xl py-12",
+                theme === "dark" && "text-slate-300"
+              )}
+            >
+              Travel
+            </h1>
+            <div className="flex flex-col gap-6">
+              <Post theme={theme} />
+              <Post theme={theme} />
+              <Post theme={theme} />
+              <Post theme={theme} />
+            </div>
           </div>
         </div>
-        <div className="item">
-          <h1
-            className={classNames(
-              "font-bold text-4xl py-12",
-              theme === "dark" && "text-slate-300"
-            )}
-          >
-            Travel
-          </h1>
-          <div className="flex flex-col gap-6">
-            <Post theme={theme} />
-            <Post theme={theme} />
-            <Post theme={theme} />
-            <Post theme={theme} />
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

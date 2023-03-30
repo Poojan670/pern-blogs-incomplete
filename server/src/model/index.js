@@ -51,6 +51,24 @@ const Comments = require("./comments")(sequelize, DataTypes);
 const Likes = require("./likes")(sequelize, DataTypes);
 const Ratings = require("./ratings")(sequelize, DataTypes);
 
+// // Scope
+// Posts.addScope("totalLikesCount", {
+//   attributes: {
+//     include: [[sequelize.fn("count", sequelize.col("Likes.id")), "likesCount"]],
+//   },
+//   include: [
+//     {
+//       model: Likes,
+//       where: {
+//         likeType: "LIKE",
+//         type: "POST",
+//       },
+//       attributes: [],
+//     },
+//   ],
+//   group: ["Posts.id"],
+// });
+
 // associations
 
 // Category Associations
@@ -104,6 +122,9 @@ Posts.belongsTo(User, {
   foreignKeyConstraint: true,
 });
 Posts.belongsToMany(Tags, {
+  through: "post_tags",
+});
+Tags.belongsToMany(Posts, {
   through: "post_tags",
 });
 

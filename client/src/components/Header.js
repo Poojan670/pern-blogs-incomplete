@@ -97,7 +97,7 @@ const Header = ({ theme }) => {
                   >
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="images/me.jpg"
+                      src={userData?.img}
                       alt=""
                     />
                   </button>

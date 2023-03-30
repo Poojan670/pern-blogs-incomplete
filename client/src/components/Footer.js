@@ -11,7 +11,7 @@ const Footer = ({ theme }) => {
   };
   return (
     <div
-      className={classNames("bg-gray-800", theme === "dark" && "bg-gray-800")}
+      className={classNames("bg-gray-50", theme === "dark" && "bg-gray-800")}
     >
       <NewsLetter theme={theme} />
       <div

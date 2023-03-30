@@ -5,7 +5,7 @@ module.exports = function validateCategory(categories) {
     title: Joi.string().min(5).max(100).required(),
     slug: Joi.string().max(100).required(),
     content: Joi.string(),
-    parent: Joi.object(),
+    parent: Joi.object().allow(null, ""),
   });
   return schema.validate(categories);
 };

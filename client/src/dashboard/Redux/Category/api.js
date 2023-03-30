@@ -25,3 +25,10 @@ export const checkRedundantData = (e, cancelToken) =>
       cancelToken: cancelToken.token,
     }
   );
+
+export const getPageCategories = (number, postsPerPage) =>
+  axiosInstance.get(
+    `api/v1/category-app/category?offset=${
+      (number - 1) * postsPerPage
+    }&limit=${postsPerPage}&ordering=-id`
+  );

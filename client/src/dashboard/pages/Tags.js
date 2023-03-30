@@ -5,17 +5,32 @@ import * as API from "../Redux/Tags/api";
 import { Link } from "react-router-dom";
 import TagsModal from "../Modal/Tags";
 import { tagsConstants } from "../Redux/Tags/constants";
-import { getAllTags, getTag, getPageTags } from "../Redux/Tags/thunk";
+import {
+  getAllTags,
+  getTag,
+  getPageTags,
+  handleSearch,
+} from "../Redux/Tags/thunk";
+import useDebounce from "../../utils/useDebounce";
+import defaultLimit from "../../utils/paginationDefault";
 
 const Tags = ({ isOpen, setIsOpen, theme }) => {
   // const [tags, setTags] = useState([]);
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const tags = useSelector((state) => state.tag.tags);
-  const next = useSelector((state) => state.manufacturer.next);
-  const previous = useSelector((state) => state.manufacturer.previous);
+  // const search = useSelector((state) => state.tag.search);
+  const [search, setSearch] = useState("");
+  // const next = useSelector((state) => state.manufacturer.next);
+  // const previous = useSelector((state) => state.manufacturer.previous);
+  const count = useSelector((state) => state.tag.count);
   const [postsPerPage, setPostsPerPage] = useState(10);
+
+  // for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   // for pagination
   const [pageNumberLimit] = useState(5);
@@ -25,9 +40,9 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
   //   dispatch(getPageTags({ number, postsPerPage }));
   // };
 
-  useEffect(() => {
-    dispatch(getTag(postsPerPage));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getTag(postsPerPage));
+  // }, []);
 
   // useEffect(() => {
   //   const tags = async () => {
@@ -42,6 +57,36 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
     dispatch({ type: tagsConstants.TAGS_EDIT_SUCCESS, payload: tag });
     setShowModal(true);
   };
+
+  //pagination end
+  //loading
+  const debouncedSearch = useDebounce(search, 500);
+  useEffect(() => {
+    if (postsPerPage === 0) {
+      if (search === "") {
+        dispatch(getTag(count));
+      } else {
+        console.log("downs");
+        dispatch(handleSearch(debouncedSearch, count));
+      }
+    } else {
+      if (search === "") {
+        if (postsPerPage === defaultLimit) {
+          dispatch(getTag(postsPerPage));
+        } else {
+          setCurrentPage(1);
+          dispatch(getTag(postsPerPage));
+        }
+      } else {
+        setCurrentPage(1);
+        setMaxPageNumberLimit(5);
+        setMinPageNumberLimit(0);
+        dispatch(handleSearch(debouncedSearch, postsPerPage));
+      }
+    }
+  }, [dispatch, postsPerPage, debouncedSearch]);
+
+  console.log(search, "searcj");
 
   return (
     <>
@@ -64,6 +109,9 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
                 <input
                   type="text"
                   placeholder="Search.."
+                  onChange={(e) => {
+                    setSearch(e.target.value.trimStart());
+                  }}
                   className="block w-60 px-3 py-2 hover:bg-gray-300 bg-gray-100 border-slate-300 rounded-full text-sm shadow-sm placeholder-slate-500 focus: outline-none focus:border-sky-500 focus:ring-sky-500 text-black"
                 />
                 <button

@@ -46,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
+      content: DataTypes.TEXT,
     },
     {
       timestamps: true,

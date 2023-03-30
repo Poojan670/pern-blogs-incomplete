@@ -39,6 +39,7 @@ exports.login = async (req, res) => {
     refreshToken: generateAuthRefreshToken(user),
     userName: user.userName,
     role: user.role,
+    img: user.img,
   });
 };
 

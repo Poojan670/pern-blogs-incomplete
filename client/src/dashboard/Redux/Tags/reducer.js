@@ -6,6 +6,7 @@ const initialState = {
   tag: null,
   count: null,
   next: null,
+  search: "",
   previous: null,
   loading: false,
   loading_updated: false,
