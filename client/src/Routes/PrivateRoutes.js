@@ -76,7 +76,11 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
               <Home theme={theme} />
             </ProtectedRoute>
             // Blog Details
-            <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
+            <ProtectedRoute
+              exact
+              path="/blog-details/:id/:categoryId"
+              roles={["ADMIN", "USER", "MOD"]}
+            >
               <BlogDetails theme={theme} />
             </ProtectedRoute>
             // Tags
