@@ -75,6 +75,10 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
             <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
               <Home theme={theme} />
             </ProtectedRoute>
+            // Blog Details
+            <ProtectedRoute exact path="/" roles={["ADMIN", "USER", "MOD"]}>
+              <BlogDetails theme={theme} />
+            </ProtectedRoute>
             // Tags
             <ProtectedRoute exact path="/tags" roles={["ADMIN", "MOD"]}>
               <Tags theme={theme} isOpen={isOpen} setIsOpen={setIsOpen} />

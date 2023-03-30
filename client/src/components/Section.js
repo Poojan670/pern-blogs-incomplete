@@ -26,7 +26,7 @@ export default function Section({ theme }) {
       theme === "dark"
         ? "url('images/test.png')no-repeat"
         : //
-          "url('images/kagura.png') left no-repeat, url('images/geralt.png') right no-repeat",
+          "url('images/kagura.png') left no-repeat",
     // backgroundPosition: theme === "dark" ? "top" : "right",
     backgroundColor:
       theme === "dark" ? "rgb(31, 41, 55)" : "rgb(249, 250, 251)",
@@ -107,7 +107,7 @@ function Slide({ theme, blog }) {
             : blog?.content?.substring(1, 300) + "..."}
         </p>
         <h1>
-          <Author theme={theme} />
+          <Author blog={blog} theme={theme} />
         </h1>
       </div>
     </div>
