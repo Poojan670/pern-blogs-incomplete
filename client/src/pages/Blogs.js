@@ -10,8 +10,14 @@ import {
 } from "../dashboard/Redux/Blogs/thunk";
 import moment from "moment";
 import classNames from "classnames";
+import { AiFillDislike, AiFillLike, AiFillStar } from "react-icons/ai";
 
 const Blogs = ({ theme }) => {
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+
+  console.log(hover, "hover");
+  console.log(rating, "Rating");
   const { id, categoryId } = useParams();
   const dispatch = useDispatch();
 
@@ -100,20 +106,27 @@ const Blogs = ({ theme }) => {
           </div>
 
           {/* Ratings */}
-          <div class="flex items-center">
-            <svg
-              aria-hidden="true"
-              class="w-5 h-5 text-yellow-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Rating star</title>
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-            </svg>
-            <p class="ml-2 text-sm font-bold text-gray-900 dark:text-white">
-              4.95
-            </p>
+          <div className="flex items-center py-5">
+            {[...Array(5)].map((star, index) => {
+              index += 1;
+              return (
+                <button
+                  type="button"
+                  key={index}
+                  className={
+                    index <= (hover || rating)
+                      ? "text-yellow-400"
+                      : "text-gray-800"
+                  }
+                  onClick={() => setRating(index)}
+                  onMouseEnter={() => setHover(index)}
+                  onMouseLeave={() => setHover(rating)}
+                >
+                  <span>&#9733;</span>
+                </button>
+              );
+            })}
+            <p class="ml-2 text-sm font-bold text-gray-900">4.95</p>
             <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
             <a
               href="#"
@@ -126,19 +139,32 @@ const Blogs = ({ theme }) => {
           {/* Comments */}
           <section className="not-format">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg lg:text-xl font-bold text-gray-900">
                 Discussion (20)
               </h2>
+              {/* Likes */}
+              <div className="flex justify-between">
+                <span className="font-bold mr-2 mt-1">215</span>
+                <AiFillLike
+                  className="mr-5 cursor-pointer hover:text-blue-500"
+                  size={30}
+                />
+                <span className="font-bold mr-2 mt-1">50</span>
+                <AiFillDislike
+                  size={30}
+                  className="cursor-pointer hover:text-blue-500"
+                />
+              </div>
             </div>
             <form className="mb-6">
-              <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <div className="py-2 px-4 mb-4 bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                 <label for="comment" className="sr-only">
                   Your comment
                 </label>
                 <textarea
                   id="comment"
                   rows="6"
-                  className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                  className="px-0 w-full text-sm text-gray-900 border-0 outline-none focus:ring-0"
                   placeholder="Write a comment..."
                   required
                 ></textarea>

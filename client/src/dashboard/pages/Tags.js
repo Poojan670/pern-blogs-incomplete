@@ -40,21 +40,8 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
   //   dispatch(getPageTags({ number, postsPerPage }));
   // };
 
-  // useEffect(() => {
-  //   dispatch(getTag(postsPerPage));
-  // }, []);
-
-  // useEffect(() => {
-  //   const tags = async () => {
-  //     const tagsList = await API.getAllTags();
-  //     setTags(tagsList.data.results);
-  //     setCount(tagsList.data.count);
-  //   };
-  //   tags().catch((e) => console.log(e.msg));
-  // }, []);
-
   const handleEdit = async (tag) => {
-    dispatch({ type: tagsConstants.TAGS_EDIT_SUCCESS, payload: tag });
+    dispatch({ type: tagsConstants.EDIT_TAGS, payload: tag });
     setShowModal(true);
   };
 
@@ -66,7 +53,6 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
       if (search === "") {
         dispatch(getTag(count));
       } else {
-        console.log("downs");
         dispatch(handleSearch(debouncedSearch, count));
       }
     } else {
@@ -85,8 +71,6 @@ const Tags = ({ isOpen, setIsOpen, theme }) => {
       }
     }
   }, [dispatch, postsPerPage, debouncedSearch]);
-
-  console.log(search, "searcj");
 
   return (
     <>

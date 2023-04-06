@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import PrivateRoutes from "./Routes/PrivateRoutes";
 import ThemeToggle from "./components/ThemeToggle";
+import Stomp from "stompjs";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -20,6 +21,28 @@ const App = () => {
     body.classList.remove(theme === "light" ? "dark" : "light");
     body.classList.add(theme);
   }, [theme]);
+
+  const socket = new WebSocket("ws://localhost:8081/ws");
+  const client = Stomp.over(socket);
+
+  client.connect(
+    {
+      login: "guest",
+      passcode: "guest",
+    },
+    () => {
+      console.log("WebSocket connection established.");
+
+      client.subscribe("/topic/messages", (message) => {
+        console.log("Received message:", message.body);
+      });
+
+      client.send("/app/message", {}, "Hello, WebSocket!");
+    },
+    (error) => {
+      console.error("WebSocket connection failed:", error);
+    }
+  );
 
   return (
     <div>

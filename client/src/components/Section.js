@@ -24,9 +24,9 @@ export default function Section({ theme }) {
   const bg = {
     background:
       theme === "dark"
-        ? "url('images/test.png')no-repeat"
+        ? "url('images/test.png') top no-repeat"
         : //
-          "url('images/kagura.png') left no-repeat",
+          "",
     // backgroundPosition: theme === "dark" ? "top" : "right",
     backgroundColor:
       theme === "dark" ? "rgb(31, 41, 55)" : "rgb(249, 250, 251)",
