@@ -35,20 +35,6 @@ exports.listCategories = async (req, res) => {
     `,
     { type: QueryTypes.SELECT }
   );
-
-  // const categories = await Category.findAll({
-  //   attributes: {
-  //     include: [[db.sequelize.col("user_name"), "userName"]],
-  //   },
-  //   include: [
-  //     {
-  //       model: User,
-  //       attributes: [],
-  //     },
-  //   ],
-  //   order: ["id"],
-  // });
-
   const result = await paginate(categories, req, res);
   res.json(result);
 };

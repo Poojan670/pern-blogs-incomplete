@@ -9,8 +9,8 @@ const Author = ({ theme, blog }) => {
         src={blog?.User?.img}
         alt=""
         className="rounded-full"
-        width={60}
-        height={60}
+        width={40}
+        height={40}
       />
       <div className="flex flex-col justify-center px-4">
         <Link

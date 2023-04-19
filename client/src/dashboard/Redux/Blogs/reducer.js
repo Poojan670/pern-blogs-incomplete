@@ -10,7 +10,9 @@ const initialState = {
   loading: false,
   loading_updated: false,
   loading_summary: false,
+  loading_blog_comments: false,
   relatedBlogs: [],
+  blogComments: [],
 };
 const blogsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -30,6 +32,11 @@ const blogsReducer = (state = initialState, action) => {
         ...state,
         loading_summary: true,
       };
+    case blogsConstants.LOADING_BLOG_COMMENTS:
+      return {
+        ...state,
+        loading_blog_comments: true,
+      };
     case blogsConstants.GET_RELATED_BLOGS_SUCCESS:
       return {
         ...state,
@@ -40,6 +47,17 @@ const blogsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case blogsConstants.GET_BLOG_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        loading_blog_comments: false,
+        blogComments: action.payload,
+      };
+    case blogsConstants.GET_BLOG_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        loading_blog_comments: false,
       };
     case blogsConstants.GET_BLOGS_SUCCESS:
       return {
@@ -84,6 +102,17 @@ const blogsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case blogsConstants.CREATE_BLOGS_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        loading_blog_comments: false,
+        blogComments: [action.payload, ...state.blogComments],
+      };
+    case blogsConstants.CREATE_BLOGS_COMMENTS_FAIL:
+      return {
+        ...state,
+        loading_blog_comments: false,
       };
     case blogsConstants.GET_BLOG_SUMMARY_SUCCESS:
       return {

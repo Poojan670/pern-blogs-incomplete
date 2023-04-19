@@ -25,6 +25,7 @@ exports.listPosts = async (req, res) => {
       "createdAt",
       "categoryId",
       "views",
+      "createdBy",
     ],
     include: [
       {
@@ -83,6 +84,11 @@ exports.listTrendingPosts = async (req, res) => {
   const today = new Date(); // get today's date
   const oneWeekAgo = new Date(today); // create a new Date object
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  let result = await trendingPostsFunction(oneWeekAgo, today, req, res);
+  res.json(result);
+};
+
+const trendingPostsFunction = async (previousDate, today, req, res) => {
   const posts = await Posts.findAll({
     attributes: [
       "id",
@@ -96,7 +102,7 @@ exports.listTrendingPosts = async (req, res) => {
     ],
     where: {
       createdAt: {
-        [Op.between]: [oneWeekAgo, today],
+        [Op.between]: [previousDate, today],
       },
     },
     include: [
@@ -111,7 +117,15 @@ exports.listTrendingPosts = async (req, res) => {
     ],
   });
   const result = await paginate(posts, req, res);
-  res.json(result);
+  if (result.count === 0) {
+    // Call the function recursively with a new previousDate
+    const newDate = new Date(previousDate);
+    newDate.setDate(newDate.getDate() - 7);
+    return await trendingPostsFunction(newDate, today, req, res);
+  } else {
+    // Return the result if count is not zero
+    return result;
+  }
 };
 
 exports.getPostSummary = async (req, res) => {
@@ -126,10 +140,9 @@ exports.getPostSummary = async (req, res) => {
         "updatedAt",
         "createdBy",
         "views",
-        // [Sequelize.col("user_name"), "createdBy"],
         [
           Sequelize.literal(`(
-            SELECT COUNT(*)
+            SELECT COALESCE(COUNT(*), 0) 
             FROM likes
             WHERE posts_id = ${req.params.id}
             AND type = 'POST'
@@ -139,7 +152,7 @@ exports.getPostSummary = async (req, res) => {
         ],
         [
           Sequelize.literal(`(
-            SELECT COUNT(*)
+            SELECT COALESCE(COUNT(*), 0) 
             FROM likes
             WHERE posts_id = ${req.params.id}
             AND type = 'POST'
@@ -147,8 +160,24 @@ exports.getPostSummary = async (req, res) => {
           )`),
           "dislikesCount",
         ],
-        // [Sequelize.fn("COUNT", Sequelize.col("Likes.posts_id")), "likesCount"],
-        // [Sequelize.fn("COUNT", Sequelize.col("dislikes.id")), "dislikesCount"],
+        [
+          Sequelize.literal(`(
+            SELECT COALESCE(COUNT(*), 0)  FROM comments WHERE posts_id=${req.params.id}
+          )`),
+          "commentsCount",
+        ],
+        [
+          Sequelize.literal(`(
+            SELECT COALESCE(COUNT(*), 0) FROM ratings WHERE posts_id=${req.params.id}
+          )`),
+          "ratingsCount",
+        ],
+        [
+          Sequelize.literal(`(
+            SELECT COALESCE((SUM(ratings)/5), 0.00) FROM ratings WHERE posts_id=${req.params.id}
+          )`),
+          "averageRatings",
+        ],
       ],
       include: [
         {
@@ -181,39 +210,10 @@ exports.getPostSummary = async (req, res) => {
           required: false,
           attributes: [],
         },
-        // {
-        //   model: Comments,
-        //   attributes: [
-        //     [
-        //       Sequelize.fn("COUNT", Sequelize.col("commentLikes.id")),
-        //       "likesCount",
-        //     ],
-        //     [
-        //       Sequelize.fn("COUNT", Sequelize.col("commentDislikes.id")),
-        //       "dislikesCount",
-        //     ],
-        //   ],
-        //   include: [
-        //     {
-        //       model: Likes,
-        //       where: {
-        //         likeTyp: "LIKE",
-        //       },
-        //       as: "commentLikes",
-        //       required: false,
-        //       attributes: [],
-        //     },
-        //     {
-        //       model: Likes,
-        //       where: {
-        //         likeTyp: "DISLIKE",
-        //       },
-        //       as: "commentDislikes",
-        //       required: false,
-        //       attributes: [],
-        //     },
-        //   ],
-        // },
+        {
+          model: Comments,
+          attributes: [],
+        },
       ],
       group: [
         "User.id",
@@ -227,6 +227,7 @@ exports.getPostSummary = async (req, res) => {
         "Tags.post_tags.updated_at",
         "Ratings.id",
         "PostContents.id",
+        "Comments.id",
       ],
     });
     if (!post) {

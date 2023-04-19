@@ -60,7 +60,11 @@ const PrivateRoutes = ({ isOpen, setIsOpen, theme }) => {
               <Dashboard isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // Blogs list
-            <ProtectedRoute exact path="/blogs-lists" roles={["ADMIN", "MOD"]}>
+            <ProtectedRoute
+              exact
+              path="/blogs-lists"
+              roles={["ADMIN", "MOD", "USER"]}
+            >
               <Bloglist isOpen={isOpen} setIsOpen={setIsOpen} theme={theme} />
             </ProtectedRoute>
             // User List

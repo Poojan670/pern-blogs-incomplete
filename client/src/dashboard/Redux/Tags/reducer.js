@@ -113,6 +113,13 @@ const tagsReducer = (state = initialState, action) => {
         loading: false,
         tag: null,
       };
+    case tagsConstants.EDIT_TAGS:
+      return {
+        ...state,
+        edit: true,
+        loading: false,
+        tag: action.payload,
+      };
     case tagsConstants.CLEAR_ALL_DATA:
       return {
         ...state,
