@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "../../../utils/axios";
 
 //obtaining the paginated data
@@ -12,6 +13,11 @@ export const getBlogSummary = (id) =>
 //obtaining all data
 export const getAllBlogs = () =>
   axiosInstance.get(`api/v1/posts-app/posts?ordering=-id&limit=10`);
+
+export const getAllMyBlogs = (id) =>
+  axiosInstance.get(
+    `api/v1/posts-app/posts?ordering=-id&limit=10&createdBy=${id}`
+  );
 
 //obtaining all popular blogs from last week
 export const getTrendingPosts = () =>
@@ -68,3 +74,10 @@ export const checkRedundantDataName = (e, cancelToken) =>
   axiosInstance.get(`api/v1/blogs-app/blogs?name=${e.target.value}`, {
     cancelToken: cancelToken.token,
   });
+
+// Create Comments
+export const postComment = (body) =>
+  axiosInstance.post(`api/v1/comments-app/comments`);
+
+export const getBlogComments = (id) =>
+  axiosInstance.get(`api/v1/comments-app/blog-comments/${id}`);

@@ -3,31 +3,20 @@ import CardLineChart from "../components/Charts/CardLineChart";
 import CardBarChart from "../components/Charts/CardBarChart";
 import Activities from "../components/Charts/Activities";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import * as API from "../Redux/Dashboard/api";
 
 const DashBoard = ({ isOpen, setIsOpen, theme }) => {
-  const userList = [
-    {
-      id: 1,
-      username: "Poojan",
-      email: "po0janhunt@gmail.com",
-      blogsCount: 45,
-      commentsCount: 55,
-    },
-    {
-      id: 2,
-      username: "Ashish",
-      email: "aashish12@gmail.com",
-      blogsCount: 34,
-      commentsCount: 35,
-    },
-    {
-      id: 3,
-      username: "Dajju",
-      email: "dajju24@gmail.com",
-      blogsCount: 20,
-      commentsCount: 15,
-    },
-  ];
+  const [bloggers, SetBloggers] = useState([]);
+
+  useEffect(() => {
+    const topBloggers = async () => {
+      const bloggersList = await API.getTopBloggers();
+      SetBloggers(bloggersList.data.results);
+    };
+    topBloggers().catch((e) => console.log(e.msg));
+  }, []);
+
   return (
     <DashboardLayout isOpen={isOpen} setIsOpen={setIsOpen} theme={theme}>
       <main className="h-[100%] m-0 p-0">
@@ -65,7 +54,7 @@ const DashBoard = ({ isOpen, setIsOpen, theme }) => {
             <h6
               className={classNames(
                 "flex justify-center px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-gray-900 opacity-70",
-                theme === "dark" && "text-gray-300 opacity-100"
+                theme === "dark" && "text-slate-50 opacity-100"
               )}
             >
               TOP Bloggers
@@ -92,9 +81,16 @@ const DashBoard = ({ isOpen, setIsOpen, theme }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {userList.map((user, i) => {
-                    const { username, email, blogsCount, commentsCount, img } =
-                      user;
+                  {bloggers.map((user, i) => {
+                    const {
+                      fullName,
+                      userName,
+                      roles,
+                      postCount,
+                      commentCount,
+                      email,
+                      img,
+                    } = user;
                     return (
                       <tr key={i}>
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -108,7 +104,7 @@ const DashBoard = ({ isOpen, setIsOpen, theme }) => {
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
-                                {username}
+                                {userName}
                               </h6>
                               <p className="mb-0 leading-tight text-xs text-slate-400">
                                 {email}
@@ -118,20 +114,30 @@ const DashBoard = ({ isOpen, setIsOpen, theme }) => {
                         </td>
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                           <p className="mb-0 font-semibold leading-tight text-xs">
-                            Manager
+                            {roles}
                           </p>
                           <p className="mb-0 leading-tight text-xs text-slate-400">
-                            Organization
+                            {fullName}
                           </p>
                         </td>
                         <td className="p-2 leading-normal text-center align-middle bg-transparent border-b text-sm whitespace-nowrap shadow-transparent">
-                          <span className="bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900">
-                            {blogsCount}
+                          <span
+                            className={classNames(
+                              "bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900",
+                              theme === "dark" && "text-slate-50"
+                            )}
+                          >
+                            {postCount}
                           </span>
                         </td>
                         <td className="p-2 leading-normal text-center align-middle bg-transparent border-b text-sm whitespace-nowrap shadow-transparent">
-                          <span className="bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900">
-                            {commentsCount}
+                          <span
+                            className={classNames(
+                              "bg-gradient-to-tl px-3.6 text-xs rounded-1.8 py-2.2 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-gray-900",
+                              theme === "dark" && "text-slate-50"
+                            )}
+                          >
+                            {commentCount}
                           </span>
                         </td>
                       </tr>

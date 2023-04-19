@@ -9,7 +9,9 @@ const express = require("express"),
   tags = require("../../src/router/tags"),
   posts = require("../../src/router/posts"),
   likes = require("../../src/router/likes"),
-  ratings = require("../../src/router/ratings");
+  ratings = require("../../src/router/ratings"),
+  dashboard = require("../../src/router/dashboard"),
+  comments = require("../../src/router/comments");
 
 module.exports = function (app) {
   app.use(
@@ -38,6 +40,8 @@ module.exports = function (app) {
   app.use("", posts);
   app.use("", likes);
   app.use("", ratings);
+  app.use("", dashboard);
+  app.use("", comments);
 
   app.use("*", (req, res) => {
     res.status(404).json({

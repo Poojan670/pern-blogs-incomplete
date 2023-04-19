@@ -8,8 +8,10 @@ import { Link } from "react-router-dom";
 import { MdCategory } from "react-icons/md";
 import { AiFillTags } from "react-icons/ai";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 const SideBar = ({ theme }) => {
+  const { role } = useSelector((state) => state.auth);
   const buttonClassName = classNames("flex-1", "ml-3", "whitespace-nowrap", {
     "text-gray-300": theme === "dark",
   });
@@ -62,24 +64,36 @@ const SideBar = ({ theme }) => {
               <span className={notificationClass}>3</span>
             </Link>
           </li>
-          <li>
-            <Link to="/users" className={linkClass}>
-              <HiUsers className={iconsClass} />
-              <span className={buttonClassName}>Users</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/blogs-category" className={linkClass}>
-              <MdCategory className={iconsClass} />
-              <span className={buttonClassName}>Category</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/tags" className={linkClass}>
-              <AiFillTags className={iconsClass} />
-              <span className={buttonClassName}>Tags</span>
-            </Link>
-          </li>
+          {role === "ADMIN" ? (
+            <li>
+              <Link to="/users" className={linkClass}>
+                <HiUsers className={iconsClass} />
+                <span className={buttonClassName}>Users</span>
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
+          {role === ("ADMIN" || "MOD") ? (
+            <li>
+              <Link to="/blogs-category" className={linkClass}>
+                <MdCategory className={iconsClass} />
+                <span className={buttonClassName}>Category</span>
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
+          {role === ("ADMIN" || "MOD") ? (
+            <li>
+              <Link to="/tags" className={linkClass}>
+                <AiFillTags className={iconsClass} />
+                <span className={buttonClassName}>Tags</span>
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
           <li>
             <Link to="/blogs-lists" className={linkClass}>
               <MdArticle className={iconsClass} />

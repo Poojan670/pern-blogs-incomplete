@@ -11,12 +11,15 @@ const BlogList = ({ isOpen, setIsOpen, theme }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const userName = localStorage.getItem("userName");
+  const { id, role } = useSelector((state) => state.auth);
 
   const [blogs, setBlogs] = useState([]);
-
   useEffect(() => {
     const blogs = async () => {
-      const blogsList = await API.getAllBlogs();
+      const blogsList =
+        role === "ADMIN"
+          ? await API.getAllBlogs()
+          : await API.getAllMyBlogs(id);
       setBlogs(blogsList.data.results);
       setCount(blogsList.data.count);
     };

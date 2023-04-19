@@ -9,6 +9,9 @@ export const loadingUpdateAction = () => ({
 export const loadingSummaryAction = () => ({
   type: blogsConstants.LOADING_BLOG_SUMMARY,
 });
+export const loadingBlogCommentsAction = () => ({
+  type: blogsConstants.LOADING_BLOG_COMMENTS,
+});
 export const getBlogsSuccessAction = (data) => ({
   type: blogsConstants.GET_BLOGS_SUCCESS,
   payload: data,
@@ -80,4 +83,24 @@ export const updateBlogsFailAction = (error) => ({
 export const clearAllDataAction = () => ({
   type: blogsConstants.CLEAR_ALL_DATA,
   payload: [],
+});
+
+export const getBlogCommentsSuccessAction = (data) => ({
+  type: blogsConstants.GET_BLOG_COMMENTS_SUCCESS,
+  payload: data,
+});
+
+export const getBlogCommentsFailAction = (error) => ({
+  type: blogsConstants.GET_BLOG_COMMENTS_FAIL,
+  payload: error,
+});
+
+export const createBlogCommentsSuccessAction = (data) => ({
+  type: blogsConstants.CREATE_BLOGS_COMMENTS_SUCCESS,
+  payload: data,
+});
+
+export const createBlogCommentsFailAction = (error) => ({
+  type: blogsConstants.CREATE_BLOGS_COMMENTS_FAIL,
+  payload: error,
 });

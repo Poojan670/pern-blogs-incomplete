@@ -134,6 +134,7 @@ export const handleSearch = (search, postsPerPage) => async (dispatch) => {
     const { data } = await API.handleSearch(search, postsPerPage);
     dispatch(action.getBlogsSuccessAction(data));
   } catch (error) {
+    errorFunction(error.response.data.msg);
     dispatch(action.getBlogsFailAction(error));
   }
 };
@@ -144,6 +145,7 @@ export const getBlogSummary = (id) => async (dispatch) => {
     const { data } = await API.getBlogSummary(id);
     dispatch(action.getBlogSummarySuccessAction(data));
   } catch (error) {
+    errorFunction(error.response.data.msg);
     dispatch(action.getBlogSummaryFailAction(error));
   }
 };
@@ -154,6 +156,29 @@ export const getRelatedBlogs = (id, categoryId) => async (dispatch) => {
     const { data } = await API.getRelatedBlogs(id, categoryId);
     dispatch(action.getRelatedBlogsSuccessAction(data));
   } catch (error) {
+    errorFunction(error.response.data.msg);
     dispatch(action.getRelatedBlogsFailAction(error));
+  }
+};
+
+export const getBlogComments = (id) => async (dispatch) => {
+  try {
+    dispatch(action.loadingBlogCommentsAction());
+    const { data } = await API.getBlogComments(id);
+    dispatch(action.getBlogCommentsSuccessAction(data));
+  } catch (error) {
+    errorFunction(error.response.data.msg);
+    dispatch(action.getBlogCommentsFailAction(error));
+  }
+};
+
+export const postBlogComments = (postsId, content) => async (dispatch) => {
+  try {
+    const values = { postsId, Comment };
+    const { data } = await API.postComment(values);
+    dispatch(action.createBlogCommentsSuccessAction(data));
+  } catch (error) {
+    errorFunction(error.response.data.msg);
+    dispatch(action.createBlogCommentsFailAction(error));
   }
 };

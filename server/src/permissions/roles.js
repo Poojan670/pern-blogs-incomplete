@@ -21,3 +21,6 @@ exports.deleteTagsPermission = [ROLES.ADMIN];
 
 // Category Permission
 exports.postPermission = [ROLES.ADMIN, ROLES.MOD, ROLES.USER];
+
+// Comments Permission
+exports.addCommentPermission = [ROLES.ADMIN, ROLES.MOD, ROLES.USER];
