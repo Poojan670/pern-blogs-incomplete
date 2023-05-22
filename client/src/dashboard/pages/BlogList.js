@@ -11,7 +11,7 @@ const BlogList = ({ isOpen, setIsOpen, theme }) => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const userName = localStorage.getItem("userName");
-  const { id, role } = useSelector((state) => state.auth);
+  const { userid, role } = useSelector((state) => state.auth);
 
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
@@ -19,7 +19,7 @@ const BlogList = ({ isOpen, setIsOpen, theme }) => {
       const blogsList =
         role === "ADMIN"
           ? await API.getAllBlogs()
-          : await API.getAllMyBlogs(id);
+          : await API.getAllMyBlogs(userid);
       setBlogs(blogsList.data.results);
       setCount(blogsList.data.count);
     };

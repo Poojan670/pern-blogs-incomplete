@@ -35,6 +35,7 @@ exports.login = async (req, res) => {
   user.lastLogin = new Date();
   await user.save();
   res.json({
+    id: user.id,
     accessToken: generateAuthToken(user),
     refreshToken: generateAuthRefreshToken(user),
     userName: user.userName,
